@@ -1,0 +1,12 @@
+
+*material, name=linearelastic, id=linearelastic,
+30000.0, 0.15 
+
+*identify, parameter=0, upperBound=50000, lowerBound=20000
+
+*simulation, type=edelweiss
+input=test/linearElasticSingleElement.inp
+outX=uTop.csv
+outY=fTop.csv
+XY=test/exp.csv
+
