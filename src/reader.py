@@ -18,7 +18,8 @@ def inputReader( filename ):
         lines = f.readlines( )
         
         for line in lines:
-            
+            if "**" in line:
+                continue
             line = line.replace(" ", "")
             if line == "\n":
                 continue
@@ -46,7 +47,6 @@ def inputReader( filename ):
         # create object for old inputstring
         obj = createObjectForKeyword( currKey, currInpString )
         inp[currKey].append( obj )
-
 
     return inp
 

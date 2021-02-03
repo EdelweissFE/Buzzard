@@ -23,8 +23,8 @@ class Material:
                 except:
                     pass
 
-        
         self.headerString = "*material,name=" + self.name + ",id=" + self.id + "\n"
         self.matProps = np.array( matProps )
 
-        print( self.matProps )
+        print( matProps )
+

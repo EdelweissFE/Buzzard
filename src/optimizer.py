@@ -26,18 +26,8 @@ def runOptimization( inputDict ):
 
     
     initialX = np.array([mat.matProps[i] for i in xIndizes])
-
-    print("initialParams = ", initialX )
-    print("initialParams = ", lb )
-    print("initialParams = ", ub )
-
-    #for ide in inputDict["*identify"]:
-
-
     
-    # set given values for material parameter
-
-    initialX = np.array( [ 10 ,] )
+    print( "initialX = ", initialX )
 
     res = minimize( getResidualForMultipleSimulations, 
                         initialX, 
@@ -54,5 +44,7 @@ def getResidualForMultipleSimulations( matParams, inputDict, xIndizes ):
     for sim in inputDict['*simulation']:
 
         res += sim.computeResidual( matParams, inputDict, xIndizes )
+    
+    print( "||R|| = {:e} ".format( res ) ) 
 
     return res

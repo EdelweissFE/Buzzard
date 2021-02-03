@@ -1,6 +1,6 @@
 
 *material, name=linearelastic, id=linearelastic,
-30000.0, 0.15 
+35000.0, 0.15 
 
 *identify, parameter=0, upperBound=50000, lowerBound=20000
 
