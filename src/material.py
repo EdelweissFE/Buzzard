@@ -9,7 +9,7 @@ class Material:
         split = inputstring.split("," )
         
         matProps = []
-
+        
         for s in split:
 
             if 'name=' in s.lower():
@@ -26,5 +26,4 @@ class Material:
         self.headerString = "*material,name=" + self.name + ",id=" + self.id + "\n"
         self.matProps = np.array( matProps )
 
-        print( matProps )
 

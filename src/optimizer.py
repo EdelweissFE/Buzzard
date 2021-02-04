@@ -2,39 +2,55 @@ from scipy.optimize import minimize, Bounds
 import numpy as np
 import os
 
+from .tools import getDictFromString
+
 def runOptimization( inputDict ):
     
     # collect all materialparameters to identify
     xIndizes = []
-    initialXList = []
+    initialX = []
     lb = []
     ub = []
-
-    for ide in inputDict["*identify"]:
-
-        split = ide.split(",")
-        for s in split:
-            if "parameter=" in s.lower():
-                xIndizes.append( int( s.split("=")[1] ))
-
-            elif "upperbound=" in s.lower():
-                ub.append( float( s.split("=")[1] ))
     
-            elif "lowerbound=" in s.lower():
-                lb.append( float( s.split("=")[1] ))
+    if "*identify" in inputDict.keys():
+        
+        for ide in inputDict["*identify"]:
 
-            elif "initial=" in s.lower():
-                initialXList.append( float( s.split("=")[1] ))
-    
-    initialX = np.array( initialXList )
-    
-    print( "initialX = ", initialX )
+            d = getDictFromString( ide )
+            
+            try:
+                xIndizes.append( int( d["parameter"] ) )
+                initialX.append( d["initial"] )
+                lb.append( d["lowerbound"] )
+                ub.append( d["upperbound"] )
+            except Exception as ex:
+                print(" The following excetion occured during indetify collection:\n ",
+                        ex )
+                exit()
+                
 
-    res = minimize( getResidualForMultipleSimulations, 
+    else:
+        print( "no parameters given to identify ..." ) 
+        exit()
+        
+    
+    customOptions = { }
+    method = None
+
+    if "*scipyoptions" in inputDict.keys():
+        customOptions = getDictFromString( inputDict["*scipyoptions"][0] )
+    
+        if "method" in customOptions:
+            method = customOptions["method"]
+            customOptions.pop( "method" )
+               
+
+    res = minimize(     getResidualForMultipleSimulations, 
                         initialX, 
                         args = ( inputDict, xIndizes ),
                         bounds = Bounds(lb,ub),
-                        method=None) 
+                        method=method,
+                        options = customOptions ) 
 
     return res
 
@@ -47,6 +63,13 @@ def getResidualForMultipleSimulations( X, inputDict, xIndizes ):
 
         res += sim.computeResidual( X, inputDict, xIndizes )
     
-    print( "||R|| = {:e} ".format( res ) ) 
-
     return res
+
+
+
+        
+
+
+
+
+    

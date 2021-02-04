@@ -15,9 +15,9 @@ if __name__ == "__main__":
     
     
     inp = inputReader( args.file[0] )
-
-    print( inp )
-
-    optParams = runOptimization( inp )
-
-    print( optParams )
+    
+    print( 50*"-" )
+    opt = runOptimization( inp )
+    
+    print( 50*"-" )
+    print( opt )

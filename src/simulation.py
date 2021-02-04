@@ -2,6 +2,9 @@ import numpy as np
 import os
 from scipy.interpolate import interp1d
 
+from .tools import getDictFromString
+
+
 edelweissExecuteable = "python /home/ad/constitutiveModelling/EdelweissFE/edelweiss.py"
 
 

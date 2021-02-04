@@ -4,7 +4,7 @@ from .material import Material
 
 def inputReader( filename ):
     
-    keywords = ['*material', '*simulation', '*identify']
+    keywords = ['*material', '*simulation', '*identify', "*scipyoptions"]
 
     print( "reading input from", filename, "..." )
     
@@ -29,7 +29,7 @@ def inputReader( filename ):
             if currKey is None:
                 if split[0] in keywords:
                     currKey = split[0]
-                    currInpString = line 
+                    currInpString = line.replace( currKey + ",",  "" ) 
 
             else:
                 
@@ -38,7 +38,7 @@ def inputReader( filename ):
                     obj = createObjectForKeyword( currKey, currInpString )
                     inp[currKey].append( obj )
                     currKey = split[0]
-                    currInpString = line
+                    currInpString = line.replace( currKey + "," , "" ) 
 
                 else:
                     currInpString += line
@@ -48,6 +48,13 @@ def inputReader( filename ):
         obj = createObjectForKeyword( currKey, currInpString )
         inp[currKey].append( obj )
 
+    # remove empty entries from input dictionary
+    keysToRemove = [key for key in inp.keys() if not inp[key] ]
+
+
+    for key in keysToRemove:
+        inp.pop( key, None )
+     
     return inp
 
 
