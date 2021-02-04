@@ -34,7 +34,7 @@ def runOptimization( inputDict ):
         exit()
         
     
-    customOptions = { }
+    customOptions = { "disp": True }
     method = None
 
     if "*scipyoptions" in inputDict.keys():
@@ -43,7 +43,12 @@ def runOptimization( inputDict ):
         if "method" in customOptions:
             method = customOptions["method"]
             customOptions.pop( "method" )
+
+        if not "disp" in customOptions:
+            customOptions["disp"] = True
                
+        if not "verbose" in customOptions:
+            customOptions["verbose"] = 2
 
     res = minimize(     getResidualForMultipleSimulations, 
                         initialX, 
@@ -57,13 +62,15 @@ def runOptimization( inputDict ):
 
 def getResidualForMultipleSimulations( X, inputDict, xIndizes ):
     
-    res = 0
+    yErr = np.array( [ ] )
 
     for sim in inputDict['*simulation']:
 
-        res += sim.computeResidual( X, inputDict, xIndizes )
+        yErr = np.append( yErr, sim.computeResidual( X, inputDict, xIndizes ) )
     
-    return res
+    residual = np.linalg.norm( yErr )
+
+    return residual
 
 
 

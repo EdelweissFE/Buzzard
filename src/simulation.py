@@ -1,6 +1,8 @@
 import numpy as np
 import os
 from scipy.interpolate import interp1d
+from random import random
+
 
 from .tools import getDictFromString
 
@@ -64,15 +66,22 @@ class Simulation:
                     matString += "\n"
                     c = -1
                 c += 1
+            
+            r = str( int( random() * 10000 ) )
+            randomfilename = r + ".inp"
+
             # write individual inptfile
-            with open( "currentInput.inp", "w+") as f:
+            with open( randomfilename, "w+") as f:
 
                 f.write( matString )
                 f.write( "\n" )
                 f.write( self.input )
         
             
-            os.system( edelweissExecuteable + " currentInput.inp --quiet " )
+            os.system( edelweissExecuteable + " " + randomfilename + " --quiet " )
+
+            # remove input file from work directory
+            os.remove( randomfilename )
 
             # load x y data from simulation results
             if self.simX == self.simY:
@@ -85,11 +94,11 @@ class Simulation:
             xySim = interp1d( x, y )
 
             yErr = np.array( 
-                    [ abs( self.xy[i,1] - xySim( abs( self.xy[i,0] ) )) 
+                    [ np.sqrt( ( self.xy[i,1] - xySim( abs( self.xy[i,0] ) )) ** 2 ) 
                         for i in range( len( self.xy[:,0] ))  ] )
         
         else:
             print( "type of simulation not defined" )
             exit()
         
-        return np.linalg.norm( yErr ) 
+        return yErr 
