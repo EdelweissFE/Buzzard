@@ -34,7 +34,7 @@ def runOptimization( inputDict ):
                         initialX, 
                         args = ( inputDict, xIndizes ),
                         bounds = Bounds(lb,ub),
-                        method="TNC") 
+                        method=None) 
 
     return res
 

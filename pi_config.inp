@@ -8,5 +8,5 @@
 input=test/linearElasticSingleElement.inp
 outX=uTop.csv
 outY=fTop.csv
-XY=test/exp.csv
+XY=test/linearElasticSingleElement_XY.csv
 
