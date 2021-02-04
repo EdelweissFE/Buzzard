@@ -2,7 +2,7 @@
 *material, name=linearelastic, id=linearelastic,
 35000.0, 0.15 
 
-*identify, parameter=0, upperBound=50000, lowerBound=20000
+*identify, parameter=0, initial=35000, upperBound=50000, lowerBound=20000
 
 *simulation, type=edelweiss
 input=test/linearElasticSingleElement.inp

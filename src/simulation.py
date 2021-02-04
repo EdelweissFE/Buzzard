@@ -69,7 +69,7 @@ class Simulation:
                 f.write( self.input )
         
             
-            os.system( edelweissExecuteable + " currentInput.inp --quiet" )
+            os.system( edelweissExecuteable + " currentInput.inp --quiet " )
 
             # load x y data from simulation results
             if self.simX == self.simY:
@@ -89,5 +89,4 @@ class Simulation:
             print( "type of simulation not defined" )
             exit()
         
-        return np.linalg.norm( yErr )
-
+        return np.linalg.norm( yErr ) 

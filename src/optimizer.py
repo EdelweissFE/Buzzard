@@ -4,10 +4,9 @@ import os
 
 def runOptimization( inputDict ):
     
-    mat = inputDict["*material"][0]
-
     # collect all materialparameters to identify
     xIndizes = []
+    initialXList = []
     lb = []
     ub = []
 
@@ -24,26 +23,29 @@ def runOptimization( inputDict ):
             elif "lowerbound=" in s.lower():
                 lb.append( float( s.split("=")[1] ))
 
+            elif "initial=" in s.lower():
+                initialXList.append( float( s.split("=")[1] ))
     
-    initialX = np.array([mat.matProps[i] for i in xIndizes])
+    initialX = np.array( initialXList )
     
     print( "initialX = ", initialX )
 
     res = minimize( getResidualForMultipleSimulations, 
                         initialX, 
                         args = ( inputDict, xIndizes ),
-                        bounds = Bounds(lb,ub) ) 
+                        bounds = Bounds(lb,ub),
+                        method="TNC") 
 
     return res
 
 
-def getResidualForMultipleSimulations( matParams, inputDict, xIndizes ):
+def getResidualForMultipleSimulations( X, inputDict, xIndizes ):
     
     res = 0
 
     for sim in inputDict['*simulation']:
 
-        res += sim.computeResidual( matParams, inputDict, xIndizes )
+        res += sim.computeResidual( X, inputDict, xIndizes )
     
     print( "||R|| = {:e} ".format( res ) ) 
 
