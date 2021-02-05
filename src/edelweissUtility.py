@@ -1,24 +1,15 @@
 import numpy as np
-
 import sys
 
 from .identification import Identification
 
-
 edelweissPath = "/home/ad/constitutiveModelling/EdelweissFE"
-
 sys.path.append( edelweissPath )
 
 import fe
 from fe.fecore import finitElementSimulation
 from fe.utils.inputfileparser import parseInputFile 
 
-def runEdelweissSimulation( inputFile, verbose = False ):
-    
-    inp = parseInputFile( inputFile ) 
-
-    return finitElementSimulation( inp, verbose=verbose )
-        
 
 def evaluateEdelweissSimulation( currParams, configDict, simName ):
 
