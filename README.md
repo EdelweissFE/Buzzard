@@ -8,9 +8,9 @@ A python tool for (material) parameter identification in finite element simulati
  python parameteridentifier.py inputFileName
 ```
 
-## Run test
+## Run testconfiguration for EdelweissFE
 
 ```bash
- python parameteridentifier.py pi_config.inp
+ python parameteridentifier.py testconfig.json
 ```
 
