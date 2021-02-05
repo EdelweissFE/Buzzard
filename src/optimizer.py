@@ -2,71 +2,73 @@ from scipy.optimize import minimize, Bounds
 import numpy as np
 import os
 
-from .tools import getDictFromString
+from .identification import Identification
+from .simulation import Simulation
 
-def runOptimization( inputDict ):
+def runOptimization( config ):
     
     # collect all materialparameters to identify
-    xIndizes = []
     initialX = []
     lb = []
     ub = []
     
-    if "*identify" in inputDict.keys():
-        
-        for ide in inputDict["*identify"]:
+    if "identification" in config:
 
-            d = getDictFromString( ide )
+        for ideName in config["identification"]:
             
-            try:
-                xIndizes.append( int( d["parameter"] ) )
-                initialX.append( d["initial"] )
-                lb.append( d["lowerbound"] )
-                ub.append( d["upperbound"] )
-            except Exception as ex:
-                print(" The following excetion occured during indetify collection:\n ",
-                        ex )
-                exit()
-                
+            ide = Identification( ideName, config["identification"][ideName] )
+            
 
-    else:
-        print( "no parameters given to identify ..." ) 
-        exit()
-        
-    
-    customOptions = { "disp": True }
+            initialX.append( ide.start ) 
+            lb.append( ide.min ) 
+            ub.append( ide.max )
+
+    if "simulations" in config:
+
+        # initilize all simulations
+        for name in config["simulations"]:
+            
+            Simulation( name, config["simulations"][name] )
+
+
     method = None
-
-    if "*scipyoptions" in inputDict.keys():
-        customOptions = getDictFromString( inputDict["*scipyoptions"][0] )
+    options = { "disp": True }
     
-        if "method" in customOptions:
-            method = customOptions["method"]
-            customOptions.pop( "method" )
+    if "scipysettings" in config:
 
-        if not "disp" in customOptions:
-            customOptions["disp"] = True
-               
-        if not "verbose" in customOptions:
-            customOptions["verbose"] = 2
+        try:
+            method = config["scipysettings"]["method"]
+        except:
+            pass
+
+        try:
+            options = config["scipysettings"]["options"]
+        except:
+            pass
 
     res = minimize(     getResidualForMultipleSimulations, 
                         initialX, 
-                        args = ( inputDict, xIndizes ),
+                        args = ( config ),
                         bounds = Bounds(lb,ub),
                         method=method,
-                        options = customOptions ) 
-
+                        options = options ) 
+    
+    # write results to file
+    with open( "optimalParameters.txt", "w+") as f:
+        for x, ide in zip( res.x, Identification.all_identifications):
+            f.write( str(x) + "\t#" + ide.name )
+            
     return res
 
 
-def getResidualForMultipleSimulations( X, inputDict, xIndizes ):
+def getResidualForMultipleSimulations( params, config ):
     
     yErr = np.array( [ ] )
 
-    for sim in inputDict['*simulation']:
+    for sim in Simulation.all_simulations:
 
-        yErr = np.append( yErr, sim.computeResidual( X, inputDict, xIndizes ) )
+        yErr = np.append( yErr, sim.computeResidual( params, config) )
+        
     
     residual = np.linalg.norm( yErr )
 

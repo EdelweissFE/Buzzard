@@ -1,0 +1,35 @@
+{"scipysettings":
+    {  
+        "method": "TNC",
+        "options": { 
+            "disp": true,
+            "xtol": 1e-10
+        }
+    },
+ "identification":{ 
+     "YoungsModulus": {
+         "idx": 0,
+         "start": 35000,
+         "min": 20000,
+         "max": 50000,
+         "type": "material",
+         "id": "linearelastic"
+     }
+
+ },
+ "simulations":
+ {
+     "sim1":
+     { 
+         "type": "edelweiss",
+         "input": "test/linearElasticSingleElement.inp",
+         "simX": "disp",
+         "simY": "force",
+         "data": "test/linearElasticSingleElement_XY.csv"
+     }
+ }
+}
+
+
+
+

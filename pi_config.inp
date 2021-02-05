@@ -9,7 +9,7 @@
 
 *simulation, type=edelweiss
 input=test/linearElasticSingleElement.inp
-outX=uTop.csv
-outY=fTop.csv
+outX=disp
+outY=force
 XY=test/linearElasticSingleElement_XY.csv
 
