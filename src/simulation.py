@@ -1,16 +1,8 @@
 import numpy as np
 import os
 from scipy.interpolate import interp1d
-from random import random
-
-
-from .tools import getDictFromString
 
 from .edelweissUtility import *
-
-
-edelweissExecuteable = "python /home/ad/constitutiveModelling/EdelweissFE/edelweiss.py"
-
 
 class Simulation:
     
