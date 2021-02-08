@@ -2,8 +2,7 @@
     {  
         "method": "TNC",
         "options": { 
-            "disp": true,
-            "xtol": 1e-10
+            "disp": true
         }
     },
  "identification":{ 
@@ -20,6 +19,14 @@
  "simulations":
  {
      "sim1":
+     { 
+         "type": "edelweiss",
+         "input": "test/linearElasticSingleElement.inp",
+         "simX": "disp",
+         "simY": "force",
+         "data": "test/linearElasticSingleElement_XY.csv"
+     },
+     "sim2":
      { 
          "type": "edelweiss",
          "input": "test/linearElasticSingleElement.inp",

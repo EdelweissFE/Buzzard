@@ -1,14 +1,15 @@
 import numpy as np
 import sys
 
-from .identification import Identification
-
+# load EdelweissFE
 edelweissPath = "/home/ad/constitutiveModelling/EdelweissFE"
 sys.path.append( edelweissPath )
-
 import fe
 from fe.fecore import finitElementSimulation
 from fe.utils.inputfileparser import parseInputFile 
+
+
+from .identification import Identification
 
 
 def evaluateEdelweissSimulation( currParams, configDict, simName ):
@@ -26,10 +27,19 @@ def evaluateEdelweissSimulation( currParams, configDict, simName ):
         if ide.type == "material":
             for n in range( len( inp["*material"] ) ):
                 if inp["*material"][n]["id"] == ide.identificator:
-                    inp["*material"][n]["data"][0][ide.idx] = currParams[i]
-        
-        i += 1
 
+                    j = 0
+                    offset = 0
+                    for j in range( len( inp["*material"][n]["id"] ) ):
+                        if ide.idx - offset < len( inp["*material"][n]["data"][j] ):
+                            inp["*material"][n]["data"][j][ide.idx - offset ] = currParams[i]
+                            break
+                        else:
+                            offset += len( inp["*material"][n]["data"][j] )
+                    
+        i += 1
+    
+    # execute simulation
     success, U, P, fieldOutputController = finitElementSimulation( inp, verbose=False )
 
 

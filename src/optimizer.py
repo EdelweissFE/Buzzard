@@ -5,9 +5,11 @@ import os
 from .identification import Identification
 from .simulation import Simulation
 
+
+
 def runOptimization( config ):
     
-    # collect all materialparameters to identify
+    # collect all parameters to identify
     initialX = []
     lb = []
     ub = []
@@ -22,15 +24,24 @@ def runOptimization( config ):
             initialX.append( ide.start ) 
             lb.append( ide.min ) 
             ub.append( ide.max )
+    
+    else:
+        print( "no parameters for identification found" )
+        exit()
 
+    
+    # collect all simulations
     if "simulations" in config:
 
-        # initilize all simulations
+        # initialize all simulations
         for name in config["simulations"]:
             
             Simulation( name, config["simulations"][name] )
+    else:
+        print( "no simulations found" )
+        exit()
 
-
+    # collect settings for scipy 
     method = None
     options = { "disp": True }
     
@@ -45,7 +56,8 @@ def runOptimization( config ):
             options = config["scipysettings"]["options"]
         except:
             pass
-
+    
+    # execute optimization
     res = minimize(     getResidualForMultipleSimulations, 
                         initialX, 
                         args = ( config ),
@@ -56,7 +68,7 @@ def runOptimization( config ):
     # write results to file
     with open( "optimalParameters.txt", "w+") as f:
         for x, ide in zip( res.x, Identification.all_identifications):
-            f.write( str(x) + "\t#" + ide.name )
+            f.write( str(x) + "\t#" + ide.name + "\n" )
             
     return res
 
@@ -64,12 +76,11 @@ def runOptimization( config ):
 def getResidualForMultipleSimulations( params, config ):
     
     yErr = np.array( [ ] )
-
-    for sim in Simulation.all_simulations:
-
-        yErr = np.append( yErr, sim.computeResidual( params, config) )
-        
     
+    # create residual vector for all simulations
+    for sim in Simulation.all_simulations:
+        yErr = np.append( yErr, sim.computeResidual( params, config) )
+   
     residual = np.linalg.norm( yErr )
 
     return residual
