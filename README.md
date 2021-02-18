@@ -1,16 +1,17 @@
-# ParameterIdentifier
+# Buzzard
 
 A python tool for (material) parameter identification in finite element simulations.
 
 ## General usage
 
 ```bash
- python parameteridentifier.py inputFileName
+ python buzzard.py jsonConfigFile
 ```
 
 ## Run testconfiguration for EdelweissFE
 
 ```bash
- python parameteridentifier.py testconfig.json
+ cd examples/LinearElastic
+ bash RUN.sh
 ```
 
