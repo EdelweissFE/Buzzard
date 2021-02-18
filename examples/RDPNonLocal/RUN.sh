@@ -1,1 +1,1 @@
-python ../../parameteridentifier.py config.json
+python ../../buzzard.py config.json
