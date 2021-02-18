@@ -1,0 +1,33 @@
+
+{"scipysettings":
+    {
+        "options": {
+            "disp": true,
+            "xtol": 1e-10,
+            "gtol": 1e-10,
+            "verbose": 2
+        }
+    },
+ "identification":{
+
+     "epsilonF": {
+         "idx": 19,
+         "start":0.001,
+         "min": 0.0001,
+         "max": 0.01,
+         "type": "material",
+         "id": "urmnl"
+     }
+ },
+ "simulations":
+ {
+     "sim1":
+     {
+         "type": "edelweiss",
+         "input": "parmfit.inp",
+         "simX": "meanDispLoad",
+         "simY": "sumRFNodes",
+         "data": "data.csv"
+     } 
+ }
+}

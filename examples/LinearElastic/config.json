@@ -2,7 +2,8 @@
     {  
         "method": "TNC",
         "options": { 
-            "disp": true
+            "disp": true,
+            "verbose": 2
         }
     },
  "identification":{ 
@@ -21,18 +22,20 @@
      "sim1":
      { 
          "type": "edelweiss",
-         "input": "test/linearElasticSingleElement.inp",
+         "input": "sim1.inp",
          "simX": "disp",
          "simY": "force",
-         "data": "test/linearElasticSingleElement_XY.csv"
+         "data": "data_sim1.csv",
+         "active": true
      },
      "sim2":
      { 
          "type": "edelweiss",
-         "input": "test/linearElasticSingleElement.inp",
+         "input": "sim2.inp",
          "simX": "disp",
          "simY": "force",
-         "data": "test/linearElasticSingleElement_XY.csv"
+         "data": "data_sim2.csv",
+         "active": true
      }
  }
 }

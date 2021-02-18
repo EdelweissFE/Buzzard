@@ -7,51 +7,53 @@ sys.path.append( edelweissPath )
 import fe
 from fe.fecore import finitElementSimulation
 from fe.utils.inputfileparser import parseInputFile 
-
+from fe.utils.misc import mergeNumpyDataLines
 
 from .identification import Identification
 
+def readEdelweissInputfile( filename ):
 
-def evaluateEdelweissSimulation( currParams, configDict, simName ):
-
-    simConfig = configDict["simulations"][simName]
-    fieldoutputX = simConfig["simX"]
-    fieldoutputY = simConfig["simY"]
-
-    # load input file 
-    inp = parseInputFile( simConfig["input"] )
+    inp = parseInputFile( filename )
     
-    # replace material parameters to identify
+    # flatten data lines for material data
+    for n in range( len( inp["*material"] ) ):
+         inp["*material"][n]["data"] = mergeNumpyDataLines( inp["*material"][n]["data"] )
+
+    return inp
+
+def setCurrentParams( currParams, sim ):
+    
     i = 0
-    for ide in Identification.all_identifications:
+    for ide in Identification.all_identifications: 
         if ide.type == "material":
-            for n in range( len( inp["*material"] ) ):
-                if inp["*material"][n]["id"] == ide.identificator:
-
-                    j = 0
-                    offset = 0
-                    for j in range( len( inp["*material"][n]["id"] ) ):
-                        if ide.idx - offset < len( inp["*material"][n]["data"][j] ):
-                            inp["*material"][n]["data"][j][ide.idx - offset ] = currParams[i]
-                            break
-                        else:
-                            offset += len( inp["*material"][n]["data"][j] )
+            for n in range( len( sim.inp["*material"] ) ):
+                if sim.inp["*material"][n]["id"] == ide.identificator:
                     
+                    sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
         i += 1
-    
+
+def evaluateEdelweissSimulation( currParams, sim ):
+
+    # replace parameters for the simulation
+    setCurrentParams( currParams, sim )
+
     # execute simulation
-    success, U, P, fieldOutputController = finitElementSimulation( inp, verbose=False )
+    success, U, P, fieldOutputController = finitElementSimulation( sim.inp, verbose=False )
+    
+    if success:
 
-
-    if fieldoutputX == fieldoutputY:
-        # get time history as x value if only one fieldoutput is given 
-        x = np.abs( fieldOutputController.fieldOutputs[fieldoutputX].timeHistory )
-        y = fieldOutputController.fieldOutputs[fieldoutputY].result
+        if sim.fieldoutputX == sim.fieldoutputY:
+            # get time history as x value if only one fieldoutput is given 
+            x = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory )
+            y = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputY].result )
+        else:
+            x = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputX].result )
+            y = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputY].result )
     else:
-        x = np.abs( fieldOutputController.fieldOutputs[fieldoutputX].result )
-        y = fieldOutputController.fieldOutputs[fieldoutputY].result
-
-
+        print( "simulation failed !!!" )
+        x = None
+        y = None
+        
     return x, y
 
 
