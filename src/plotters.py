@@ -18,6 +18,6 @@ def plotOptimizationResults( initialParams, optParams ):
         plt.plot( optX, optY, label="optimal params" )
         plt.legend()
         plt.grid()
-        plt.savefig(sim.name + ".pdf" )
-        message( " --> " + sim.name +".pdf" )
+        plt.savefig(sim.name + ".png" )
+        message( " --> " + sim.name +".png" )
 
