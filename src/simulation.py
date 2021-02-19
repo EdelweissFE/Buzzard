@@ -2,7 +2,9 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
+from similaritymeasures import frechet_dist, area_between_two_curves, pcm 
 
+from .journal import message
 from .edelweissUtility import *
 
 class Simulation:
@@ -15,6 +17,11 @@ class Simulation:
         self.name = name
         self.type = config["type"]
         self.data = np.loadtxt( config["data"] )
+
+        try:
+            self.errorType = config["errorType"]
+        except:
+            self.errorType = "relative"
         
         if self.type == "edelweiss":
             self.inp = readEdelweissInputfile( config["input"] )
@@ -35,13 +42,54 @@ class Simulation:
         return x, y
 
     def computeResidual( self, currParams ):
-         
-       
+          
         x, y = self.run( currParams )
 
         if type(x) is not np.ndarray:
             print("params = ", currParams )
             return np.array( [1e12] )
+        
+        return self.computeErrorVector( x, y )
+
+    def computeErrorVector( self, x, y ):
+                
+        yErr = np.array([])
+
+        # compute relative error vector
+        if self.errorType == "relative":
+            
+            xySim = self.interpolateSimulationResults( x, y )
+            for i in range( len( self.data[:,1] ) ):
+                if self.data[i,1] == 0:
+                    continue
+                try:
+                    yErr = np.append( yErr,
+                    ( self.data[i,1] - xySim(  self.data[i,0]  ) ) / self.data[i,1] )
+                except Exception as e:
+                    print( e )
+        
+        # compute relative error vector
+        elif self.errorType == "absolute":
+            
+            xySim = self.interpolateSimulationResults( x, y )
+            for i in range( len( self.data[:,1] ) ):
+                try:
+                    yErr = np.append( yErr, self.data[i,1] - xySim(  self.data[i,0]  ) ) 
+                except Exception as e:
+                    print( e )        
+
+        elif self.errorType == "area-between":
+            
+            simData = np.vstack( [ x, y ] ).T
+            yErr = np.append( yErr,  area_between_two_curves( self.data,  simData )   )
+
+        else:
+            message( " wrong type for error calculation ..." )
+            exit()
+    
+        return yErr
+
+    def interpolateSimulationResults( self, x, y ):
 
         xlist = [x[0]]
         ylist = [y[0]]
@@ -52,28 +100,11 @@ class Simulation:
                     xlist.append(float(val))
                     ylist.append(float(y[i+1]))
 
-            xySim = interp1d(   xlist[::-1] , ylist[::-1] )
         else:
             for i, val in enumerate(x[1:]):
                 if x[i+1] > x[i]:
                     xlist.append(float(val))
                     ylist.append(float(y[i+1]))
 
-            xySim= interp1d(   xlist , ylist )
-
-        # compute relative error vector
-        yErr = np.array([])
-        for i in range( len( self.data[:,1] ) ):
-            if self.data[i,1] == 0:
-                continue
-
-            try:
-                yErr = np.append( yErr,
-                   ( self.data[i,1] - xySim(  self.data[i,0]  ) ) / self.data[i,1] )
-            except:
-                pass
-
-        return yErr
-    
-
+        return interp1d( xlist, ylist )
 

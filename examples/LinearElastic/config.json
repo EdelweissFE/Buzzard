@@ -1,10 +1,9 @@
 {"scipysettings":
-    {   "method": "TNC", 
+    {   "method": "trust-constr", 
         "options": { 
             "disp": true,
             "verbose": 2,
-            "gtol": 1e-10,
-            "ftol": 1e-5
+            "gtol": 1e-10
         }
     },
  "identification":{ 
@@ -27,7 +26,8 @@
          "simX": "disp",
          "simY": "force",
          "data": "data_sim1.csv",
-         "active": true
+         "active": true,
+         "errorType": "absolute"
      },
      "sim2":
      { 
@@ -36,7 +36,8 @@
          "simX": "disp",
          "simY": "force",
          "data": "data_sim2.csv",
-         "active": true
+         "active": true,
+         "errorType": "absolute"
      }
  }
 }

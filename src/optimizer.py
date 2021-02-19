@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 from .identification import Identification
-rom .simulation import Simulation
+from .simulation import Simulation
 from .journal import *
 from .plotters import *
 
@@ -135,20 +135,19 @@ def getResidualForMultipleSimulations( params, args ):
     yErr = np.array( [ ] )
     
     if args.parallel in [1, 3]:
-
         nSim = len( Simulation.all_simulations )
         with ProcessPoolExecutor(max_workers = nSim ) as executor:
             future_res = { executor.submit(sim.computeResidual, params ): sim for sim in Simulation.all_simulations}
 
-            for future in as_completed(future_res):
-                yErr =np.append( yErr,  future.result() )
-
+            for future in as_completed( future_res ):
+                yErr = np.append( yErr,  future.result() )
+        
     
     else:
         # create residual vector for all simulations
         for sim in Simulation.all_simulations:
             yErr = np.append( yErr, sim.computeResidual( params ) )
-   
+    
     residual = np.linalg.norm( yErr )
 
     return residual
