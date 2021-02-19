@@ -1,13 +1,15 @@
 from scipy.optimize import minimize, Bounds
+from optimparallel import minimize_parallel
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import numpy as np
 import time
 
 from .identification import Identification
 from .simulation import Simulation
 from .journal import *
+from .plotters import *
 
-
-def runOptimization( config ):
+def runOptimization( config, args ):
     
     printSepline() 
     message( " collecting parameters to identify ..." )  
@@ -62,7 +64,11 @@ def runOptimization( config ):
     else:
         message( " no simulations found" )
         exit()
-
+    
+    printLine()
+    message( " found "+ 
+            str( len(Simulation.all_simulations) ) +
+            " active simulations(s)" ) 
     # collect settings for scipy 
     method = None
     options = { "disp": True }
@@ -85,12 +91,21 @@ def runOptimization( config ):
  
     # execute optimization
     tic = time.time()
-    res = minimize(     getResidualForMultipleSimulations, 
-                        initialX, 
-                        args = ( config ),
-                        bounds = Bounds(lb,ub),
-                        method=method,
-                        options = options )  
+    
+    if args.parallel > 1:
+        
+        res = minimize_parallel(    getResidualForMultipleSimulations, 
+                                    initialX, 
+                                    args = ( args ),
+                                    bounds = Bounds(lb,ub),
+                                    options = options )  
+    else:
+        res = minimize(     getResidualForMultipleSimulations, 
+                            initialX, 
+                            args = ( args ),
+                            bounds = Bounds(lb,ub),
+                            method=method,
+                            options = options )  
     toc = time.time()
     
     printSepline()
@@ -105,23 +120,34 @@ def runOptimization( config ):
             f.write( str(x) + "\t#" + ide.name + "\n" )
             message(  "   {:4.4e}".format( x ) + " " + ide.name ) 
     
-    printLine()
-    message( " plot results ... " )
-    # plot results
-    for sim in Simulation.all_simulations:
-        sim.plotResults()
+    if args.createPlots:
+        printLine()
+        message( " plot results ... " )
+        plotOptimizationResults( initialX, res.x )
+    
     printSepline()
 
     return res
 
 
-def getResidualForMultipleSimulations( params, config ):
+def getResidualForMultipleSimulations( params, args ):
     
     yErr = np.array( [ ] )
     
-    # create residual vector for all simulations
-    for sim in Simulation.all_simulations:
-        yErr = np.append( yErr, sim.computeResidual( params, config) )
+    if args.parallel in [1, 3]:
+
+        nSim = len( Simulation.all_simulations )
+        with ProcessPoolExecutor(max_workers = nSim ) as executor:
+            future_res = { executor.submit(sim.computeResidual, params ): sim for sim in Simulation.all_simulations}
+
+            for future in as_completed(future_res):
+                yErr =np.append( yErr,  future.result() )
+
+    
+    else:
+        # create residual vector for all simulations
+        for sim in Simulation.all_simulations:
+            yErr = np.append( yErr, sim.computeResidual( params ) )
    
     residual = np.linalg.norm( yErr )
 

@@ -1,13 +1,14 @@
 {"scipysettings":
-    {  
-        "method": "TNC",
+    {   "method": "TNC", 
         "options": { 
             "disp": true,
-            "verbose": 2
+            "verbose": 2,
+            "gtol": 1e-10,
+            "ftol": 1e-5
         }
     },
  "identification":{ 
-     "YoungsModulus": {
+     "E": {
          "idx": 0,
          "start": 35000,
          "min": 20000,

@@ -20,23 +20,25 @@ class Simulation:
             self.inp = readEdelweissInputfile( config["input"] )
             self.fieldoutputX = config["simX"] 
             self.fieldoutputY = config["simY"] 
-        
-        self.initialSimXY = None
-        self.currSimXY = None
 
         Simulation.all_simulations.append( self )
 
-
-    def computeResidual( self, currParams, configDict ):
+    def run( self, currParams):
          
         if self.type == "edelweiss":
-
             x, y = evaluateEdelweissSimulation( currParams, self ) 
             
         else:
             print( "type of simulation not defined" )
             exit()
+
+        return x, y
+
+    def computeResidual( self, currParams ):
+         
        
+        x, y = self.run( currParams )
+
         if type(x) is not np.ndarray:
             print("params = ", currParams )
             return np.array( [1e12] )
@@ -53,28 +55,9 @@ class Simulation:
                 continue
             yErr = np.append( yErr,
                    ( self.data[i,1] - xySim(  self.data[i,0]  ) ) / self.data[i,1] )
-            
-        if self.initialSimXY is None:
-            self.initialSimXY = np.vstack( [ x, y ] ).T
-        
-        self.currSimXY = np.vstack( [ x, y ] ).T
-        
+                    
 
         return yErr
     
-
-    def plotResults( self ):
-
-        plt.figure()
-        plt.plot( self.data[:,0], self.data[:,1], "x", 
-                label= "given data", 
-                fillstyle="none",
-                markersize=8,
-                markeredgewidth=1.5)
-        plt.plot( self.initialSimXY[:,0], self.initialSimXY[:,1], label="initial params" )
-        plt.plot( self.currSimXY[:,0], self.currSimXY[:,1], label="optimal params" )
-        plt.legend()
-        plt.grid()
-        plt.savefig(self.name + ".pdf" )
 
 
