@@ -42,3 +42,5 @@ Currently the path to EdelweissFE can only be changed in ``src/edelweissUtility.
  cd examples/RDPNonlocal
  python ../../buzzard.py config.json --createPlots
 ```
+![Image](share/rdp_sim.png "Uniaxial tension test")
+
