@@ -43,19 +43,35 @@ class Simulation:
             print("params = ", currParams )
             return np.array( [1e12] )
 
-        
-        if x[0] > x[1]:
-            xySim = interp1d(   x[::-1] , y[::-1] )
+        xlist = [x[0]]
+        ylist = [y[0]]
+
+        if x[0] > x[-1]:
+            for i, val in enumerate(x[1:]):
+                if x[i+1] < x[i]:
+                    xlist.append(float(val))
+                    ylist.append(float(y[i+1]))
+
+            xySim = interp1d(   xlist[::-1] , ylist[::-1] )
         else:
-            xySim= interp1d(   x , y )
+            for i, val in enumerate(x[1:]):
+                if x[i+1] > x[i]:
+                    xlist.append(float(val))
+                    ylist.append(float(y[i+1]))
+
+            xySim= interp1d(   xlist , ylist )
+
         # compute relative error vector
         yErr = np.array([])
         for i in range( len( self.data[:,1] ) ):
             if self.data[i,1] == 0:
                 continue
-            yErr = np.append( yErr,
+
+            try:
+                yErr = np.append( yErr,
                    ( self.data[i,1] - xySim(  self.data[i,0]  ) ) / self.data[i,1] )
-                    
+            except:
+                pass
 
         return yErr
     

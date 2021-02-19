@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 from .identification import Identification
-from .simulation import Simulation
+rom .simulation import Simulation
 from .journal import *
 from .plotters import *
 
@@ -24,7 +24,7 @@ def runOptimization( config, args ):
             # skip inactive identifications
             if "active" in config["identification"][name].keys():
                 if config["identification"][name]["active"] == False:
-                    message( "  -->  ", name, "(inactive)" ) 
+                    message( "  -->  " + name + "(inactive)" ) 
                     continue
 
             ide = Identification( name, config["identification"][name] )
