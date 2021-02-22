@@ -10,6 +10,11 @@ To install the dependencies do
 ```bash
  pip install -r requirements.txt
 ```
+or
+```bash
+ conda install --file requirements.txt
+```
+if you are using Anaconda.
 
 
 ## General usage
