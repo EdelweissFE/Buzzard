@@ -18,6 +18,7 @@ def plotOptimizationResults( initialParams, optParams ):
         plt.plot( optX, optY, label="optimal params" )
         plt.legend()
         plt.grid()
+        plt.xlim(  min( sim.data[:,0] ), max( sim.data[:,0] ) )
         plt.savefig(sim.name + ".png" )
         message( " --> " + sim.name +".png" )
 

@@ -1,0 +1,23 @@
+*include, input=scdpv3.inp
+*include, input=singleElementC3D8.inp
+
+
+*section, name=section1, thickness=1.0, material=scdp, type=solid
+all
+
+*job, name=cps4job, domain=3d, solver=NISTParallel
+
+*fieldOutput,
+name=disp, nSet=top, field=displacement, result=U, saveHistory=True, f(x)='mean( x[:,2])'
+
+
+*step, jobName=cps4job, maxInc=1e-1, minInc=1e-8, maxNumInc=1000, maxIter=25, stepLength=9.9999
+dirichlet, name=bottom,     nSet=bottom,      field=displacement, 3=0,
+dirichlet, name=left,       nSet=left,        field=displacement, 2=0,
+dirichlet, name=bottom,     nSet=back,        field=displacement, 1=0,
+
+*step, jobName=cps4job, maxInc=1e-1, minInc=1e-8, maxNumInc=1000, maxIter=25, stepLength=0.0001
+distributedload, name=dload, surface=top, magnitude=3.79, type=pressure, f(t)=t
+
+*step, jobName=cps4job, maxInc=1e-3, minInc=1e-6, maxNumInc=10000, maxIter=25, stepLength=240
+*step, jobName=cps4job, maxInc=1e-2, minInc=1e-6, maxNumInc=10000, maxIter=25, stepLength=2200

@@ -80,9 +80,64 @@ class Simulation:
 
         elif self.errorType == "area-between":
             
-            simData = np.vstack( [ x, y ] ).T
+            # find index to start and end
+            start = 0
+            end = 0
+            for xItem in x:
+                
+                if xItem < max( self.data[:,0] ):
+                    end += 1
+                    if xItem < min( self.data[:,0] ):
+                        start += 1
+                else:
+                    break
+            
+            simData = np.vstack( [ x[start:end], y[start:end] ] ).T
             yErr = np.append( yErr,  area_between_two_curves( self.data,  simData )   )
 
+
+        elif self.errorType == "frechet-distance":
+           
+            # find index to start and end
+            start = 0
+            end = 0
+            for xItem in x:
+                
+                if xItem < max( self.data[:,0] ):
+                    end += 1
+                    if xItem < min( self.data[:,0] ):
+                        start += 1
+                else:
+                    break
+            
+            sim = np.vstack( [ x[start:end] / max( abs( self.data[:,0] ) ) , y[start:end] / max( abs( self.data[:,1] ) ) ] ).T
+            exp = np.vstack( [ self.data[:,0] / max( abs( self.data[:,0] ) ) , self.data[:,1] / max( abs( self.data[:,1] ) ) ] ).T
+            
+            val = frechet_dist( exp,  sim ) 
+
+            yErr = np.append( yErr,  val   )
+        
+        elif self.errorType == "partial-curve-mapping":
+           
+            # find index to start and end
+            start = 0
+            end = 0
+            for xItem in x:
+                
+                if xItem < max( self.data[:,0] ):
+                    end += 1
+                    if xItem < min( self.data[:,0] ):
+                        start += 1
+                else:
+                    break
+            
+            sim = np.vstack( [ x[start:end], y[start:end] ] ).T
+            exp = np.vstack( [ self.data[:,0] , self.data[:,1] ] ).T
+            
+            val = pcm( exp,  sim ) 
+
+            yErr = np.append( yErr,  val   )
+        
         else:
             message( " wrong type for error calculation ..." )
             exit()

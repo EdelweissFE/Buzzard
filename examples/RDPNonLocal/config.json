@@ -26,7 +26,7 @@
          "simX": "meanDispLoad",
          "simY": "sumRFNodes",
          "data": "data.csv",
-         "errorType": "relative" 
+         "errorType": "frechet-distance" 
      } 
  }
 }
