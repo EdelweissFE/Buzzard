@@ -3,5 +3,4 @@ __pycache__
 **/optimalParameters.txt
 *.pdf
 *.png
-*.csv
 /venv
