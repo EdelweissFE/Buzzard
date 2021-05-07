@@ -1,6 +1,6 @@
 *material, name=scdpv3nonlocal, id=scdp, statevars=200
 **q1,    q2,    q3,       q4,         m,           nu,     nKelvin,    kelvinMin,       
-20,   150.,    8.7,     14.,        0.5,        0.2,    12,         1e-5,   
+20,   150.,    5,     10.,        0.5,        0.2,    12,         1e-5,   
 **strainShrInf,     TauShr,         fcu28,      fcu1,       ratioFcy,   ratioFbu,       ratioFtu,   offsetFtu,
 -0.0000,            500,            47.6,      23.8,        0.1,        1.16,           0.077,      0.78,
 **eCPP1,          eCPP8,      eCPP24,       nlRadius,   nonLocalWeight,     epsilonF8h,   epsilonF7,   epsilonF28    

@@ -1,0 +1,59 @@
+{"scipysettings":
+    {   "method": "trust-constr", 
+        "options": { 
+            "disp": true,
+            "verbose": 2,
+            "gtol": 1e-10
+        }
+    },
+ "identification":{
+
+     "MATPARAM00": {
+         "start": 30,
+         "min": 20,
+         "max": 50,
+         "active": true
+     },
+     "MATPARAM01": {
+         "start": 0.25,
+         "min": 0.2,
+         "max": 0.3,
+         "active": true
+     },
+     "MATPARAM02": {
+         "start": 30,
+         "min": 25,
+         "max": 35,
+         "active": true
+     },
+     "MATPARAM03": {
+         "start": 0,
+         "min": 0,
+         "max": 5,
+         "active": true
+     },
+     "MATPARAM04": {
+         "start": 0.005,
+         "min": 0.0005,
+         "max": 0.05,
+         "active": true
+     }
+
+ },
+ "simulations":
+ {
+     "sim1":
+     { 
+         "type": "abaqus",
+         "input": "triax.inp",
+         "postProcessingScript": "readdata.py",
+         "data": "data_sim1.csv",
+         "active": true,
+         "errorType": "relative"
+     }
+ }
+}
+
+
+
+
