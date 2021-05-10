@@ -31,7 +31,7 @@ class Simulation:
             self.fieldoutputY = config["simY"] 
         elif self.type == "abaqus":
             self.inp = open( config["input"] ).read()
-            self.postprocessingScript = config["postProcessingScript"] 
+            self.postProcessingScript = config["postProcessingScript"] 
         Simulation.all_simulations.append( self )
 
     def run( self, currParams):
