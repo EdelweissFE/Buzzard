@@ -141,7 +141,7 @@ _PickedSurf20, P, 0.1
 ** 
 ** Name: Disp-BC-4 Type: Displacement/Rotation
 *Boundary
-_PICKEDSET8, 2, 2, -0.02
+_PICKEDSET8, 2, 2, -0.2
 ** 
 ** OUTPUT REQUESTS
 ** 

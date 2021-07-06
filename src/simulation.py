@@ -32,6 +32,8 @@ class Simulation:
         elif self.type == "abaqus":
             self.inp = open( config["input"] ).read()
             self.postProcessingScript = config["postProcessingScript"] 
+            self.executeable = config["executeable"] 
+            self.cpus = config["cpus"] 
         Simulation.all_simulations.append( self )
 
     def run( self, currParams):

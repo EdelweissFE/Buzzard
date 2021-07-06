@@ -7,7 +7,7 @@ import random as rd
 from .identification import Identification
 from .journal import message
 
-abaqusExecuteable = 'singularity exec /home/ad/constitutiveModelling/abaqus-2019-centos-7.simg abaqus'
+# abaqusExecuteable = 'singularity exec /home/ad/constitutiveModelling/abaqus-2019-centos-7.simg abaqus'
 
 
 def evaluateAbaqusSimulation( currParams, sim ):
@@ -32,8 +32,11 @@ def evaluateAbaqusSimulation( currParams, sim ):
 
 
     # execute simulation
+     
+    abaqusExecuteable = sim.executeable
+    cpus = sim.cpus
     
-    simCommand = ' '.join( [ abaqusExecuteable, '-j', randomFileName, 'interactive', 'cpus=1' ] )
+    simCommand = ' '.join( [ abaqusExecuteable, '-j', randomFileName, 'interactive', 'cpus='+str(cpus) ] )
     
     success = runCommandAndCatchError( simCommand )
     
