@@ -26,10 +26,16 @@ def setCurrentParams( currParams, sim ):
     i = 0
     for ide in Identification.all_identifications: 
         if ide.type == "material":
-            for n in range( len( sim.inp["*material"] ) ):
-                if sim.inp["*material"][n]["id"] == ide.identificator:
-                    
-                    sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
+            if type( ide.identificator ) == list:
+                for ID in ide.identificator:
+                    for n in range( len( sim.inp["*material"] ) ):
+                        if sim.inp["*material"][n]["id"] == ID:
+                            sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
+            else:
+                ID = ide.identificator
+                for n in range( len( sim.inp["*material"] ) ):
+                    if sim.inp["*material"][n]["id"] == ID:
+                       sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
         i += 1
 
 def evaluateEdelweissSimulation( currParams, sim ):
