@@ -16,8 +16,12 @@ class Simulation:
             
         self.name = name
         self.type = config["type"]
-        self.data = np.loadtxt( config["data"] )
-
+        
+        if type( config["data"] ) == list:
+            self.data = np.concatenate( tuple( [ np.loadtxt( d ) for d in config["data"] ] ), axis=0 )
+        else:
+            self.data = np.loadtxt( config["data"] )
+        
         try:
             self.errorType = config["errorType"]
         except:
@@ -40,7 +44,7 @@ class Simulation:
          
         if self.type == "edelweiss":
             
-            from .edelweissUtility import readEdelweissInputfile
+            from .edelweissUtility import evaluateEdelweissSimulation
             x, y = evaluateEdelweissSimulation( currParams, self ) 
             
         elif self.type == "abaqus":
