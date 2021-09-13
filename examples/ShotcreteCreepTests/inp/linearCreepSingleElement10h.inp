@@ -1,4 +1,4 @@
-*include, input=scdpv3.inp
+*include, input=scdpv3_optimal.inp
 *include, input=singleElementC3D8.inp
 
 
@@ -8,8 +8,7 @@ all
 *job, name=cps4job, domain=3d, solver=NISTParallel
 
 *fieldOutput,
-name=disp, nSet=top, field=displacement, result=U, saveHistory=True, f(x)='mean( x[:,2])'
-
+name=disp, nSet=top, field=displacement, result=U, saveHistory=True, f(x)='mean( x[:,2])', export=disp_10h_optimal
 
 *step, jobName=cps4job, maxInc=1e-1, minInc=1e-8, maxNumInc=1000, maxIter=25, stepLength=9.9999
 dirichlet, name=bottom,     nSet=bottom,      field=displacement, 3=0,

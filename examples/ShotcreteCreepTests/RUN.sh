@@ -1,1 +1,1 @@
-python ../../buzzard.py config.json --parallel 2 --createPlots
+python ../../buzzard.py config.json --parallel 1 --createPlots

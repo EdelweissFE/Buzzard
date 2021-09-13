@@ -5,7 +5,7 @@ from scipy.interpolate import interp1d
 from similaritymeasures import frechet_dist, area_between_two_curves, pcm 
 
 from .journal import message
-from .edelweissUtility import *
+from .abaqusUtility import *
 
 class Simulation:
     
@@ -24,17 +24,29 @@ class Simulation:
             self.errorType = "relative"
         
         if self.type == "edelweiss":
+            from .edelweissUtility import readEdelweissInputfile
+            
             self.inp = readEdelweissInputfile( config["input"] )
             self.fieldoutputX = config["simX"] 
             self.fieldoutputY = config["simY"] 
-
+        elif self.type == "abaqus":
+            self.inp = open( config["input"] ).read()
+            self.postProcessingScript = config["postProcessingScript"] 
+            self.executeable = config["executeable"] 
+            self.cpus = config["cpus"] 
         Simulation.all_simulations.append( self )
 
     def run( self, currParams):
          
         if self.type == "edelweiss":
+            
+            from .edelweissUtility import readEdelweissInputfile
             x, y = evaluateEdelweissSimulation( currParams, self ) 
             
+        elif self.type == "abaqus":
+
+            x, y = evaluateAbaqusSimulation( currParams, self ) 
+        
         else:
             print( "type of simulation not defined" )
             exit()

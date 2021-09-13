@@ -10,12 +10,6 @@ To install the dependencies do
 ```bash
  pip install -r requirements.txt
 ```
-or
-```bash
- conda install --file requirements.txt
-```
-if you are using Anaconda.
-
 
 ## General usage
 
@@ -29,12 +23,15 @@ For further details run
  python buzzard.py -h
 ```
 
+## Instructions for Abaqus
 
-## Examples for EdelweissFE
+Currently the path to your Abaqus executeable can only be changed in ``src/abaqusUtility.py``.
+
+## Instructions for EdelweissFE
 
 Currently the path to EdelweissFE can only be changed in ``src/edelweissUtility.py``.
 
-### Linear Elastic Single Element Test
+### Linear Elastic Single Element Test in EdeleissFE
 
 ```bash
  cd examples/LinearElastic
