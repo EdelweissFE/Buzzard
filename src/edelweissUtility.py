@@ -3,63 +3,68 @@ import sys
 
 # load EdelweissFE
 edelweissPath = "/home/ad/constitutiveModelling/EdelweissFE"
-sys.path.append( edelweissPath )
+sys.path.append(edelweissPath)
 import fe
-from fe.fecore import finitElementSimulation
-from fe.utils.inputfileparser import parseInputFile 
+from fe.fecore import finiteElementSimulation
+from fe.utils.inputfileparser import parseInputFile
 from fe.utils.misc import mergeNumpyDataLines
 
 from .identification import Identification
 
-def readEdelweissInputfile( filename ):
 
-    inp = parseInputFile( filename )
-    
+def readEdelweissInputfile(filename):
+
+    inp = parseInputFile(filename)
+
     # flatten data lines for material data
-    for n in range( len( inp["*material"] ) ):
-         inp["*material"][n]["data"] = mergeNumpyDataLines( inp["*material"][n]["data"] )
+    for n in range(len(inp["*material"])):
+        inp["*material"][n]["data"] = mergeNumpyDataLines(inp["*material"][n]["data"])
 
     return inp
 
-def setCurrentParams( currParams, sim ):
-    
+
+def setCurrentParams(currParams, sim):
+
     i = 0
-    for ide in Identification.all_identifications: 
+    for ide in Identification.all_identifications:
         if ide.type == "material":
-            if type( ide.identificator ) == list:
+            if type(ide.identificator) == list:
                 for ID in ide.identificator:
-                    for n in range( len( sim.inp["*material"] ) ):
+                    for n in range(len(sim.inp["*material"])):
                         if sim.inp["*material"][n]["id"] == ID:
                             sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
             else:
                 ID = ide.identificator
-                for n in range( len( sim.inp["*material"] ) ):
+                for n in range(len(sim.inp["*material"])):
                     if sim.inp["*material"][n]["id"] == ID:
-                       sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
+                        sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
         i += 1
 
-def evaluateEdelweissSimulation( currParams, sim ):
+
+def evaluateEdelweissSimulation(currParams, sim):
 
     # replace parameters for the simulation
-    setCurrentParams( currParams, sim )
+    setCurrentParams(currParams, sim)
 
     # execute simulation
-    success, U, P, fieldOutputController = finitElementSimulation( sim.inp, verbose=False )
-    
+    success, U, P, fieldOutputController = finiteElementSimulation(
+        sim.inp, verbose=False
+    )
+
     if success:
 
         if sim.fieldoutputX == sim.fieldoutputY:
-            # get time history as x value if only one fieldoutput is given 
-            x = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory )
-            y = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputY].result )
+            # get time history as x value if only one fieldoutput is given
+            x = np.array(
+                fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory
+            )
+            y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result)
         else:
-            x = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputX].result )
-            y = np.array( fieldOutputController.fieldOutputs[sim.fieldoutputY].result )
+            x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].result)
+            y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result)
     else:
-        print( "simulation failed !!!" )
+        print("simulation failed !!!")
         x = None
         y = None
-        
+
     return x, y
-
-
