@@ -32,7 +32,7 @@ class Simulation:
         if self.type == "edelweiss":
             from .edelweissUtility import readEdelweissInputfile
 
-            self.inp = readEdelweissInputfile(config["input"])
+            self.inp = open(config["input"]).read()
             self.fieldoutputX = config["simX"]
             self.fieldoutputY = config["simY"]
         elif self.type == "abaqus":
