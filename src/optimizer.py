@@ -21,22 +21,25 @@ def runOptimization(config, args):
     ub = []
 
     if "identification" in config:
-        for name in config["identification"]:
+        for ideName, ideConfig in config["identification"].items():
             # skip inactive identifications
-            if "active" in config["identification"][name].keys():
-                if config["identification"][name]["active"] == False:
-                    message("  -->  " + name + "(inactive)")
-                    continue
 
-            ide = Identification(name, config["identification"][name])
-            initialX.append(ide.start)
-            lb.append(ide.min)
-            ub.append(ide.max)
+            ide = Identification(ideName, ideConfig)
+            if ide.active:
+                ide.active = True
+                initialX.append(ide.start)
+                lb.append(ide.min)
+                ub.append(ide.max)
 
-            message(" " + name + " (active) ")
-            message("   start=" + str(ide.start))
-            message("     min=" + str(ide.min))
-            message("     max=" + str(ide.max))
+                message(" " + ide.name + " (active) ")
+                message("   start=" + str(ide.start))
+                message("     min=" + str(ide.min))
+                message("     max=" + str(ide.max))
+
+            else:
+                message(" " + ide.name + " (inactive) ")
+                message("   value=" + str(ide.start))
+
             printLine()
     else:
         message(" no parameter(s) for identification found")
@@ -44,7 +47,7 @@ def runOptimization(config, args):
 
     message(
         " found "
-        + str(len(Identification.all_identifications))
+        + str(len(Identification.active_identifications))
         + " active parameter(s) to identify"
     )
 
@@ -101,7 +104,9 @@ def runOptimization(config, args):
             bounds=Bounds(lb, ub),
             options=options,
             callback=lambda x: [
-                message(Identification.all_identifications[i].name + " = " + str(val))
+                message(
+                    Identification.active_identifications[i].name + " = " + str(val)
+                )
                 for i, val in enumerate(x)
             ],
         )
@@ -116,7 +121,7 @@ def runOptimization(config, args):
                 options=options,
                 callback=lambda x, *args: [
                     message(
-                        Identification.all_identifications[i].name + " = " + str(val)
+                        Identification.active_identifications[i].name + " = " + str(val)
                     )
                     for i, val in enumerate(x)
                 ],
@@ -131,7 +136,7 @@ def runOptimization(config, args):
                 options=options,
                 callback=lambda x: [
                     message(
-                        Identification.all_identifications[i].name + " = " + str(val)
+                        Identification.active_identifications[i].name + " = " + str(val)
                     )
                     for i, val in enumerate(x)
                 ],
@@ -146,7 +151,7 @@ def runOptimization(config, args):
     message(" write optimal parameters to file ... ")
     # write results to file
     with open("optimalParameters.txt", "w+") as f:
-        for x, ide in zip(res.x, Identification.all_identifications):
+        for x, ide in zip(res.x, Identification.active_identifications):
             f.write(str(x) + "\t#" + ide.name + "\n")
             message("   {:4.4e}".format(x) + " " + ide.name)
 
