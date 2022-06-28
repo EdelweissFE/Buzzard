@@ -1,6 +1,6 @@
 import argparse
 
-from src.reader import readConfigFromJson
+from src.reader import readConfig
 from src.optimizer import runOptimization
 from src.journal import *
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     printHeader()
 
     message( " reading config from {:}... ".format( args.file[0]) ) 
-    config = readConfigFromJson( args.file[0] )
+    config = readConfig( args.file[0] )
 
     success = runOptimization( config, args ) 
     
