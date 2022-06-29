@@ -38,4 +38,9 @@ if __name__ == "__main__":
     else:
         raise Exception("File type of config file must be .py or .json")
 
+    # set environment variables
+    if "env_variables" in config.keys():
+        for var, value in config["env_variables"].items():
+            os.environ[var] = value
+
     success = runOptimization(config, args)

@@ -119,12 +119,12 @@ def runOptimization(config, args):
                 bounds=Bounds(lb, ub),
                 method=method,
                 options=options,
-                callback=lambda x, *args: [
-                    message(
-                        Identification.active_identifications[i].name + " = " + str(val)
-                    )
-                    for i, val in enumerate(x)
-                ],
+                #                callback=lambda x, *args: [
+                #                    message(
+                #                        Identification.active_identifications[i].name + " = " + str(val)
+                #                    )
+                #                    for i, val in enumerate(x)
+                #                ],
             )
         else:
             res = minimize(
@@ -184,8 +184,6 @@ def getResidualForMultipleSimulations(params, args):
         # create residual vector for all simulations
         for sim in Simulation.all_simulations:
             yErr = np.append(yErr, sim.computeResidual(params))
-
-    print(max(np.abs(yErr)))
 
     residual = np.linalg.norm(yErr)
 

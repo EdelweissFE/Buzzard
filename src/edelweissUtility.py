@@ -1,9 +1,11 @@
 import numpy as np
 import sys
+import os
 import random as rd
 
-# load EdelweissFE
-edelweissPath = "/home/paul/projects/EdelweissFE"
+edelweissPath = os.environ.get("EDELWEISS_PATH")
+if edelweissPath is None:
+    raise Exception("You need to specify the environment variable EDELWEISS_PATH")
 sys.path.append(edelweissPath)
 import fe
 from fe.fecore import finiteElementSimulation
