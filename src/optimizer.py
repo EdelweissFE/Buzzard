@@ -6,87 +6,17 @@ import time
 
 from .identification import Identification
 from .simulation import Simulation
-from .journal import *
+from .journal import message, infoMessage, printSepline, printLine
 from .plotters import *
 
 
 def runOptimization(config, args):
 
-    printSepline()
-    message(" collecting parameters to identify ...")
-    printLine()
+    method, options = getScipySettings(config)
 
-    initialX = []
-    lb = []
-    ub = []
+    initialX, lowerBounds, upperBounds = collectIdentificationsFromConfig(config)
 
-    if "identification" in config:
-        for ideName, ideConfig in config["identification"].items():
-            # skip inactive identifications
-
-            ide = Identification(ideName, ideConfig)
-            if ide.active:
-                ide.active = True
-                initialX.append(ide.start)
-                lb.append(ide.min)
-                ub.append(ide.max)
-
-                message(" " + ide.name + " (active) ")
-                message("   start=" + str(ide.start))
-                message("     min=" + str(ide.min))
-                message("     max=" + str(ide.max))
-
-            else:
-                message(" " + ide.name + " (inactive) ")
-                message("   value=" + str(ide.start))
-
-            printLine()
-    else:
-        message(" no parameter(s) for identification found")
-        exit()
-
-    message(
-        " found "
-        + str(len(Identification.active_identifications))
-        + " active parameter(s) to identify"
-    )
-
-    printSepline()
-    message(" collecting simulations ...")
-    printLine()
-
-    if "simulations" in config:
-        for name in config["simulations"]:
-            # skip inactive simulations
-            if "active" in config["simulations"][name].keys():
-                if config["simulations"][name]["active"] == False:
-                    message("  -->  " + name + " (inactive)")
-                    continue
-
-            message("  -->  " + name + " (active)")
-            Simulation(name, config["simulations"][name])
-
-    else:
-        message(" no simulations found")
-        exit()
-
-    printLine()
-    message(" found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
-    # collect settings for scipy
-    method = None
-    options = {"disp": True}
-
-    if "scipysettings" in config:
-
-        try:
-            method = config["scipysettings"]["method"]
-        except:
-            pass
-
-        try:
-            options = config["scipysettings"]["options"]
-        except:
-            pass
+    collectSimulationsFromConfig(config)
 
     printSepline()
     message(" call scipy minimize function ...")
@@ -101,46 +31,20 @@ def runOptimization(config, args):
             getResidualForMultipleSimulations,
             initialX,
             args=(args),
-            bounds=Bounds(lb, ub),
+            bounds=Bounds(lowerBounds, upperBounds),
             options=options,
-            callback=lambda x: [
-                message(
-                    Identification.active_identifications[i].name + " = " + str(val)
-                )
-                for i, val in enumerate(x)
-            ],
+            callback=minimizerCallbackFunction,
         )
     else:
-        if method == "trust-constr":
-            res = minimize(
-                getResidualForMultipleSimulations,
-                initialX,
-                args=(args),
-                bounds=Bounds(lb, ub),
-                method=method,
-                options=options,
-                #                callback=lambda x, *args: [
-                #                    message(
-                #                        Identification.active_identifications[i].name + " = " + str(val)
-                #                    )
-                #                    for i, val in enumerate(x)
-                #                ],
-            )
-        else:
-            res = minimize(
-                getResidualForMultipleSimulations,
-                initialX,
-                args=(args),
-                bounds=Bounds(lb, ub),
-                method=method,
-                options=options,
-                callback=lambda x: [
-                    message(
-                        Identification.active_identifications[i].name + " = " + str(val)
-                    )
-                    for i, val in enumerate(x)
-                ],
-            )
+        res = minimize(
+            getResidualForMultipleSimulations,
+            initialX,
+            args=(args),
+            bounds=Bounds(lowerBounds, upperBounds),
+            method=method,
+            options=options,
+            callback=minimizerCallbackFunction,
+        )
 
     toc = time.time()
 
@@ -163,6 +67,87 @@ def runOptimization(config, args):
     printSepline()
 
     return res
+
+
+def getScipySettings(config):
+
+    method = None
+    options = {"disp": True}
+
+    if "scipysettings" in config:
+        if "method" in config["scipysettings"]:
+            method = config["scipysettings"]["method"]
+        if "options" in config["scipysettings"]:
+            options = config["scipysettings"]["options"]
+
+    return method, options
+
+
+def collectIdentificationsFromConfig(config):
+
+    initialX = []
+    lb = []
+    ub = []
+
+    printSepline()
+    message(" collecting parameters to identify ...")
+    printLine()
+
+    if "identification" in config:
+        for ideName, ideConfig in config["identification"].items():
+            # skip inactive identifications
+            ide = Identification(ideName, ideConfig)
+            if ide.active:
+                ide.active = True
+                initialX.append(ide.start)
+                lb.append(ide.min)
+                ub.append(ide.max)
+
+                message(" " + ide.name + " (active) ")
+                message("   start=" + str(ide.start))
+                message("     min=" + str(ide.min))
+                message("     max=" + str(ide.max))
+
+            else:
+                message(" " + ide.name + " (inactive) ")
+                message("   value=" + str(ide.start))
+
+            printLine()
+    else:
+        raise Exception("no parameter(s) for identification found")
+
+    message(
+        " found "
+        + str(len(Identification.active_identifications))
+        + " active parameter(s) to identify"
+    )
+
+    return initialX, lb, ub
+
+
+def collectSimulationsFromConfig(config):
+
+    printSepline()
+    message(" collecting simulations ...")
+    printLine()
+
+    if "simulations" in config:
+        for name in config["simulations"]:
+            # skip inactive simulations
+            if "active" in config["simulations"][name].keys():
+                if config["simulations"][name]["active"] == False:
+                    message("  -->  " + name + " (inactive)")
+                    continue
+
+            message("  -->  " + name + " (active)")
+            Simulation(name, config["simulations"][name])
+
+    else:
+        message(" no simulations found")
+        exit()
+
+    printLine()
+    message(" found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
 
 
 def getResidualForMultipleSimulations(params, args):
@@ -188,3 +173,12 @@ def getResidualForMultipleSimulations(params, args):
     residual = np.linalg.norm(yErr)
 
     return residual
+
+
+def minimizerCallbackFunction(x, *args):
+
+    printLine()
+    infoMessage("current parameters ...")
+    for i, val in enumerate(x):
+        message(" -->", Identification.active_identifications[i].name + "=" + str(val))
+    printLine()
