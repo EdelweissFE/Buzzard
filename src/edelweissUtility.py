@@ -55,7 +55,7 @@ def readEdelweissInputfile(filename):
 
 def setCurrentParams(currParams, sim):
 
-    randomFileName = "_temp_" + str(rd.randint(0, 1e16))
+    randomFileName = "_temp_" + str(rd.randint(0, 1e16)) + ".inp"
 
     # create input for current parameters
     paramIDX = 0
@@ -68,10 +68,14 @@ def setCurrentParams(currParams, sim):
         else:
             data = data.replace(ide.name, str(ide.start))
 
-    with open(randomFileName + ".inp", "w+") as f:
+    with open(randomFileName, "w+") as f:
         f.write(data)
 
-    return readEdelweissInputfile(randomFileName + ".inp")
+    currentInputDict = readEdelweissInputfile(randomFileName)
+
+    os.system("rm {:}".format(randomFileName))
+
+    return currentInputDict
 
 
 def evaluateEdelweissSimulation(currParams, sim):

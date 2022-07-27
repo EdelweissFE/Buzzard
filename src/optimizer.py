@@ -34,20 +34,22 @@ import time
 from .identification import Identification
 from .simulation import Simulation
 from .journal import message, infoMessage, printSepline, printLine
-from .plotters import *
+from .plotters import plotOptimizationResults
 
 
 def runOptimization(config, args):
 
     method, options = getScipySettings(config)
 
-    initialX, lowerBounds, upperBounds = collectIdentificationsFromConfig(config)
+    initialParameters, lowerBounds, upperBounds = collectIdentificationsFromConfig(
+        config
+    )
 
     collectSimulationsFromConfig(config)
 
     printSepline()
     message(" call scipy minimize function ...")
-    message(" ... ")
+    printSepline()
 
     # execute optimization
     tic = time.time()
@@ -56,7 +58,7 @@ def runOptimization(config, args):
 
         res = minimize_parallel(
             getResidualForMultipleSimulations,
-            initialX,
+            initialParameters,
             args=(args),
             bounds=Bounds(lowerBounds, upperBounds),
             options=options,
@@ -65,7 +67,7 @@ def runOptimization(config, args):
     else:
         res = minimize(
             getResidualForMultipleSimulations,
-            initialX,
+            initialParameters,
             args=(args),
             bounds=Bounds(lowerBounds, upperBounds),
             method=method,
@@ -76,10 +78,10 @@ def runOptimization(config, args):
     toc = time.time()
 
     printSepline()
-    message(" time in minimize function: " + str(round(toc - tic, 4)) + " seconds")
+    infoMessage("time in minimize function: " + str(round(toc - tic, 4)) + " seconds")
 
     printSepline()
-    message(" write optimal parameters to file ... ")
+    infoMessage("writing optimal parameters to file ... ")
     # write results to file
     with open("optimalParameters.txt", "w+") as f:
         for x, ide in zip(res.x, Identification.active_identifications):
@@ -89,7 +91,7 @@ def runOptimization(config, args):
     if args.createPlots:
         printLine()
         message(" plot results ... ")
-        plotOptimizationResults(initialX, res.x)
+        plotOptimizationResults(initialParameters, res.x)
 
     printSepline()
 
@@ -141,7 +143,7 @@ def collectIdentificationsFromConfig(config):
 
             printLine()
     else:
-        raise Exception("no parameter(s) for identification found")
+        raise Exception("no parameter(s) found to identify")
 
     message(
         " found "
@@ -170,11 +172,12 @@ def collectSimulationsFromConfig(config):
             Simulation(name, config["simulations"][name])
 
     else:
-        message(" no simulations found")
-        exit()
+        raise Exception(" no simulations found")
 
     printLine()
-    message(" found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
+    infoMessage(
+        " found " + str(len(Simulation.all_simulations)) + " active simulations(s)"
+    )
 
 
 def getResidualForMultipleSimulations(params, args):

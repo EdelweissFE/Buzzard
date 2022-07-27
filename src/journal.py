@@ -27,7 +27,6 @@
 
 from textwrap import wrap
 
-from rich import print
 
 maxCharCentered = 70
 maxCharJustified = 68
@@ -35,10 +34,18 @@ maxCharJustified = 68
 
 def printHeader():
     printSepline()
-    printCenteredLine("BUZZARD")
+    printCenteredLine("This is")
     printCenteredLine("")
-    printCenteredLine("-- MaterialModelingToolbox --")
-    printCenteredLine("github.com/MAteRialMOdelingToolbox")
+    printCenteredLine(" ____                             _ ")
+    printCenteredLine("| __ ) _   _ __________ _ _ __ __| |")
+    printCenteredLine("|  _ \| | | |_  /_  / _` | '__/ _` |")
+    printCenteredLine("| |_) | |_| |/ / / / (_| | | | (_| |")
+    printCenteredLine("|____/ \__,_/___/___\__,_|_|  \__,_|")
+    printCenteredLine("")
+    printCenteredLine("a part of")
+    printCenteredLine("")
+    printCenteredLine("-- EdelweissFE --")
+    printCenteredLine("github.com/EdelweissFE")
     printCenteredLine("")
     printSepline()
 

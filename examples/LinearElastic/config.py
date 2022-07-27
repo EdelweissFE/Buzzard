@@ -4,9 +4,7 @@ config = {
         "method": "trust-constr",
         "options": {"disp": True, "verbose": 2, "gtol": 1e-6},
     },
-    "identification": {
-        "YOUNGS_MODULUS": {"idx": 0, "start": 35000, "min": 20000, "max": 50000}
-    },
+    "identification": {"YOUNGS_MODULUS": {"start": 35000, "min": 20000, "max": 50000}},
     "simulations": {
         "sim1": {
             "type": "edelweiss",
