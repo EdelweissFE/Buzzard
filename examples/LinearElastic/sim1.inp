@@ -1,5 +1,5 @@
 *material, id=linearelastic, name=linearelastic
-34000, 0.3
+YOUNGS_MODULUS, 0.3
 *modelGenerator, generator=planeRectQuad, name=gen
 x0=0, l=50
 y0=0, h=50

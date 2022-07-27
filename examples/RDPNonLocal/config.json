@@ -1,19 +1,16 @@
-
 {"scipysettings":
     {  
+        "method": "TNC",
         "options": {
             "disp": true
         }
     },
  "identification":{
 
-     "epsilonF": {
-         "idx": 19,
+     "EPSILONF": {
          "start":0.001,
-         "min": 0.0001,
+         "min": 0.00005,
          "max": 0.01,
-         "type": "material",
-         "id": "urmnl",
          "active": true
      }
  },
@@ -26,7 +23,7 @@
          "simX": "meanDispLoad",
          "simY": "sumRFNodes",
          "data": "data.csv",
-         "errorType": "frechet-distance" 
+         "errorType": "absolute" 
      } 
  }
 }

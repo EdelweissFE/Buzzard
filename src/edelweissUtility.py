@@ -1,8 +1,11 @@
 import numpy as np
 import sys
+import os
+import random as rd
 
-# load EdelweissFE
-edelweissPath = "/home/ad/constitutiveModelling/EdelweissFE"
+edelweissPath = os.environ.get("EDELWEISS_PATH")
+if edelweissPath is None:
+    raise Exception("You need to specify the environment variable EDELWEISS_PATH")
 sys.path.append(edelweissPath)
 import fe
 from fe.fecore import finiteElementSimulation
@@ -25,31 +28,32 @@ def readEdelweissInputfile(filename):
 
 def setCurrentParams(currParams, sim):
 
-    i = 0
+    randomFileName = "_temp_" + str(rd.randint(0, 1e16))
+
+    # create input for current parameters
+    paramIDX = 0
+
+    data = str(sim.inp)
     for ide in Identification.all_identifications:
-        if ide.type == "material":
-            if type(ide.identificator) == list:
-                for ID in ide.identificator:
-                    for n in range(len(sim.inp["*material"])):
-                        if sim.inp["*material"][n]["id"] == ID:
-                            sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
-            else:
-                ID = ide.identificator
-                for n in range(len(sim.inp["*material"])):
-                    if sim.inp["*material"][n]["id"] == ID:
-                        sim.inp["*material"][n]["data"][ide.idx] = currParams[i]
-        i += 1
+        if ide.active:
+            data = data.replace(ide.name, str(currParams[paramIDX]))
+            paramIDX += 1
+        else:
+            data = data.replace(ide.name, str(ide.start))
+
+    with open(randomFileName + ".inp", "w+") as f:
+        f.write(data)
+
+    return readEdelweissInputfile(randomFileName + ".inp")
 
 
 def evaluateEdelweissSimulation(currParams, sim):
 
     # replace parameters for the simulation
-    setCurrentParams(currParams, sim)
+    inp = setCurrentParams(currParams, sim)
 
     # execute simulation
-    success, U, P, fieldOutputController = finiteElementSimulation(
-        sim.inp, verbose=False
-    )
+    success, U, P, fieldOutputController = finiteElementSimulation(inp, verbose=False)
 
     if success:
 
