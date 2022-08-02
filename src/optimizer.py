@@ -42,9 +42,7 @@ def runOptimization(config, args):
 
     method, options = getScipySettings(config)
 
-    initialParameters, lowerBounds, upperBounds = collectIdentificationsFromConfig(
-        config
-    )
+    initialParameters, lowerBounds, upperBounds = collectIdentificationsFromConfig(config)
 
     collectSimulationsFromConfig(config)
 
@@ -146,11 +144,7 @@ def collectIdentificationsFromConfig(config):
     else:
         raise Exception("no parameter(s) found to identify")
 
-    message(
-        " found "
-        + str(len(Identification.active_identifications))
-        + " active parameter(s) to identify"
-    )
+    message(" found " + str(len(Identification.active_identifications)) + " active parameter(s) to identify")
 
     return initialX, lb, ub
 
@@ -176,9 +170,7 @@ def collectSimulationsFromConfig(config):
         raise Exception(" no simulations found")
 
     printLine()
-    infoMessage(
-        " found " + str(len(Simulation.all_simulations)) + " active simulations(s)"
-    )
+    infoMessage(" found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
 
 
 def getResidualForMultipleSimulations(params, args):
@@ -188,10 +180,7 @@ def getResidualForMultipleSimulations(params, args):
     if args.parallel in [1, 3]:
         nSim = len(Simulation.all_simulations)
         with ProcessPoolExecutor(max_workers=nSim) as executor:
-            future_res = {
-                executor.submit(sim.computeResidual, params): sim
-                for sim in Simulation.all_simulations
-            }
+            future_res = {executor.submit(sim.computeResidual, params): sim for sim in Simulation.all_simulations}
 
             for future in as_completed(future_res):
                 yErr = np.append(yErr, future.result())

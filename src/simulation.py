@@ -43,9 +43,7 @@ class Simulation:
         self.type = config["type"]
 
         if type(config["data"]) == list:
-            self.data = np.concatenate(
-                tuple([np.loadtxt(d) for d in config["data"]]), axis=0
-            )
+            self.data = np.concatenate(tuple([np.loadtxt(d) for d in config["data"]]), axis=0)
         else:
             self.data = np.loadtxt(config["data"])
 

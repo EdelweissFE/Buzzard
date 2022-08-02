@@ -77,9 +77,7 @@ def evaluateEdelweissSimulation(currParams, sim):
 
         if sim.fieldoutputX == sim.fieldoutputY:
             # get time history as x value if only one fieldoutput is given
-            x = np.array(
-                fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory
-            )
+            x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory)
             y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result)
         else:
             x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].result)
