@@ -1,0 +1,13 @@
+stages:
+  - linting
+
+linting:
+  stage: linting
+  image: continuumio/miniconda3:latest
+  script:
+    - pip install git+https://github.com/psf/black
+    - pip install isort
+    - pip install flake8
+    - black --check src castor.py
+    - isort src castor.py --check-only
+    - flake8 src castor.py
