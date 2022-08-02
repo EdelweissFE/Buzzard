@@ -24,8 +24,6 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
-from .journal import message
-
 
 class Identification:
 

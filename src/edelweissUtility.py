@@ -25,39 +25,26 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
-import numpy as np
-import sys
 import os
 import random as rd
+import sys
+
+import numpy as np
+
+from .identification import Identification
 
 edelweissPath = os.environ.get("EDELWEISS_PATH")
 if edelweissPath is None:
     raise Exception("You need to specify the environment variable EDELWEISS_PATH")
 sys.path.append(edelweissPath)
-import fe
-from fe.fecore import finiteElementSimulation
-from fe.utils.inputfileparser import parseInputFile
-from fe.utils.misc import mergeNumpyDataLines
-
-from .identification import Identification
-
-
-def readEdelweissInputfile(filename):
-
-    inp = parseInputFile(filename)
-
-    # flatten data lines for material data
-    for n in range(len(inp["*material"])):
-        inp["*material"][n]["data"] = mergeNumpyDataLines(inp["*material"][n]["data"])
-
-    return inp
+from fe.fecore import finiteElementSimulation  # noqa: E402
+from fe.utils.inputfileparser import parseInputFile  # noqa: E402
 
 
 def setCurrentParams(currParams, sim):
 
     randomFileName = "_temp_" + str(rd.randint(0, 1e16)) + ".inp"
 
-    # create input for current parameters
     paramIDX = 0
 
     data = str(sim.inp)
@@ -71,7 +58,7 @@ def setCurrentParams(currParams, sim):
     with open(randomFileName, "w+") as f:
         f.write(data)
 
-    currentInputDict = readEdelweissInputfile(randomFileName)
+    currentInputDict = parseInputFile(randomFileName)
 
     os.system("rm {:}".format(randomFileName))
 

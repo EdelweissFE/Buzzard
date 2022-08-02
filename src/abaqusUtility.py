@@ -25,16 +25,14 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
-import numpy as np
-import sys
 import os
-import subprocess
 import random as rd
+import subprocess
+
+import numpy as np
 
 from .identification import Identification
 from .journal import message
-
-# abaqusExecuteable = 'singularity exec /home/ad/constitutiveModelling/abaqus-2019-centos-7.simg abaqus'
 
 
 def evaluateAbaqusSimulation(currParams, sim):
@@ -68,7 +66,7 @@ def evaluateAbaqusSimulation(currParams, sim):
     success = runCommandAndCatchError(simCommand)
 
     if success:
-        runCommandAndCatchError(
+        (
             " ".join(
                 [
                     abaqusExecuteable,

@@ -26,13 +26,11 @@
 #  ---------------------------------------------------------------------
 
 import numpy as np
-import os
-import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
-from similaritymeasures import frechet_dist, area_between_two_curves, pcm
+from similaritymeasures import area_between_two_curves, frechet_dist, pcm
 
+from .abaqusUtility import evaluateAbaqusSimulation
 from .journal import message
-from .abaqusUtility import *
 
 
 class Simulation:
@@ -51,14 +49,12 @@ class Simulation:
         else:
             self.data = np.loadtxt(config["data"])
 
-        try:
-            self.errorType = config["errorType"]
-        except:
+        if "errorType" not in config.keys():
             self.errorType = "relative"
+        else:
+            self.errorType = config["errorType"]
 
         if self.type == "edelweiss":
-            from .edelweissUtility import readEdelweissInputfile
-
             self.inp = open(config["input"]).read()
             self.fieldoutputX = config["simX"]
             self.fieldoutputY = config["simY"]

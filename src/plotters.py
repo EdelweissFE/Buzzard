@@ -28,8 +28,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from .simulation import Simulation
 from .journal import message
+from .simulation import Simulation
 
 sns.set_theme(context="paper", style="ticks", font="Arial")
 
@@ -51,7 +51,6 @@ def plotOptimizationResults(initialParams, optParams):
         plt.ylabel("y")
         plt.legend()
         plt.grid()
-        # plt.xlim(0.9*min(sim.data[:, 0]), 1.1*max(sim.data[:, 0]))
         plt.tight_layout()
         plt.savefig(sim.name + ".pdf")
         message(" --> " + sim.name + ".pdf")

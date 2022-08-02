@@ -25,16 +25,17 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
-from scipy.optimize import minimize, Bounds
-from optimparallel import minimize_parallel
-from concurrent.futures import ProcessPoolExecutor, as_completed
-import numpy as np
 import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
+import numpy as np
+from optimparallel import minimize_parallel
+from scipy.optimize import Bounds, minimize
 
 from .identification import Identification
-from .simulation import Simulation
-from .journal import message, infoMessage, printSepline, printLine
+from .journal import infoMessage, message, printLine, printSepline
 from .plotters import plotOptimizationResults
+from .simulation import Simulation
 
 
 def runOptimization(config, args):
@@ -164,7 +165,7 @@ def collectSimulationsFromConfig(config):
         for name in config["simulations"]:
             # skip inactive simulations
             if "active" in config["simulations"][name].keys():
-                if config["simulations"][name]["active"] == False:
+                if config["simulations"][name]["active"] is False:
                     message("  -->  " + name + " (inactive)")
                     continue
 

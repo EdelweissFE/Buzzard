@@ -27,7 +27,6 @@
 
 from textwrap import wrap
 
-
 maxCharCentered = 70
 maxCharJustified = 68
 
@@ -38,9 +37,9 @@ def printHeader():
     printCenteredLine("")
     printCenteredLine(" ____                             _ ")
     printCenteredLine("| __ ) _   _ __________ _ _ __ __| |")
-    printCenteredLine("|  _ \| | | |_  /_  / _` | '__/ _` |")
+    printCenteredLine("|  _ \\| | | |_  /_  / _` | '__/ _` |")
     printCenteredLine("| |_) | |_| |/ / / / (_| | | | (_| |")
-    printCenteredLine("|____/ \__,_/___/___\__,_|_|  \__,_|")
+    printCenteredLine("|____/ \\__,_/___/___\\__,_|_|  \\__,_|")
     printCenteredLine("")
     printCenteredLine("a part of")
     printCenteredLine("")
