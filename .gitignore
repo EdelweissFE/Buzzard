@@ -4,3 +4,4 @@ __pycache__
 *.pdf
 *.png
 /venv
+/docs

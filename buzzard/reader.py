@@ -32,16 +32,26 @@ import sys
 from .journal import message
 
 
+def setEnvironmentVariables(variableValuePairs):
+    for var, value in variableValuePairs:
+        os.environ[var] = value
+
+
 def readConfigFromJson(jsonfile):
+    """read configuration from a .json file"""
     message("reading config from {:}... ".format(jsonfile))
 
     with open(jsonfile, "r") as j:
-        data = json.load(j)
+        config = json.load(j)
 
-    return data
+    if "env_variables" in config.keys():
+        setEnvironmentVariables(config["env_variables"].items())
+
+    return config
 
 
 def readConfig(configFile):
+    """read configuartion dictionary 'config' from a .py file"""
     message("reading config from {:}... ".format(configFile))
 
     (head, tail) = os.path.split(configFile)
@@ -49,4 +59,6 @@ def readConfig(configFile):
     (root, ext) = os.path.splitext(tail)
     config = __import__(root).config
 
+    if "env_variables" in config.keys():
+        setEnvironmentVariables(config["env_variables"].items())
     return config
