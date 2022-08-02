@@ -28,15 +28,15 @@
 import argparse
 import os
 
-from src.reader import readConfig, readConfigFromJson
-from src.optimizer import runOptimization
 from src.journal import printHeader
+from src.optimizer import runOptimization
+from src.reader import readConfig, readConfigFromJson
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
         prog="buzzard",
-        description="A tool for optimizing (material) parameters simultaneously for multiple finite element simulations",
+        description="A tool for optimizing (material) parameters for finite element simulations",
     )
 
     parser.add_argument(
@@ -49,7 +49,10 @@ if __name__ == "__main__":
         type=int,
         default=0,
         choices=[0, 1, 2, 3],
-        help=" 0: no parallelization (default); 1: parallel execution of simulations; 2:run parallel minimize (L-BGFS method only); 3: combines option 1 and 2 (L-BGFS method only)",
+        help="0: no parallelization (default);i"
+        + "1: parallel execution of simulations;"
+        + "2:run parallel minimize (L-BGFS method only);"
+        "3: combines option 1 and 2 (L-BGFS method only)",
     )
     parser.add_argument("--createPlots", action="store_true", default=False)
 

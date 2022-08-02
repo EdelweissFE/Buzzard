@@ -25,9 +25,10 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
+import json
 import os
 import sys
-import json
+
 from .journal import message
 
 
