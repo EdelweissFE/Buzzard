@@ -30,7 +30,7 @@ import os
 
 from src.reader import readConfig, readConfigFromJson
 from src.optimizer import runOptimization
-from src.journal import *
+from src.journal import printHeader
 
 if __name__ == "__main__":
 
