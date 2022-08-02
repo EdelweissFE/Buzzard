@@ -8,6 +8,6 @@ linting:
     - pip install git+https://github.com/psf/black
     - pip install isort
     - pip install flake8
-    - black --check src buzzard.py
+    - black --check src buzzard.py --line-length 120
     - isort src buzzard.py --check-only
-    - flake8 src buzzard.py
+    - flake8 src buzzard.py --max-line-length 120
