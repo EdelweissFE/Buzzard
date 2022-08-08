@@ -64,7 +64,7 @@ def evaluateAbaqusSimulation(currParams, sim):
     success = runCommandAndCatchError(simCommand)
 
     if success:
-        (
+        runCommandAndCatchError(
             " ".join(
                 [
                     abaqusExecuteable,

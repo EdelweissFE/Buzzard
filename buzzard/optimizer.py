@@ -38,8 +38,8 @@ from .plotters import plotOptimizationResults
 from .simulation import Simulation
 
 
-def runOptimization(config, args):
-
+def runOptimization(config: dict, args):
+    """execute parameter identification"""
     method, options = getScipySettings(config)
 
     initialParameters, lowerBounds, upperBounds = collectIdentificationsFromConfig(config)
@@ -54,7 +54,6 @@ def runOptimization(config, args):
     tic = time.time()
 
     if args.parallel > 1:
-
         res = minimize_parallel(
             getResidualForMultipleSimulations,
             initialParameters,
@@ -126,7 +125,6 @@ def collectIdentificationsFromConfig(config):
             # skip inactive identifications
             ide = Identification(ideName, ideConfig)
             if ide.active:
-                ide.active = True
                 initialX.append(ide.start)
                 lb.append(ide.min)
                 ub.append(ide.max)

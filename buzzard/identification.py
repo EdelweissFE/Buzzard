@@ -26,24 +26,41 @@
 
 
 class Identification:
+    """
+    The identification object stores information for one parameter which is defined to be optimized.
+
+    Parameters
+    ----------
+    str name
+        Name of the parameter. Has to be equal to the placeholder in the simulation input files.
+    dict values
+        Dictionary to define values for the parameter. Required keys are 'start', 'min', 'max' and 'active'.
+    """
 
     all_identifications = []
     active_identifications = []
 
-    def __init__(self, name, config):
+    def __init__(self, name: str, values: dict):
 
+        self.checkInput(name, values)
+
+        self.active = False
         self.name = name
+        self.start = values["start"]
 
-        self.start = config["start"]
-
-        try:
-            self.active = config["active"]
-        except KeyError:
+        if values["active"]:
+            self.min = values["min"]
+            self.max = values["max"]
             self.active = True
-
-        if self.active:
-            self.min = config["min"]
-            self.max = config["max"]
             Identification.active_identifications.append(self)
 
         Identification.all_identifications.append(self)
+
+    def checkInput(self, name: str, values: dict):
+        """Input check for Identification object initialization"""
+        if not type(name) is str:
+            raise Exception("name of the identification object must be a string")
+
+        requiredKeys = ("start", "min", "max", "active")
+        if not all(key in values for key in requiredKeys):
+            raise Exception("one or more required keys are not provided for {:}".format(name))

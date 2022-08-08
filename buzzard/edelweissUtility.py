@@ -28,10 +28,12 @@
 import os
 import random as rd
 import sys
+from typing import Union
 
 import numpy as np
 
 from .identification import Identification
+from .simulation import Simulation
 
 edelweissPath = os.environ.get("EDELWEISS_PATH")
 if edelweissPath is None:
@@ -41,7 +43,23 @@ from fe.fecore import finiteElementSimulation  # noqa: E402
 from fe.utils.inputfileparser import parseInputFile  # noqa: E402
 
 
-def setCurrentParams(currParams, sim):
+def getInputDictWithCurrentParameters(currParams: np.ndarray, sim: Simulation) -> dict:
+    """
+    Creates an input dictionary with the current parameters.
+
+    Parameters
+    ----------
+
+    numpy.ndarray currParams
+        An array with the current parameters.
+    buzzard.simulation.Simulation sim
+        The respective simulation object.
+
+    Returns
+    -------
+    dict
+        Input dictionary for EdelweissFE.
+    """
 
     randomFileName = "_temp_" + str(rd.randint(0, 1e16)) + ".inp"
 
@@ -65,10 +83,28 @@ def setCurrentParams(currParams, sim):
     return currentInputDict
 
 
-def evaluateEdelweissSimulation(currParams, sim):
+def evaluateEdelweissSimulation(currParams: np.ndarray, sim: Simulation) -> Union[np.ndarray, np.ndarray]:
+    """
+    Evaluates a single EdelweissFE simulation with certain parameters.
+
+    Parameters
+    ----------
+
+    numpy.ndarray currParams
+        An array with the current parameters.
+    buzzard.simulation.Simulation sim
+        The respective simulation object.
+
+    Returns
+    -------
+    numpy.ndarray
+        x-data for the simulation.
+    numpy.ndarray
+        y-data for the simulation.
+    """
 
     # replace parameters for the simulation
-    inp = setCurrentParams(currParams, sim)
+    inp = getInputDictWithCurrentParameters(currParams, sim)
 
     # execute simulation
     success, U, P, fieldOutputController = finiteElementSimulation(inp, verbose=False)
