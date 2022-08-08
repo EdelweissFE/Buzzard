@@ -1,48 +1,5 @@
 # Buzzard
 
-A python tool for (material) parameter identification in finite element simulations.
+Buzzards aims to provide an easy to use interface to the optimization algorithms in [SciPy](https://scipy.org/) for parameter identification in finite element simulations. It is developed to work with simulations in [EdelweissFE](https://github.com/EdelweissFE/EdelweissFE) which makes use of the finite element and material routines provided by [Marmot](https://github.com/MAteRialMOdelingToolbox/Marmot). Additionally, an interface to [Abaqus](https://www.3ds.com/de/produkte-und-services/simulia/produkte/abaqus/) is available.
 
-## Dependencies
-
-The required python packages can be found in ``requirements.txt``.
-To install the dependencies do
-
-```bash
- pip install -r requirements.txt
-```
-
-## General usage
-
-```bash
- python buzzard.py jsonConfigFile
-```
-
-For further details run
-
-```bash
- python buzzard.py -h
-```
-
-## Instructions for Abaqus
-
-Currently the path to your Abaqus executeable can only be changed in ``src/abaqusUtility.py``.
-
-## Instructions for EdelweissFE
-
-Currently the path to EdelweissFE can only be changed in ``src/edelweissUtility.py``.
-
-### Linear Elastic Single Element Test in EdeleissFE
-
-```bash
- cd examples/LinearElastic
- python ../../buzzard.py config.json --createPlots
-```
-
-### Nonlocal Rock Damage Plasticity Uniaxial Tension Test 
-
-```bash
- cd examples/RDPNonlocal
- python ../../buzzard.py config.json --createPlots
-```
-![Image](share/rdp_sim.png "Uniaxial tension test")
-
+For more details please see the [documentation](https://edelweissfe.github.io/Buzzard).
