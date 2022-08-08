@@ -20,11 +20,14 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: latest
           activate-environment: anaconda-client-env
-              
-      - name: Install conda packages
+      
+      - name: Prepare EdelweissFE
         shell: bash -l {0}
         run: |
+          git clone https://github.com/EdelweissFE/EdelweissFE.git
+          cd EdelweissFE
           mamba install -c conda-forge -c anaconda --file requirements.txt
+          cd ..
 
       - name: Install Eigen
         shell: bash -l {0}
@@ -62,12 +65,14 @@ jobs:
       - name: Build EdelweissFE
         shell: bash -l {0}
         run: |
-          python setup.py build_ext -i 
+          cd EdelweissFE
+          python setup.py build_ext -i
+          cd ..
 
       - name: Building Buzzard documentation
         shell: bash -l {0}
         run: |
-          EDELWEISS_PATH=../../EdelweissFE sphinx-build ./doc/source/ ./docs -b html
+          EDELWEISS_PATH=EdelweissFE sphinx-build ./doc/source/ ./docs -b html
             
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
