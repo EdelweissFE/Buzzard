@@ -44,7 +44,7 @@
 <li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Interfaces</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#module-buzzard.abaqusUtility">Abaqus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#edelweissfe">EdelweissFE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.edelweissUtility">EdelweissFE</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
@@ -94,8 +94,49 @@
 <dd></dd></dl>
 
 </section>
-<section id="edelweissfe">
-<h2>EdelweissFE<a class="headerlink" href="#edelweissfe" title="Permalink to this heading"></a></h2>
+<section id="module-buzzard.edelweissUtility">
+<span id="edelweissfe"></span><h2>EdelweissFE<a class="headerlink" href="#module-buzzard.edelweissUtility" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.edelweissUtility.evaluateEdelweissSimulation">
+<span class="sig-prename descclassname"><span class="pre">buzzard.edelweissUtility.</span></span><span class="sig-name descname"><span class="pre">evaluateEdelweissSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><span class="pre">Simulation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/edelweissUtility.html#evaluateEdelweissSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.edelweissUtility.evaluateEdelweissSimulation" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluates a single EdelweissFE simulation with certain parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>currParams</strong> (<em>numpy.ndarray</em>) – An array with the current parameters.</p></li>
+<li><p><strong>sim</strong> (<a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><em>buzzard.simulation.Simulation</em></a>) – The respective simulation object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>numpy.ndarray</em> – x-data for the simulation.</p></li>
+<li><p><em>numpy.ndarray</em> – y-data for the simulation.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.edelweissUtility.getInputDictWithCurrentParameters">
+<span class="sig-prename descclassname"><span class="pre">buzzard.edelweissUtility.</span></span><span class="sig-name descname"><span class="pre">getInputDictWithCurrentParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><span class="pre">Simulation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></span><a class="reference internal" href="../_modules/buzzard/edelweissUtility.html#getInputDictWithCurrentParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.edelweissUtility.getInputDictWithCurrentParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Creates an input dictionary with the current parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>currParams</strong> (<em>numpy.ndarray</em>) – An array with the current parameters.</p></li>
+<li><p><strong>sim</strong> (<a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><em>buzzard.simulation.Simulation</em></a>) – The respective simulation object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Input dictionary for EdelweissFE.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
