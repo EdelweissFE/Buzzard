@@ -1,4 +1,4 @@
-![documentation](https://github.com/EdelweissFE/Buzzard/actions/workflows/sphinx.yml/badge.svg) ![linting](https://github.com/EdelweissFE/Buzzard/actions/workflows/linting.yml/badge.svg)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
+![documentation](https://github.com/EdelweissFE/Buzzard/actions/workflows/sphinx.yml/badge.svg) [![linting](https://github.com/EdelweissFE/Buzzard/actions/workflows/linting.yml/badge.svg)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
 
 # Buzzard
 
