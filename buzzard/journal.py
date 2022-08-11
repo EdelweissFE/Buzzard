@@ -32,6 +32,7 @@ maxCharJustified = 68
 
 
 def printHeader():
+    """Prints the program header."""
     printSepline()
     printCenteredLine("This is")
     printCenteredLine("")
@@ -50,14 +51,17 @@ def printHeader():
 
 
 def infoMessage(*args):
+    """Prints an info message."""
     message(*("INFO:", *args))
 
 
 def errorMessage(*args):
+    """Prints an error message."""
     message(*("ERROR:", *args))
 
 
 def message(*args):
+    """Prints a message to the terminal with fixed format."""
     if args:
         string = str(args[0])
         for arg in args[1:]:
@@ -74,16 +78,20 @@ def message(*args):
 
 
 def printSepline():
+    """Prints a separation line."""
     printCenteredLine(maxCharCentered * "=")
 
 
 def printLine():
+    """Prints a simple line."""
     printCenteredLine(maxCharCentered * "-")
 
 
-def printCenteredLine(string):
+def printCenteredLine(string: str):
+    """Prints a string which is centered."""
     print("|{:^{}s}|".format(string, maxCharCentered))
 
 
-def printJustifiedLine(string):
+def printJustifiedLine(string: str):
+    """Prints a string which is justified."""
     print("| {:<{}s} |".format(string, maxCharJustified))
