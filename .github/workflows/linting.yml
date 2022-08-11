@@ -11,7 +11,7 @@ jobs:
         with:
           options: "--check --verbose -l 120"
           src: "./buzzard, buzzard.py"
-      - uses: PyCQA/isort@latest
+      - uses: PyCQA/isort@5.10.1
         with:
           options: "--check-only"
           src: "./buzzard, buzzard.py"
