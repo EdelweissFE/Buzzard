@@ -15,7 +15,7 @@ jobs:
         with:
           options: "--check-only"
           src: "./buzzard, buzzard.py"
-      - uses: PyCQA/flake8@latest
+      - uses: PyCQA/flake8@5.0.4
         with:
           options: "--max-line-length 120"
           src: "./buzzard, buzzard.py"
