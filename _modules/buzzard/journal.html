@@ -101,6 +101,7 @@
 
 
 <div class="viewcode-block" id="printHeader"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printHeader">[docs]</a><span class="k">def</span> <span class="nf">printHeader</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Prints the program header.&quot;&quot;&quot;</span>
     <span class="n">printSepline</span><span class="p">()</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="s2">&quot;This is&quot;</span><span class="p">)</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -119,14 +120,17 @@
 
 
 <div class="viewcode-block" id="infoMessage"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.infoMessage">[docs]</a><span class="k">def</span> <span class="nf">infoMessage</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints an info message.&quot;&quot;&quot;</span>
     <span class="n">message</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;INFO:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="errorMessage"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.errorMessage">[docs]</a><span class="k">def</span> <span class="nf">errorMessage</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints an error message.&quot;&quot;&quot;</span>
     <span class="n">message</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;ERROR:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="message"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.message">[docs]</a><span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints a message to the terminal with fixed format.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
         <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
@@ -143,18 +147,22 @@
 
 
 <div class="viewcode-block" id="printSepline"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printSepline">[docs]</a><span class="k">def</span> <span class="nf">printSepline</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Prints a separation line.&quot;&quot;&quot;</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="n">maxCharCentered</span> <span class="o">*</span> <span class="s2">&quot;=&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="printLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printLine">[docs]</a><span class="k">def</span> <span class="nf">printLine</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Prints a simple line.&quot;&quot;&quot;</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="n">maxCharCentered</span> <span class="o">*</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="printCenteredLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printCenteredLine">[docs]</a><span class="k">def</span> <span class="nf">printCenteredLine</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="printCenteredLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printCenteredLine">[docs]</a><span class="k">def</span> <span class="nf">printCenteredLine</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints a string which is centered.&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|{:^</span><span class="si">{}</span><span class="s2">s}|&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharCentered</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="printJustifiedLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printJustifiedLine">[docs]</a><span class="k">def</span> <span class="nf">printJustifiedLine</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="printJustifiedLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printJustifiedLine">[docs]</a><span class="k">def</span> <span class="nf">printJustifiedLine</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prints a string which is justified.&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;| {:&lt;</span><span class="si">{}</span><span class="s2">s} |&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharJustified</span><span class="p">))</span></div>
 </pre></div>
 
