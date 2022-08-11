@@ -11,11 +11,11 @@ jobs:
         with:
           options: "--check --verbose -l 120"
           src: "./buzzard, buzzard.py"
-      - uses: PyCQA/isort@stable
+      - uses: PyCQA/isort@latest
         with:
           options: "--check-only"
           src: "./buzzard, buzzard.py"
-      - uses: PyCQA/flake8@stable
+      - uses: PyCQA/flake8@latest
         with:
           options: "--max-line-length 120"
           src: "./buzzard, buzzard.py"
