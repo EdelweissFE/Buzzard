@@ -10,12 +10,12 @@ jobs:
       - uses: psf/black@stable
         with:
           options: "--check --verbose -l 120"
-          src: "./buzzard", "buzzard.py"
+          src: "./buzzard, buzzard.py"
       - uses: PyCQA/isort@stable
         with:
           options: "--check-only"
-          src: "./buzzard", "buzzard.py"
+          src: "./buzzard, buzzard.py"
       - uses: PyCQA/flake8@stable
         with:
           options: "--max-line-length 120"
-          src: "./buzzard", "buzzard.py"
+          src: "./buzzard, buzzard.py"
