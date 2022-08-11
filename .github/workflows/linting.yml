@@ -7,14 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: psf/black@stable
-        with:
-          options: "--check --verbose -l 120"
-          src: "./buzzard"
-      - name: install isort and flake8
-        run: pip install isort flake8
-      - name: run isort and flake8
-        run: | 
+      - name: install black, isort and flake8
+        run: pip install black isort flake8
+      - name: run black, isort and flake8
+        run: |
+         black ./buzzard buzzard.py --line-length 120 
          isort ./buzzard buzzard.py --check-only
          flake8 ./buzzard buzzard.py --max-line-length 120
          
