@@ -10,7 +10,7 @@ jobs:
       - uses: psf/black@stable
         with:
           options: "--check --verbose -l 120"
-          src: "./buzzard, buzzard.py"
+          src: "buzzard/, buzzard.py"
       - name: install flake8
         run: pip install flake8
       - name: run flake8
