@@ -19,7 +19,7 @@ pyparsing
 PyPDF4
 python-dateutil
 PyYAML
-rich
+seaborn
 scipy
 similaritymeasures
 six
