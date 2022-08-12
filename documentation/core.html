@@ -42,7 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Core</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#optimizer">Optimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.optimizer">Optimizer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#identification-object">Identification Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#simulation-object">Simulation Object</a></li>
 </ul>
@@ -82,8 +82,39 @@
              
   <section id="core">
 <h1>Core<a class="headerlink" href="#core" title="Permalink to this heading"></a></h1>
-<section id="optimizer">
-<h2>Optimizer<a class="headerlink" href="#optimizer" title="Permalink to this heading"></a></h2>
+<section id="module-buzzard.optimizer">
+<span id="optimizer"></span><h2>Optimizer<a class="headerlink" href="#module-buzzard.optimizer" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.optimizer.collectIdentificationsFromConfig">
+<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">collectIdentificationsFromConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#collectIdentificationsFromConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.collectIdentificationsFromConfig" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.optimizer.collectSimulationsFromConfig">
+<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">collectSimulationsFromConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#collectSimulationsFromConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.collectSimulationsFromConfig" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.optimizer.getResidualForMultipleSimulations">
+<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">getResidualForMultipleSimulations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#getResidualForMultipleSimulations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.getResidualForMultipleSimulations" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.optimizer.getScipySettings">
+<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">getScipySettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#getScipySettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.getScipySettings" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.optimizer.minimizerCallbackFunction">
+<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">minimizerCallbackFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#minimizerCallbackFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.minimizerCallbackFunction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.optimizer.runOptimization">
+<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">runOptimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#runOptimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.runOptimization" title="Permalink to this definition"></a></dt>
+<dd><p>execute parameter identification</p>
+</dd></dl>
+
 </section>
 <section id="identification-object">
 <h2>Identification Object<a class="headerlink" href="#identification-object" title="Permalink to this heading"></a></h2>
