@@ -178,7 +178,7 @@ def getResidualForMultipleSimulations(params, args):
     if args.parallel in [1, 3]:
         nSim = len(Simulation.all_simulations)
         with ProcessPoolExecutor(max_workers=nSim) as executor:
-            future_res = {executor.submit(sim.computeResidual, params): sim for sim in Simulation.all_simulations}
+            future_res = {executor.submit(sim.computeErrorVector, params): sim for sim in Simulation.all_simulations}
 
             for future in as_completed(future_res):
                 yErr = np.append(yErr, future.result())
@@ -186,7 +186,7 @@ def getResidualForMultipleSimulations(params, args):
     else:
         # create residual vector for all simulations
         for sim in Simulation.all_simulations:
-            yErr = np.append(yErr, sim.computeResidual(params))
+            yErr = np.append(yErr, sim.computeErrorVector(params))
 
     residual = np.linalg.norm(yErr)
 

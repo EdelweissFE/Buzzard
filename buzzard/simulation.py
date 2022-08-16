@@ -25,15 +25,26 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
+from typing import Union
+
 import numpy as np
 from scipy.interpolate import interp1d
 from similaritymeasures import area_between_two_curves, frechet_dist, pcm
 
-from .abaqusUtility import evaluateAbaqusSimulation
-from .journal import message
+from .journal import errorMessage, infoMessage
 
 
 class Simulation:
+    """
+    The identification object stores information for one simulation for the optimization process.
+
+    Parameters
+    ----------
+    str name
+        Name of the simulation.
+    dict config
+        Dictionary which contains information about the simulation.
+    """
 
     all_simulations = []
 
@@ -63,36 +74,65 @@ class Simulation:
             self.cpus = config["cpus"]
         Simulation.all_simulations.append(self)
 
-    def run(self, currParams):
+    def run(self, currParams: np.ndarray) -> Union[np.ndarray, np.ndarray]:
+        """
+        Executes the simulation
+
+        Parameters
+        ----------
+        numpy.ndarray currParams
+            An array with the current parameters.
+
+        Returns
+        -------
+        Union[numpy.ndarray,numpy.ndarray]
+            Result of the simulation (x-data, y-data).
+        """
 
         if self.type == "edelweiss":
-
             from .edelweissUtility import evaluateEdelweissSimulation
 
             x, y = evaluateEdelweissSimulation(currParams, self)
 
         elif self.type == "abaqus":
+            from .abaqusUtility import evaluateAbaqusSimulation
 
             x, y = evaluateAbaqusSimulation(currParams, self)
 
         else:
-            print("type of simulation not defined")
+            errorMessage(
+                "Unknown simulation type;",
+                "possible types are:",
+                "'edelweiss' and",
+                "'abaqus',",
+            )
             exit()
 
         return x, y
 
-    def computeResidual(self, currParams):
+    def computeErrorVector(self, currParams: np.ndarray) -> np.ndarray:
+        """
+        Computes the error vector for the simulation wrt the given data.
 
+        Parameters
+        ----------
+        numpy.ndarray currParams
+            An array with the current parameters.
+
+        Returns
+        -------
+        numpy.ndarray
+            Array containing the errors between given data and simulation.
+        """
         x, y = self.run(currParams)
 
         if type(x) is not np.ndarray:
-            print("params = ", currParams)
+            infoMessage(
+                "Simulation {sim} failed with the following parameters:{params}".format(
+                    sim=self.name, params=currParams
+                )
+            )
             return np.array([1e12])
-
-        return self.computeErrorVector(x, y)
-
-    def computeErrorVector(self, x, y):
-
         yErr = np.array([])
 
         # compute relative error vector
@@ -108,7 +148,7 @@ class Simulation:
                         (self.data[i, 1] - xySim(self.data[i, 0])) / self.data[i, 1],
                     )
                 except Exception as e:
-                    print(e)
+                    infoMessage(e)
 
         # compute relative error vector
         elif self.errorType == "absolute":
@@ -190,7 +230,15 @@ class Simulation:
             yErr = np.append(yErr, val)
 
         else:
-            message(" wrong type for error calculation ...")
+            errorMessage(
+                "Unknown type for error calculation;",
+                "possible types are:",
+                "'relative',",
+                "'absolute',",
+                "'area-between',",
+                "'frechet_dist', and",
+                "'partial-curve-mapping'",
+            )
             exit()
 
         return yErr

@@ -49,7 +49,6 @@ def getInputDictWithCurrentParameters(currParams: np.ndarray, sim: Simulation) -
 
     Parameters
     ----------
-
     numpy.ndarray currParams
         An array with the current parameters.
     buzzard.simulation.Simulation sim
