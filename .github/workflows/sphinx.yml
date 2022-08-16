@@ -73,11 +73,14 @@ jobs:
         shell: bash -l {0}
         run: |
           pip install -r requirements.txt
-          EDELWEISS_PATH=EdelweissFE sphinx-build ./doc/source/ ./docs -b html
+          export EDELWEISS_PATH=/home/runner/work/Buzzard/EdelweissFE
+          sphinx-build ./doc/source/ ./docs -b html
           
       - name: Run Buzzard tests
         shell: bash -l {0}
-        run: EDELWEISS_PATH=/home/runner/work/Buzzard/EdelweissFE python run_tests.py 
+        run: |
+          export EDELWEISS_PATH=/home/runner/work/Buzzard/EdelweissFE
+          python run_tests.py 
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
