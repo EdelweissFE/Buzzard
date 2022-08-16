@@ -64,6 +64,7 @@ if __name__ == "__main__":
             np.savetxt("results_ref.txt", result.x)
 
         if np.linalg.norm( result.x - np.loadtxt("results_ref.txt") ) > 1e-6:
+            print( result.x - np.loadtxt("results_ref.txt") )
             failedTests += 1
 
         os.chdir(wd)
