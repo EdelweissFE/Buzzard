@@ -47,6 +47,7 @@ class Simulation:
     """
 
     all_simulations = []
+    """A list containing all simulations."""
 
     def __init__(self, name, config):
 
@@ -243,7 +244,22 @@ class Simulation:
 
         return yErr
 
-    def interpolateSimulationResults(self, x, y):
+    def interpolateSimulationResults(self, x: np.ndarray, y: np.ndarray) -> interp1d:
+        """
+        Interpolates simulation results taking into account decreasing x-data.
+
+        Parameters
+        ----------
+        numpy.ndarray x
+            x-data for interpolation
+        numpy.ndarray y
+            y-data for interpolation
+
+        Returns
+        -------
+        scipy.interpolate.interp1d
+            interpolation of x and y
+        """
 
         xlist = [x[0]]
         ylist = [y[0]]

@@ -25,12 +25,14 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
+import argparse
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from typing import Union
 
 import numpy as np
 from optimparallel import minimize_parallel
-from scipy.optimize import Bounds, minimize
+from scipy.optimize import Bounds, OptimizeResult, minimize
 
 from .identification import Identification
 from .journal import infoMessage, message, printLine, printSepline
@@ -38,7 +40,7 @@ from .plotters import plotOptimizationResults
 from .simulation import Simulation
 
 
-def runOptimization(config: dict, args):
+def runOptimization(config: dict, args: argparse.Namespace) -> OptimizeResult:
     """execute parameter identification"""
     method, options = getScipySettings(config)
 
@@ -47,7 +49,7 @@ def runOptimization(config: dict, args):
     collectSimulationsFromConfig(config)
 
     printSepline()
-    message(" call scipy minimize function ...")
+    infoMessage("call scipy minimize function ...")
     printSepline()
 
     # execute optimization
@@ -79,8 +81,8 @@ def runOptimization(config: dict, args):
     infoMessage("time in minimize function: " + str(round(toc - tic, 4)) + " seconds")
 
     printSepline()
-    infoMessage("writing optimal parameters to file ... ")
-    # write results to file
+    infoMessage("writing optimal parameters to optimalParameters.txt ... ")
+
     with open("optimalParameters.txt", "w+") as f:
         for x, ide in zip(res.x, Identification.active_identifications):
             f.write(str(x) + "\t#" + ide.name + "\n")
@@ -96,7 +98,7 @@ def runOptimization(config: dict, args):
     return res
 
 
-def getScipySettings(config):
+def getScipySettings(config: dict) -> Union[str, dict]:
 
     method = None
     options = {"disp": True}
@@ -110,7 +112,7 @@ def getScipySettings(config):
     return method, options
 
 
-def collectIdentificationsFromConfig(config):
+def collectIdentificationsFromConfig(config: dict):
 
     initialX = []
     lb = []
@@ -150,7 +152,7 @@ def collectIdentificationsFromConfig(config):
 def collectSimulationsFromConfig(config):
 
     printSepline()
-    message(" collecting simulations ...")
+    infoMessage(" collecting simulations ...")
     printLine()
 
     if "simulations" in config:
@@ -165,13 +167,13 @@ def collectSimulationsFromConfig(config):
             Simulation(name, config["simulations"][name])
 
     else:
-        raise Exception(" no simulations found")
+        raise Exception("no simulations found")
 
     printLine()
-    infoMessage(" found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
+    infoMessage("found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
 
 
-def getResidualForMultipleSimulations(params, args):
+def getResidualForMultipleSimulations(params: np.ndarray, args) -> float:
 
     yErr = np.array([])
 
@@ -184,7 +186,6 @@ def getResidualForMultipleSimulations(params, args):
                 yErr = np.append(yErr, future.result())
 
     else:
-        # create residual vector for all simulations
         for sim in Simulation.all_simulations:
             yErr = np.append(yErr, sim.computeErrorVector(params))
 
@@ -193,10 +194,10 @@ def getResidualForMultipleSimulations(params, args):
     return residual
 
 
-def minimizerCallbackFunction(x, *args):
+def minimizerCallbackFunction(x: np.ndarray, *args):
 
     printLine()
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(" -->", Identification.active_identifications[i].name + "=" + str(val))
+        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
     printLine()

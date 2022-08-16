@@ -38,7 +38,9 @@ class Identification:
     """
 
     all_identifications = []
+    """A list containing all identification objects."""
     active_identifications = []
+    """A list containing all active identification objects."""
 
     def __init__(self, name: str, values: dict):
 

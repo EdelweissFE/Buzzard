@@ -28,44 +28,48 @@
 import argparse
 import os
 
-from buzzard.journal import printHeader
+import numpy as np
+
 from buzzard.optimizer import runOptimization
 from buzzard.reader import readConfig, readConfigFromJson
 
+createResults = False
+tests = ["examples/LinearElastic/config.py"]
+
+wd = os.getcwd()
+
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(
-        prog="buzzard",
-        description="A tool for optimizing (material) parameters for finite element simulations",
-    )
+    failedTests = 0
 
-    parser.add_argument(
-        "file",
-        type=str,
-        nargs=1,
-    )
-    parser.add_argument(
-        "--parallel",
-        type=int,
-        default=0,
-        choices=[0, 1, 2, 3],
-        help="0: no parallelization (default);"
-        + "1: parallel execution of simulations;"
-        + "2:run parallel minimize (L-BFGS method only);"
-        + "3: combines option 1 and 2 (L-BFGS method only)",
-    )
-    parser.add_argument("--createPlots", action="store_true", default=False)
+    for test in tests:
 
-    args = parser.parse_args()
-    printHeader()
+        if test.endswith(".py"):
+            config = readConfig(test)
+        elif test.endswith(".json"):
+            config = readConfigFromJson(test)
+        else:
+            raise Exception("File type of config file must be .py or .json")
 
-    configFile = args.file[0]
-    root, ext = os.path.splitext(configFile)
-    if ext == ".py":
-        config = readConfig(configFile)
-    elif ext == ".json":
-        config = readConfigFromJson(configFile)
+        head_tail = os.path.split(test)
+        os.chdir(head_tail[0])
+
+        args = argparse.Namespace
+        args.parallel = 0
+        args.createPlots = False
+
+        result = runOptimization(config, args)
+
+        if createResults:
+            np.savetxt("results_ref.txt", result.x)
+
+        if result.x != np.loadtxt("results_ref.txt"):
+            failedTests += 1
+
+        os.chdir(wd)
+
+    print("{:} test(s) failed!".format(failedTests))
+    if failedTests == 0:
+        exit(0)
     else:
-        raise Exception("File type of config file must be .py or .json")
-
-    result = runOptimization(config, args)
+        exit(1)
