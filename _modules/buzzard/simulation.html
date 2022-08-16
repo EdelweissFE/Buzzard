@@ -94,17 +94,29 @@
 <span class="c1">#  the top level directory of Buzzard.</span>
 <span class="c1">#  ---------------------------------------------------------------------</span>
 
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
 <span class="kn">from</span> <span class="nn">similaritymeasures</span> <span class="kn">import</span> <span class="n">area_between_two_curves</span><span class="p">,</span> <span class="n">frechet_dist</span><span class="p">,</span> <span class="n">pcm</span>
 
-<span class="kn">from</span> <span class="nn">.abaqusUtility</span> <span class="kn">import</span> <span class="n">evaluateAbaqusSimulation</span>
-<span class="kn">from</span> <span class="nn">.journal</span> <span class="kn">import</span> <span class="n">message</span>
+<span class="kn">from</span> <span class="nn">.journal</span> <span class="kn">import</span> <span class="n">errorMessage</span><span class="p">,</span> <span class="n">infoMessage</span>
 
 
 <div class="viewcode-block" id="Simulation"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation">[docs]</a><span class="k">class</span> <span class="nc">Simulation</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The identification object stores information for one simulation for the optimization process.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    str name</span>
+<span class="sd">        Name of the simulation.</span>
+<span class="sd">    dict config</span>
+<span class="sd">        Dictionary which contains information about the simulation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">all_simulations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="sd">&quot;&quot;&quot;A list containing all simulations.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
 
@@ -132,36 +144,65 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cpus</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;cpus&quot;</span><span class="p">]</span>
         <span class="n">Simulation</span><span class="o">.</span><span class="n">all_simulations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Simulation.run"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">currParams</span><span class="p">):</span>
+<div class="viewcode-block" id="Simulation.run"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">currParams</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the simulation</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numpy.ndarray currParams</span>
+<span class="sd">            An array with the current parameters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Union[numpy.ndarray,numpy.ndarray]</span>
+<span class="sd">            Result of the simulation (x-data, y-data).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;edelweiss&quot;</span><span class="p">:</span>
-
             <span class="kn">from</span> <span class="nn">.edelweissUtility</span> <span class="kn">import</span> <span class="n">evaluateEdelweissSimulation</span>
 
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">evaluateEdelweissSimulation</span><span class="p">(</span><span class="n">currParams</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;abaqus&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.abaqusUtility</span> <span class="kn">import</span> <span class="n">evaluateAbaqusSimulation</span>
 
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">evaluateAbaqusSimulation</span><span class="p">(</span><span class="n">currParams</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type of simulation not defined&quot;</span><span class="p">)</span>
+            <span class="n">errorMessage</span><span class="p">(</span>
+                <span class="s2">&quot;Unknown simulation type;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;possible types are:&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;edelweiss&#39; and&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;abaqus&#39;,&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">exit</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
 
-<div class="viewcode-block" id="Simulation.computeResidual"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.computeResidual">[docs]</a>    <span class="k">def</span> <span class="nf">computeResidual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">currParams</span><span class="p">):</span>
+<div class="viewcode-block" id="Simulation.computeErrorVector"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.computeErrorVector">[docs]</a>    <span class="k">def</span> <span class="nf">computeErrorVector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">currParams</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the error vector for the simulation wrt the given data.</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numpy.ndarray currParams</span>
+<span class="sd">            An array with the current parameters.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Array containing the errors between given data and simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">currParams</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;params = &quot;</span><span class="p">,</span> <span class="n">currParams</span><span class="p">)</span>
+            <span class="n">infoMessage</span><span class="p">(</span>
+                <span class="s2">&quot;Simulation </span><span class="si">{sim}</span><span class="s2"> failed with the following parameters:</span><span class="si">{params}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">sim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">currParams</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e12</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">computeErrorVector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Simulation.computeErrorVector"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.computeErrorVector">[docs]</a>    <span class="k">def</span> <span class="nf">computeErrorVector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-
         <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
         <span class="c1"># compute relative error vector</span>
@@ -177,7 +218,7 @@
                         <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xySim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
                     <span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="n">infoMessage</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
         <span class="c1"># compute relative error vector</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">errorType</span> <span class="o">==</span> <span class="s2">&quot;absolute&quot;</span><span class="p">:</span>
@@ -259,12 +300,35 @@
             <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yErr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">message</span><span class="p">(</span><span class="s2">&quot; wrong type for error calculation ...&quot;</span><span class="p">)</span>
+            <span class="n">errorMessage</span><span class="p">(</span>
+                <span class="s2">&quot;Unknown type for error calculation;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;possible types are:&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;relative&#39;,&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;absolute&#39;,&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;area-between&#39;,&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;frechet_dist&#39;, and&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&#39;partial-curve-mapping&#39;&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">exit</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">yErr</span></div>
 
-<div class="viewcode-block" id="Simulation.interpolateSimulationResults"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.interpolateSimulationResults">[docs]</a>    <span class="k">def</span> <span class="nf">interpolateSimulationResults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="Simulation.interpolateSimulationResults"><a class="viewcode-back" href="../../documentation/core.html#buzzard.simulation.Simulation.interpolateSimulationResults">[docs]</a>    <span class="k">def</span> <span class="nf">interpolateSimulationResults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">interp1d</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Interpolates simulation results taking into account decreasing x-data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numpy.ndarray x</span>
+<span class="sd">            x-data for interpolation</span>
+<span class="sd">        numpy.ndarray y</span>
+<span class="sd">            y-data for interpolation</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        scipy.interpolate.interp1d</span>
+<span class="sd">            interpolation of x and y</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">xlist</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="n">ylist</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
