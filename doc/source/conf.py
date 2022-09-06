@@ -33,7 +33,7 @@ author = "Alexander Dummer"
 # The short X.Y version
 version = ""
 # The full version, including alpha/beta/rc tags
-release = "v22.08"
+release = "v22.09"
 
 
 # -- General configuration ---------------------------------------------------
