@@ -83,7 +83,7 @@ jobs:
         shell: bash -l {0}
         run: |
           export EDELWEISS_PATH=/home/runner/work/Buzzard/Buzzard/EdelweissFE
-          python run_tests.py 
+          python run_edelweiss_tests.py 
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
