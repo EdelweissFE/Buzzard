@@ -12,6 +12,6 @@ jobs:
       - name: run black, isort and flake8
         run: |
          black ./buzzard buzzard.py --check --verbose --line-length 120 
-         isort ./buzzard buzzard.py --check-only --verbose
+         isort ./buzzard buzzard.py --check-only --verbose --profile black
          flake8 ./buzzard buzzard.py --max-line-length 120 --verbose
          
