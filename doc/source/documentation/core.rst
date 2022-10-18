@@ -4,7 +4,7 @@ Core
 Optimizer
 ---------------------
 
-.. automodule:: buzzard.optimizer
+.. automodule:: buzzard.core.optimizer
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ Optimizer
 Identification Object
 ---------------------
 
-.. autoclass:: buzzard.identification.Identification
+.. autoclass:: buzzard.core.identification.Identification
     :members:
     :undoc-members:
     :show-inheritance:
@@ -20,7 +20,7 @@ Identification Object
 Simulation Object
 -----------------
 
-.. autoclass:: buzzard.simulation.Simulation
+.. autoclass:: buzzard.core.simulation.Simulation
     :members:
     :undoc-members:
     :show-inheritance:

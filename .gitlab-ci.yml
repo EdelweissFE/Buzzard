@@ -9,5 +9,5 @@ linting:
     - pip install isort
     - pip install flake8
     - black --check buzzard buzzard.py --line-length 120
-    - isort buzzard buzzard.py --check-only
+    - isort buzzard buzzard.py --check-only --profile black
     - flake8 buzzard buzzard.py --max-line-length 120

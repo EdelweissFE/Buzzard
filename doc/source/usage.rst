@@ -26,13 +26,13 @@ The configuration file can be either a ``.py``-file containing a dictionary call
 Example configuration file (python format)
 ******************************************
 
-.. literalinclude:: ../../examples/LinearElastic/config.py
+.. literalinclude:: ../../testfiles/edelweiss/LinearElastic/config.py
    :language: python
-   :caption: File: ``examples/LinearElastic/config.py``
+   :caption: File: ``testfiles/LinearElastic/edelweiss/config.py``
 
 Example configuration file (json format)
 ****************************************
 
-.. literalinclude:: ../../examples/LinearElastic/config.json
+.. literalinclude:: ../../testfiles/edelweiss/LinearElasticJSON/config.json
    :language: json
-   :caption: File: ``examples/LinearElastic/config.json``
+   :caption: File: ``testfiles/edelweiss/LinearElasticJSON/config.json``
