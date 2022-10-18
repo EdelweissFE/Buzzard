@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>buzzard.optimizer &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>buzzard.core.optimizer &mdash; Buzzard v22.09 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -25,10 +26,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Buzzard
+            <a href="../../../index.html" class="icon icon-home"> Buzzard
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -36,10 +37,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../documentation/index.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Contributors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/index.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
 </ul>
 
         </div>
@@ -48,16 +49,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Buzzard</a>
+          <a href="../../../index.html">Buzzard</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>buzzard.optimizer</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>buzzard.core.optimizer</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -66,7 +67,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for buzzard.optimizer</h1><div class="highlight"><pre>
+  <h1>Source code for buzzard.core.optimizer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">#  ---------------------------------------------------------------------</span>
 <span class="c1">#</span>
@@ -94,28 +95,52 @@
 <span class="c1">#  the top level directory of Buzzard.</span>
 <span class="c1">#  ---------------------------------------------------------------------</span>
 
-<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">optimparallel</span> <span class="kn">import</span> <span class="n">minimize_parallel</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">OptimizeResult</span><span class="p">,</span> <span class="n">minimize</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">OptimizeResult</span>
 
-<span class="kn">from</span> <span class="nn">.identification</span> <span class="kn">import</span> <span class="n">Identification</span>
-<span class="kn">from</span> <span class="nn">.journal</span> <span class="kn">import</span> <span class="n">infoMessage</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">printLine</span><span class="p">,</span> <span class="n">printSepline</span>
-<span class="kn">from</span> <span class="nn">.plotters</span> <span class="kn">import</span> <span class="n">plotOptimizationResults</span>
-<span class="kn">from</span> <span class="nn">.simulation</span> <span class="kn">import</span> <span class="n">Simulation</span>
+<span class="kn">from</span> <span class="nn">buzzard.core.identification</span> <span class="kn">import</span> <span class="n">Identification</span>
+<span class="kn">from</span> <span class="nn">buzzard.core.simulation</span> <span class="kn">import</span> <span class="n">Simulation</span>
+<span class="kn">from</span> <span class="nn">buzzard.interfaces.scipy</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">availableOptimizationMethods</span><span class="p">,</span>
+    <span class="n">callSciPyGlobalOptimization</span><span class="p">,</span>
+    <span class="n">callSciPyMinimize</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">buzzard.utils.journal</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">errorMessage</span><span class="p">,</span>
+    <span class="n">infoMessage</span><span class="p">,</span>
+    <span class="n">message</span><span class="p">,</span>
+    <span class="n">printLine</span><span class="p">,</span>
+    <span class="n">printSepline</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">buzzard.utils.plotters</span> <span class="kn">import</span> <span class="n">plotOptimizationResults</span>
+
+<span class="n">executeSimulationsInParallel</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">createPlots</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="runOptimization"><a class="viewcode-back" href="../../documentation/core.html#buzzard.optimizer.runOptimization">[docs]</a><span class="k">def</span> <span class="nf">runOptimization</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OptimizeResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;execute parameter identification&quot;&quot;&quot;</span>
-    <span class="n">method</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="n">getScipySettings</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<div class="viewcode-block" id="runOptimization"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.runOptimization">[docs]</a><span class="k">def</span> <span class="nf">runOptimization</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OptimizeResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Core function which executes parameter identification.</span>
 
-    <span class="n">initialParameters</span><span class="p">,</span> <span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span> <span class="o">=</span> <span class="n">collectIdentificationsFromConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dict config</span>
+<span class="sd">        Dictionary containing the information of the Buzzard input.</span>
 
-    <span class="n">collectSimulationsFromConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    scipy.optimize.OptimizeResult</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">method</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="n">getOptimizationMethodAndOptions</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">initialParameters</span><span class="p">,</span> <span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span> <span class="o">=</span> <span class="n">collectParametersToIdentify</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">collectSimulations</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
     <span class="n">printSepline</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;call scipy minimize function ...&quot;</span><span class="p">)</span>
@@ -123,31 +148,33 @@
 
     <span class="c1"># execute optimization</span>
     <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
 
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">parallel</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">minimize_parallel</span><span class="p">(</span>
-            <span class="n">getResidualForMultipleSimulations</span><span class="p">,</span>
-            <span class="n">initialParameters</span><span class="p">,</span>
-            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">args</span><span class="p">),</span>
-            <span class="n">bounds</span><span class="o">=</span><span class="n">Bounds</span><span class="p">(</span><span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span><span class="p">),</span>
-            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
-            <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
-            <span class="n">getResidualForMultipleSimulations</span><span class="p">,</span>
-            <span class="n">initialParameters</span><span class="p">,</span>
-            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">args</span><span class="p">),</span>
-            <span class="n">bounds</span><span class="o">=</span><span class="n">Bounds</span><span class="p">(</span><span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span><span class="p">),</span>
-            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
-            <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">availableOptimizationMethods</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">callSciPyMinimize</span><span class="p">(</span>
+                <span class="n">getResidualForMultipleSimulations</span><span class="p">,</span> <span class="n">initialParameters</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">(</span><span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span><span class="p">),</span> <span class="n">method</span><span class="p">,</span> <span class="n">options</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">availableOptimizationMethods</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;global&quot;</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">callSciPyGlobalOptimization</span><span class="p">(</span>
+                <span class="n">getResidualForMultipleSimulations</span><span class="p">,</span>
+                <span class="p">[(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span> <span class="k">for</span> <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span><span class="p">)],</span>
+                <span class="n">method</span><span class="p">,</span>
+                <span class="n">options</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">errorMessage</span><span class="p">(</span><span class="s2">&quot;Requested optimization method &#39;</span><span class="si">{:}</span><span class="s2">&#39; not available!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+            <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;available methods are&quot;</span><span class="p">,</span> <span class="n">availableOptimizationMethods</span><span class="p">)</span>
+
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Requested optimization method &#39;</span><span class="si">{:}</span><span class="s2">&#39; not available!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;interrupted by user&quot;</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">toc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
     <span class="n">printSepline</span><span class="p">()</span>
-    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;time in minimize function: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; seconds&quot;</span><span class="p">)</span>
+    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;total time for optimization: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">toc</span> <span class="o">-</span> <span class="n">tic</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; seconds&quot;</span><span class="p">)</span>
 
     <span class="n">printSepline</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;writing optimal parameters to optimalParameters.txt ... &quot;</span><span class="p">)</span>
@@ -157,7 +184,7 @@
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">#&quot;</span> <span class="o">+</span> <span class="n">ide</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">message</span><span class="p">(</span><span class="s2">&quot;   </span><span class="si">{:4.4e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">ide</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">createPlots</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">createPlots</span><span class="p">:</span>
         <span class="n">printLine</span><span class="p">()</span>
         <span class="n">message</span><span class="p">(</span><span class="s2">&quot; plot results ... &quot;</span><span class="p">)</span>
         <span class="n">plotOptimizationResults</span><span class="p">(</span><span class="n">initialParameters</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
@@ -167,21 +194,27 @@
     <span class="k">return</span> <span class="n">res</span></div>
 
 
-<div class="viewcode-block" id="getScipySettings"><a class="viewcode-back" href="../../documentation/core.html#buzzard.optimizer.getScipySettings">[docs]</a><span class="k">def</span> <span class="nf">getScipySettings</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<div class="viewcode-block" id="getOptimizationMethodAndOptions"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.getOptimizationMethodAndOptions">[docs]</a><span class="k">def</span> <span class="nf">getOptimizationMethodAndOptions</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts the optimization method and respective options from the input dictionary.</span>
 
-    <span class="n">method</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dict config</span>
+<span class="sd">        Dictionary containing the information of the Buzzard input.</span>
 
-    <span class="k">if</span> <span class="s2">&quot;scipysettings&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;scipysettings&quot;</span><span class="p">]:</span>
-            <span class="n">method</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;scipysettings&quot;</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;options&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;scipysettings&quot;</span><span class="p">]:</span>
-            <span class="n">options</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;scipysettings&quot;</span><span class="p">][</span><span class="s2">&quot;options&quot;</span><span class="p">]</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Union[str,dict]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">method</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;scipysettings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;scipysettings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;options&quot;</span><span class="p">,</span> <span class="p">{})</span>
 
     <span class="k">return</span> <span class="n">method</span><span class="p">,</span> <span class="n">options</span></div>
 
 
-<div class="viewcode-block" id="collectIdentificationsFromConfig"><a class="viewcode-back" href="../../documentation/core.html#buzzard.optimizer.collectIdentificationsFromConfig">[docs]</a><span class="k">def</span> <span class="nf">collectIdentificationsFromConfig</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="collectParametersToIdentify"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.collectParametersToIdentify">[docs]</a><span class="k">def</span> <span class="nf">collectParametersToIdentify</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
 
     <span class="n">initialX</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">lb</span> <span class="o">=</span> <span class="p">[]</span>
@@ -213,12 +246,12 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no parameter(s) found to identify&quot;</span><span class="p">)</span>
 
-    <span class="n">message</span><span class="p">(</span><span class="s2">&quot; found &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; active parameter(s) to identify&quot;</span><span class="p">)</span>
+    <span class="n">message</span><span class="p">(</span><span class="s2">&quot;found &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">)),</span> <span class="s2">&quot; active parameter(s) to identify&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">initialX</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span></div>
 
 
-<div class="viewcode-block" id="collectSimulationsFromConfig"><a class="viewcode-back" href="../../documentation/core.html#buzzard.optimizer.collectSimulationsFromConfig">[docs]</a><span class="k">def</span> <span class="nf">collectSimulationsFromConfig</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<div class="viewcode-block" id="collectSimulations"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.collectSimulations">[docs]</a><span class="k">def</span> <span class="nf">collectSimulations</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
 
     <span class="n">printSepline</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot; collecting simulations ...&quot;</span><span class="p">)</span>
@@ -242,34 +275,27 @@
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;found &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Simulation</span><span class="o">.</span><span class="n">all_simulations</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; active simulations(s)&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="getResidualForMultipleSimulations"><a class="viewcode-back" href="../../documentation/core.html#buzzard.optimizer.getResidualForMultipleSimulations">[docs]</a><span class="k">def</span> <span class="nf">getResidualForMultipleSimulations</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="getResidualForMultipleSimulations"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.getResidualForMultipleSimulations">[docs]</a><span class="k">def</span> <span class="nf">getResidualForMultipleSimulations</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 
     <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
-    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">parallel</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+    <span class="c1"># workaround for differential evolution</span>
+
+    <span class="k">if</span> <span class="n">executeSimulationsInParallel</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">nSim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Simulation</span><span class="o">.</span><span class="n">all_simulations</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">nSim</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-            <span class="n">future_res</span> <span class="o">=</span> <span class="p">{</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">computeErrorVector</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span> <span class="n">sim</span> <span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">all_simulations</span><span class="p">}</span>
+            <span class="n">future_res</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">computeWeightedResidual</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span> <span class="n">sim</span> <span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">all_simulations</span>
+            <span class="p">}</span>
 
             <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">future_res</span><span class="p">):</span>
                 <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yErr</span><span class="p">,</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">all_simulations</span><span class="p">:</span>
-            <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yErr</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">computeErrorVector</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+            <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">yErr</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">computeWeightedResidual</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
 
-    <span class="n">residual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">yErr</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">residual</span></div>
-
-
-<div class="viewcode-block" id="minimizerCallbackFunction"><a class="viewcode-back" href="../../documentation/core.html#buzzard.optimizer.minimizerCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">minimizerCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-
-    <span class="n">printLine</span><span class="p">()</span>
-    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-        <span class="n">message</span><span class="p">(</span><span class="s2">&quot; --&gt;&quot;</span><span class="p">,</span> <span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;= </span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
-    <span class="n">printLine</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">yErr</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

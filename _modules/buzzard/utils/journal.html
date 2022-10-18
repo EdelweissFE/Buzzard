@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>buzzard.journal &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>buzzard.utils.journal &mdash; Buzzard v22.09 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -25,10 +26,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Buzzard
+            <a href="../../../index.html" class="icon icon-home"> Buzzard
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -36,10 +37,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../documentation/index.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Contributors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/index.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
 </ul>
 
         </div>
@@ -48,16 +49,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Buzzard</a>
+          <a href="../../../index.html">Buzzard</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>buzzard.journal</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>buzzard.utils.journal</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -66,7 +67,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for buzzard.journal</h1><div class="highlight"><pre>
+  <h1>Source code for buzzard.utils.journal</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">#  ---------------------------------------------------------------------</span>
 <span class="c1">#</span>
@@ -99,8 +100,10 @@
 <span class="n">maxCharCentered</span> <span class="o">=</span> <span class="mi">70</span>
 <span class="n">maxCharJustified</span> <span class="o">=</span> <span class="mi">68</span>
 
+<span class="n">quiet</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="printHeader"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printHeader">[docs]</a><span class="k">def</span> <span class="nf">printHeader</span><span class="p">():</span>
+
+<div class="viewcode-block" id="printHeader"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.printHeader">[docs]</a><span class="k">def</span> <span class="nf">printHeader</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Prints the program header.&quot;&quot;&quot;</span>
     <span class="n">printSepline</span><span class="p">()</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="s2">&quot;This is&quot;</span><span class="p">)</span>
@@ -119,51 +122,54 @@
     <span class="n">printSepline</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="infoMessage"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.infoMessage">[docs]</a><span class="k">def</span> <span class="nf">infoMessage</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="infoMessage"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.infoMessage">[docs]</a><span class="k">def</span> <span class="nf">infoMessage</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints an info message.&quot;&quot;&quot;</span>
     <span class="n">message</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;INFO:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="errorMessage"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.errorMessage">[docs]</a><span class="k">def</span> <span class="nf">errorMessage</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="errorMessage"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.errorMessage">[docs]</a><span class="k">def</span> <span class="nf">errorMessage</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints an error message.&quot;&quot;&quot;</span>
     <span class="n">message</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="s2">&quot;ERROR:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="message"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.message">[docs]</a><span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="message"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.message">[docs]</a><span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints a message to the terminal with fixed format.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">maxCharJustified</span><span class="p">:</span>
-            <span class="n">printJustifiedLine</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">quiet</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">maxCharJustified</span><span class="p">:</span>
+                <span class="n">printJustifiedLine</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stringList</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharJustified</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+                <span class="n">printJustifiedLine</span><span class="p">(</span><span class="n">stringList</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">stringList</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                    <span class="n">printJustifiedLine</span><span class="p">(</span><span class="s2">&quot;...&quot;</span> <span class="o">+</span> <span class="n">string</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">stringList</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharJustified</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
-            <span class="n">printJustifiedLine</span><span class="p">(</span><span class="n">stringList</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">stringList</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                <span class="n">printJustifiedLine</span><span class="p">(</span><span class="s2">&quot;...&quot;</span> <span class="o">+</span> <span class="n">string</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">printJustifiedLine</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+            <span class="n">printJustifiedLine</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="printSepline"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printSepline">[docs]</a><span class="k">def</span> <span class="nf">printSepline</span><span class="p">():</span>
+<div class="viewcode-block" id="printSepline"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.printSepline">[docs]</a><span class="k">def</span> <span class="nf">printSepline</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Prints a separation line.&quot;&quot;&quot;</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="n">maxCharCentered</span> <span class="o">*</span> <span class="s2">&quot;=&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="printLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printLine">[docs]</a><span class="k">def</span> <span class="nf">printLine</span><span class="p">():</span>
+<div class="viewcode-block" id="printLine"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.printLine">[docs]</a><span class="k">def</span> <span class="nf">printLine</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Prints a simple line.&quot;&quot;&quot;</span>
     <span class="n">printCenteredLine</span><span class="p">(</span><span class="n">maxCharCentered</span> <span class="o">*</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="printCenteredLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printCenteredLine">[docs]</a><span class="k">def</span> <span class="nf">printCenteredLine</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="printCenteredLine"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.printCenteredLine">[docs]</a><span class="k">def</span> <span class="nf">printCenteredLine</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints a string which is centered.&quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|{:^</span><span class="si">{}</span><span class="s2">s}|&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharCentered</span><span class="p">))</span></div>
+    <span class="k">if</span> <span class="n">quiet</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|{:^</span><span class="si">{}</span><span class="s2">s}|&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharCentered</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="printJustifiedLine"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.journal.printJustifiedLine">[docs]</a><span class="k">def</span> <span class="nf">printJustifiedLine</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="printJustifiedLine"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.journal.printJustifiedLine">[docs]</a><span class="k">def</span> <span class="nf">printJustifiedLine</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Prints a string which is justified.&quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;| {:&lt;</span><span class="si">{}</span><span class="s2">s} |&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharJustified</span><span class="p">))</span></div>
+    <span class="k">if</span> <span class="n">quiet</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;| {:&lt;</span><span class="si">{}</span><span class="s2">s} |&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">maxCharJustified</span><span class="p">))</span></div>
 </pre></div>
 
            </div>

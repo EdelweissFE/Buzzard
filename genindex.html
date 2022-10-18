@@ -15,6 +15,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -72,6 +73,7 @@
  <a href="#A"><strong>A</strong></a>
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
@@ -84,13 +86,13 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.identification.Identification.active_identifications">active_identifications (buzzard.identification.Identification attribute)</a>
+      <li><a href="documentation/core.html#buzzard.core.identification.Identification.active_identifications">active_identifications (buzzard.core.identification.Identification attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.identification.Identification.all_identifications">all_identifications (buzzard.identification.Identification attribute)</a>
+      <li><a href="documentation/core.html#buzzard.core.identification.Identification.all_identifications">all_identifications (buzzard.core.identification.Identification attribute)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.simulation.Simulation.all_simulations">all_simulations (buzzard.simulation.Simulation attribute)</a>
+      <li><a href="documentation/core.html#buzzard.core.simulation.Simulation.all_simulations">all_simulations (buzzard.core.simulation.Simulation attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -99,47 +101,54 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    buzzard.abaqusUtility
+    buzzard.core.optimizer
 
       <ul>
-        <li><a href="documentation/interfaces.html#module-buzzard.abaqusUtility">module</a>
+        <li><a href="documentation/core.html#module-buzzard.core.optimizer">module</a>
 </li>
       </ul></li>
       <li>
-    buzzard.edelweissUtility
+    buzzard.interfaces.abaqus
 
       <ul>
-        <li><a href="documentation/interfaces.html#module-buzzard.edelweissUtility">module</a>
+        <li><a href="documentation/interfaces.html#module-buzzard.interfaces.abaqus">module</a>
 </li>
       </ul></li>
       <li>
-    buzzard.journal
+    buzzard.interfaces.edelweiss
 
       <ul>
-        <li><a href="documentation/utilities.html#module-buzzard.journal">module</a>
+        <li><a href="documentation/interfaces.html#module-buzzard.interfaces.edelweiss">module</a>
+</li>
+      </ul></li>
+      <li>
+    buzzard.interfaces.scipy
+
+      <ul>
+        <li><a href="documentation/interfaces.html#module-buzzard.interfaces.scipy">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    buzzard.optimizer
+    buzzard.utils.journal
 
       <ul>
-        <li><a href="documentation/core.html#module-buzzard.optimizer">module</a>
+        <li><a href="documentation/utilities.html#module-buzzard.utils.journal">module</a>
 </li>
       </ul></li>
       <li>
-    buzzard.plotters
+    buzzard.utils.plotters
 
       <ul>
-        <li><a href="documentation/utilities.html#module-buzzard.plotters">module</a>
+        <li><a href="documentation/utilities.html#module-buzzard.utils.plotters">module</a>
 </li>
       </ul></li>
       <li>
-    buzzard.reader
+    buzzard.utils.reader
 
       <ul>
-        <li><a href="documentation/utilities.html#module-buzzard.reader">module</a>
+        <li><a href="documentation/utilities.html#module-buzzard.utils.reader">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -148,15 +157,31 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.identification.Identification.checkInput">checkInput() (buzzard.identification.Identification method)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyGlobalOptimization">callSciPyGlobalOptimization() (in module buzzard.interfaces.scipy)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.optimizer.collectIdentificationsFromConfig">collectIdentificationsFromConfig() (in module buzzard.optimizer)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyMinimize">callSciPyMinimize() (in module buzzard.interfaces.scipy)</a>
+</li>
+      <li><a href="documentation/core.html#buzzard.core.identification.Identification.checkInput">checkInput() (buzzard.core.identification.Identification method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.optimizer.collectSimulationsFromConfig">collectSimulationsFromConfig() (in module buzzard.optimizer)</a>
+      <li><a href="documentation/core.html#buzzard.core.optimizer.collectParametersToIdentify">collectParametersToIdentify() (in module buzzard.core.optimizer)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.simulation.Simulation.computeErrorVector">computeErrorVector() (buzzard.simulation.Simulation method)</a>
+      <li><a href="documentation/core.html#buzzard.core.optimizer.collectSimulations">collectSimulations() (in module buzzard.core.optimizer)</a>
+</li>
+      <li><a href="documentation/core.html#buzzard.core.simulation.Simulation.computeWeightedResidual">computeWeightedResidual() (buzzard.core.simulation.Simulation method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.scipy.differentialEvolutionCallbackFunction">differentialEvolutionCallbackFunction() (in module buzzard.interfaces.scipy)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.scipy.dualAnnealingCallbackFunction">dualAnnealingCallbackFunction() (in module buzzard.interfaces.scipy)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -164,13 +189,13 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.journal.errorMessage">errorMessage() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.errorMessage">errorMessage() (in module buzzard.utils.journal)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/interfaces.html#buzzard.abaqusUtility.evaluateAbaqusSimulation">evaluateAbaqusSimulation() (in module buzzard.abaqusUtility)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.abaqus.evaluateAbaqusSimulation">evaluateAbaqusSimulation() (in module buzzard.interfaces.abaqus)</a>
 </li>
-      <li><a href="documentation/interfaces.html#buzzard.edelweissUtility.evaluateEdelweissSimulation">evaluateEdelweissSimulation() (in module buzzard.edelweissUtility)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.edelweiss.evaluateEdelweissSimulation">evaluateEdelweissSimulation() (in module buzzard.interfaces.edelweiss)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -178,13 +203,13 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/interfaces.html#buzzard.edelweissUtility.getInputDictWithCurrentParameters">getInputDictWithCurrentParameters() (in module buzzard.edelweissUtility)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.edelweiss.getInputDictWithCurrentParameters">getInputDictWithCurrentParameters() (in module buzzard.interfaces.edelweiss)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.optimizer.getResidualForMultipleSimulations">getResidualForMultipleSimulations() (in module buzzard.optimizer)</a>
+      <li><a href="documentation/core.html#buzzard.core.optimizer.getOptimizationMethodAndOptions">getOptimizationMethodAndOptions() (in module buzzard.core.optimizer)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.optimizer.getScipySettings">getScipySettings() (in module buzzard.optimizer)</a>
+      <li><a href="documentation/core.html#buzzard.core.optimizer.getResidualForMultipleSimulations">getResidualForMultipleSimulations() (in module buzzard.core.optimizer)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -192,13 +217,13 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.identification.Identification">Identification (class in buzzard.identification)</a>
+      <li><a href="documentation/core.html#buzzard.core.identification.Identification">Identification (class in buzzard.core.identification)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.journal.infoMessage">infoMessage() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.infoMessage">infoMessage() (in module buzzard.utils.journal)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.simulation.Simulation.interpolateSimulationResults">interpolateSimulationResults() (buzzard.simulation.Simulation method)</a>
+      <li><a href="documentation/core.html#buzzard.core.simulation.Simulation.interpolateSimulationResults">interpolateSimulationResults() (buzzard.core.simulation.Simulation method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -206,25 +231,27 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.journal.message">message() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.message">message() (in module buzzard.utils.journal)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.optimizer.minimizerCallbackFunction">minimizerCallbackFunction() (in module buzzard.optimizer)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.scipy.minimizerCallbackFunction">minimizerCallbackFunction() (in module buzzard.interfaces.scipy)</a>
 </li>
       <li>
     module
 
       <ul>
-        <li><a href="documentation/interfaces.html#module-buzzard.abaqusUtility">buzzard.abaqusUtility</a>
+        <li><a href="documentation/core.html#module-buzzard.core.optimizer">buzzard.core.optimizer</a>
 </li>
-        <li><a href="documentation/interfaces.html#module-buzzard.edelweissUtility">buzzard.edelweissUtility</a>
+        <li><a href="documentation/interfaces.html#module-buzzard.interfaces.abaqus">buzzard.interfaces.abaqus</a>
 </li>
-        <li><a href="documentation/utilities.html#module-buzzard.journal">buzzard.journal</a>
+        <li><a href="documentation/interfaces.html#module-buzzard.interfaces.edelweiss">buzzard.interfaces.edelweiss</a>
 </li>
-        <li><a href="documentation/core.html#module-buzzard.optimizer">buzzard.optimizer</a>
+        <li><a href="documentation/interfaces.html#module-buzzard.interfaces.scipy">buzzard.interfaces.scipy</a>
 </li>
-        <li><a href="documentation/utilities.html#module-buzzard.plotters">buzzard.plotters</a>
+        <li><a href="documentation/utilities.html#module-buzzard.utils.journal">buzzard.utils.journal</a>
 </li>
-        <li><a href="documentation/utilities.html#module-buzzard.reader">buzzard.reader</a>
+        <li><a href="documentation/utilities.html#module-buzzard.utils.plotters">buzzard.utils.plotters</a>
+</li>
+        <li><a href="documentation/utilities.html#module-buzzard.utils.reader">buzzard.utils.reader</a>
 </li>
       </ul></li>
   </ul></td>
@@ -233,19 +260,19 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.plotters.plotOptimizationResults">plotOptimizationResults() (in module buzzard.plotters)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.plotters.plotOptimizationResults">plotOptimizationResults() (in module buzzard.utils.plotters)</a>
 </li>
-      <li><a href="documentation/utilities.html#buzzard.journal.printCenteredLine">printCenteredLine() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.printCenteredLine">printCenteredLine() (in module buzzard.utils.journal)</a>
 </li>
-      <li><a href="documentation/utilities.html#buzzard.journal.printHeader">printHeader() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.printHeader">printHeader() (in module buzzard.utils.journal)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.journal.printJustifiedLine">printJustifiedLine() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.printJustifiedLine">printJustifiedLine() (in module buzzard.utils.journal)</a>
 </li>
-      <li><a href="documentation/utilities.html#buzzard.journal.printLine">printLine() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.printLine">printLine() (in module buzzard.utils.journal)</a>
 </li>
-      <li><a href="documentation/utilities.html#buzzard.journal.printSepline">printSepline() (in module buzzard.journal)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.journal.printSepline">printSepline() (in module buzzard.utils.journal)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -253,17 +280,17 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.reader.readConfig">readConfig() (in module buzzard.reader)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.reader.readConfig">readConfig() (in module buzzard.utils.reader)</a>
 </li>
-      <li><a href="documentation/utilities.html#buzzard.reader.readConfigFromJson">readConfigFromJson() (in module buzzard.reader)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.reader.readConfigFromJson">readConfigFromJson() (in module buzzard.utils.reader)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.simulation.Simulation.run">run() (buzzard.simulation.Simulation method)</a>
+      <li><a href="documentation/core.html#buzzard.core.simulation.Simulation.run">run() (buzzard.core.simulation.Simulation method)</a>
 </li>
-      <li><a href="documentation/interfaces.html#buzzard.abaqusUtility.runCommandAndCatchError">runCommandAndCatchError() (in module buzzard.abaqusUtility)</a>
+      <li><a href="documentation/interfaces.html#buzzard.interfaces.abaqus.runCommandAndCatchError">runCommandAndCatchError() (in module buzzard.interfaces.abaqus)</a>
 </li>
-      <li><a href="documentation/core.html#buzzard.optimizer.runOptimization">runOptimization() (in module buzzard.optimizer)</a>
+      <li><a href="documentation/core.html#buzzard.core.optimizer.runOptimization">runOptimization() (in module buzzard.core.optimizer)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -271,11 +298,11 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/utilities.html#buzzard.reader.setEnvironmentVariables">setEnvironmentVariables() (in module buzzard.reader)</a>
+      <li><a href="documentation/utilities.html#buzzard.utils.reader.setEnvironmentVariables">setEnvironmentVariables() (in module buzzard.utils.reader)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="documentation/core.html#buzzard.simulation.Simulation">Simulation (class in buzzard.simulation)</a>
+      <li><a href="documentation/core.html#buzzard.core.simulation.Simulation">Simulation (class in buzzard.core.simulation)</a>
 </li>
   </ul></td>
 </tr></table>

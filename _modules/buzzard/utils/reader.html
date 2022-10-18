@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>buzzard.reader &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>buzzard.utils.reader &mdash; Buzzard v22.09 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -25,10 +26,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Buzzard
+            <a href="../../../index.html" class="icon icon-home"> Buzzard
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -36,10 +37,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../documentation/index.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">Contributors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/index.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
 </ul>
 
         </div>
@@ -48,16 +49,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Buzzard</a>
+          <a href="../../../index.html">Buzzard</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>buzzard.reader</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>buzzard.utils.reader</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -66,7 +67,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for buzzard.reader</h1><div class="highlight"><pre>
+  <h1>Source code for buzzard.utils.reader</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">#  ---------------------------------------------------------------------</span>
 <span class="c1">#</span>
@@ -101,12 +102,12 @@
 <span class="kn">from</span> <span class="nn">.journal</span> <span class="kn">import</span> <span class="n">message</span>
 
 
-<div class="viewcode-block" id="setEnvironmentVariables"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.reader.setEnvironmentVariables">[docs]</a><span class="k">def</span> <span class="nf">setEnvironmentVariables</span><span class="p">(</span><span class="n">variableValuePairs</span><span class="p">):</span>
+<div class="viewcode-block" id="setEnvironmentVariables"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.reader.setEnvironmentVariables">[docs]</a><span class="k">def</span> <span class="nf">setEnvironmentVariables</span><span class="p">(</span><span class="n">variableValuePairs</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">variableValuePairs</span><span class="p">:</span>
         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
-<div class="viewcode-block" id="readConfigFromJson"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.reader.readConfigFromJson">[docs]</a><span class="k">def</span> <span class="nf">readConfigFromJson</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">):</span>
+<div class="viewcode-block" id="readConfigFromJson"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.reader.readConfigFromJson">[docs]</a><span class="k">def</span> <span class="nf">readConfigFromJson</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;read configuration from a .json file&quot;&quot;&quot;</span>
     <span class="n">message</span><span class="p">(</span><span class="s2">&quot;reading config from </span><span class="si">{:}</span><span class="s2">... &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">))</span>
 
@@ -119,7 +120,7 @@
     <span class="k">return</span> <span class="n">config</span></div>
 
 
-<div class="viewcode-block" id="readConfig"><a class="viewcode-back" href="../../documentation/utilities.html#buzzard.reader.readConfig">[docs]</a><span class="k">def</span> <span class="nf">readConfig</span><span class="p">(</span><span class="n">configFile</span><span class="p">):</span>
+<div class="viewcode-block" id="readConfig"><a class="viewcode-back" href="../../../documentation/utilities.html#buzzard.utils.reader.readConfig">[docs]</a><span class="k">def</span> <span class="nf">readConfig</span><span class="p">(</span><span class="n">configFile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;read configuartion dictionary &#39;config&#39; from a .py file&quot;&quot;&quot;</span>
     <span class="n">message</span><span class="p">(</span><span class="s2">&quot;reading config from </span><span class="si">{:}</span><span class="s2">... &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">configFile</span><span class="p">))</span>
 

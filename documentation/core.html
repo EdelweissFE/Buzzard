@@ -15,6 +15,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -41,9 +42,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Core</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.optimizer">Optimizer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#identification-object">Identification Object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#simulation-object">Simulation Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.core.optimizer">Optimizer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.optimizer.collectParametersToIdentify"><code class="docutils literal notranslate"><span class="pre">collectParametersToIdentify()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.optimizer.collectSimulations"><code class="docutils literal notranslate"><span class="pre">collectSimulations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.optimizer.getOptimizationMethodAndOptions"><code class="docutils literal notranslate"><span class="pre">getOptimizationMethodAndOptions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.optimizer.getResidualForMultipleSimulations"><code class="docutils literal notranslate"><span class="pre">getResidualForMultipleSimulations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.optimizer.runOptimization"><code class="docutils literal notranslate"><span class="pre">runOptimization()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#identification-object">Identification Object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.identification.Identification"><code class="docutils literal notranslate"><span class="pre">Identification</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#simulation-object">Simulation Object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.core.simulation.Simulation"><code class="docutils literal notranslate"><span class="pre">Simulation</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Interfaces</a></li>
@@ -81,45 +95,57 @@
              
   <div class="section" id="core">
 <h1>Core<a class="headerlink" href="#core" title="Permalink to this heading"></a></h1>
-<div class="section" id="module-buzzard.optimizer">
-<span id="optimizer"></span><h2>Optimizer<a class="headerlink" href="#module-buzzard.optimizer" title="Permalink to this heading"></a></h2>
+<div class="section" id="module-buzzard.core.optimizer">
+<span id="optimizer"></span><h2>Optimizer<a class="headerlink" href="#module-buzzard.core.optimizer" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.optimizer.collectIdentificationsFromConfig">
-<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">collectIdentificationsFromConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#collectIdentificationsFromConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.collectIdentificationsFromConfig" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.optimizer.collectParametersToIdentify">
+<span class="sig-prename descclassname"><span class="pre">buzzard.core.optimizer.</span></span><span class="sig-name descname"><span class="pre">collectParametersToIdentify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/buzzard/core/optimizer.html#collectParametersToIdentify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.optimizer.collectParametersToIdentify" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.optimizer.collectSimulationsFromConfig">
-<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">collectSimulationsFromConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#collectSimulationsFromConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.collectSimulationsFromConfig" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.optimizer.collectSimulations">
+<span class="sig-prename descclassname"><span class="pre">buzzard.core.optimizer.</span></span><span class="sig-name descname"><span class="pre">collectSimulations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/core/optimizer.html#collectSimulations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.optimizer.collectSimulations" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.optimizer.getResidualForMultipleSimulations">
-<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">getResidualForMultipleSimulations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../_modules/buzzard/optimizer.html#getResidualForMultipleSimulations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.getResidualForMultipleSimulations" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.optimizer.getOptimizationMethodAndOptions">
+<span class="sig-prename descclassname"><span class="pre">buzzard.core.optimizer.</span></span><span class="sig-name descname"><span class="pre">getOptimizationMethodAndOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/buzzard/core/optimizer.html#getOptimizationMethodAndOptions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.optimizer.getOptimizationMethodAndOptions" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts the optimization method and respective options from the input dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary containing the information of the Buzzard input.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>,<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.core.optimizer.getResidualForMultipleSimulations">
+<span class="sig-prename descclassname"><span class="pre">buzzard.core.optimizer.</span></span><span class="sig-name descname"><span class="pre">getResidualForMultipleSimulations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../_modules/buzzard/core/optimizer.html#getResidualForMultipleSimulations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.optimizer.getResidualForMultipleSimulations" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.optimizer.getScipySettings">
-<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">getScipySettings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/buzzard/optimizer.html#getScipySettings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.getScipySettings" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="buzzard.optimizer.minimizerCallbackFunction">
-<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">minimizerCallbackFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/optimizer.html#minimizerCallbackFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.minimizerCallbackFunction" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="buzzard.optimizer.runOptimization">
-<span class="sig-prename descclassname"><span class="pre">buzzard.optimizer.</span></span><span class="sig-name descname"><span class="pre">runOptimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.10)"><span class="pre">Namespace</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">OptimizeResult</span></span></span><a class="reference internal" href="../_modules/buzzard/optimizer.html#runOptimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.optimizer.runOptimization" title="Permalink to this definition"></a></dt>
-<dd><p>execute parameter identification</p>
+<dt class="sig sig-object py" id="buzzard.core.optimizer.runOptimization">
+<span class="sig-prename descclassname"><span class="pre">buzzard.core.optimizer.</span></span><span class="sig-name descname"><span class="pre">runOptimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">OptimizeResult</span></span></span><a class="reference internal" href="../_modules/buzzard/core/optimizer.html#runOptimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.optimizer.runOptimization" title="Permalink to this definition"></a></dt>
+<dd><p>Core function which executes parameter identification.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Dictionary containing the information of the Buzzard input.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>scipy.optimize.OptimizeResult</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="identification-object">
 <h2>Identification Object<a class="headerlink" href="#identification-object" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="buzzard.identification.Identification">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">buzzard.identification.</span></span><span class="sig-name descname"><span class="pre">Identification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/identification.html#Identification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.identification.Identification" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.identification.Identification">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">buzzard.core.identification.</span></span><span class="sig-name descname"><span class="pre">Identification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/core/identification.html#Identification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.identification.Identification" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The identification object stores information for one parameter which is defined to be optimized.</p>
 <dl class="field-list simple">
@@ -131,20 +157,20 @@
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="buzzard.identification.Identification.active_identifications">
-<span class="sig-name descname"><span class="pre">active_identifications</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#buzzard.identification.Identification.active_identifications" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.identification.Identification.active_identifications">
+<span class="sig-name descname"><span class="pre">active_identifications</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#buzzard.core.identification.Identification.active_identifications" title="Permalink to this definition"></a></dt>
 <dd><p>A list containing all active identification objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="buzzard.identification.Identification.all_identifications">
-<span class="sig-name descname"><span class="pre">all_identifications</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#buzzard.identification.Identification.all_identifications" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.identification.Identification.all_identifications">
+<span class="sig-name descname"><span class="pre">all_identifications</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#buzzard.core.identification.Identification.all_identifications" title="Permalink to this definition"></a></dt>
 <dd><p>A list containing all identification objects.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="buzzard.identification.Identification.checkInput">
-<span class="sig-name descname"><span class="pre">checkInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/identification.html#Identification.checkInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.identification.Identification.checkInput" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.identification.Identification.checkInput">
+<span class="sig-name descname"><span class="pre">checkInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/core/identification.html#Identification.checkInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.identification.Identification.checkInput" title="Permalink to this definition"></a></dt>
 <dd><p>Input check for Identification object initialization</p>
 </dd></dl>
 
@@ -154,8 +180,8 @@
 <div class="section" id="simulation-object">
 <h2>Simulation Object<a class="headerlink" href="#simulation-object" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="buzzard.simulation.Simulation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">buzzard.simulation.</span></span><span class="sig-name descname"><span class="pre">Simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/simulation.html#Simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.simulation.Simulation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.simulation.Simulation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">buzzard.core.simulation.</span></span><span class="sig-name descname"><span class="pre">Simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/core/simulation.html#Simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.simulation.Simulation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The identification object stores information for one simulation for the optimization process.</p>
 <dl class="field-list simple">
@@ -167,14 +193,14 @@
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="buzzard.simulation.Simulation.all_simulations">
-<span class="sig-name descname"><span class="pre">all_simulations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#buzzard.simulation.Simulation.all_simulations" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.simulation.Simulation.all_simulations">
+<span class="sig-name descname"><span class="pre">all_simulations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#buzzard.core.simulation.Simulation.all_simulations" title="Permalink to this definition"></a></dt>
 <dd><p>A list containing all simulations.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="buzzard.simulation.Simulation.computeErrorVector">
-<span class="sig-name descname"><span class="pre">computeErrorVector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/simulation.html#Simulation.computeErrorVector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.simulation.Simulation.computeErrorVector" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.simulation.Simulation.computeWeightedResidual">
+<span class="sig-name descname"><span class="pre">computeWeightedResidual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/core/simulation.html#Simulation.computeWeightedResidual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.simulation.Simulation.computeWeightedResidual" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the error vector for the simulation wrt the given data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -190,8 +216,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="buzzard.simulation.Simulation.interpolateSimulationResults">
-<span class="sig-name descname"><span class="pre">interpolateSimulationResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">interp1d</span></span></span><a class="reference internal" href="../_modules/buzzard/simulation.html#Simulation.interpolateSimulationResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.simulation.Simulation.interpolateSimulationResults" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.simulation.Simulation.interpolateSimulationResults">
+<span class="sig-name descname"><span class="pre">interpolateSimulationResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">interp1d</span></span></span><a class="reference internal" href="../_modules/buzzard/core/simulation.html#Simulation.interpolateSimulationResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.simulation.Simulation.interpolateSimulationResults" title="Permalink to this definition"></a></dt>
 <dd><p>Interpolates simulation results taking into account decreasing x-data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -210,8 +236,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="buzzard.simulation.Simulation.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/simulation.html#Simulation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.simulation.Simulation.run" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.core.simulation.Simulation.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/core/simulation.html#Simulation.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.core.simulation.Simulation.run" title="Permalink to this definition"></a></dt>
 <dd><p>Executes the simulation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

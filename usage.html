@@ -15,6 +15,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -94,12 +95,12 @@ They may be installed with</p>
 <div class="section" id="example-configuration-file-python-format">
 <h2>Example configuration file (python format)<a class="headerlink" href="#example-configuration-file-python-format" title="Permalink to this heading"></a></h2>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">File: <code class="docutils literal notranslate"><span class="pre">examples/LinearElastic/config.py</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">File: <code class="docutils literal notranslate"><span class="pre">testfiles/LinearElastic/edelweiss/config.py</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1">#    &quot;env_variables&quot;: {&quot;EDELWEISS_PATH&quot;: &quot;your_custom_path_to/EdelweissFE&quot;},</span>
     <span class="s2">&quot;scipysettings&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;trust-constr&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;disp&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;gtol&quot;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">},</span>
+        <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{},</span>
     <span class="p">},</span>
     <span class="s2">&quot;identification&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;YOUNGS_MODULUS&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">35000</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">20000</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="mi">50000</span><span class="p">,</span> <span class="s2">&quot;active&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
     <span class="s2">&quot;simulations&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -130,7 +131,7 @@ They may be installed with</p>
 <div class="section" id="example-configuration-file-json-format">
 <h2>Example configuration file (json format)<a class="headerlink" href="#example-configuration-file-json-format" title="Permalink to this heading"></a></h2>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">File: <code class="docutils literal notranslate"><span class="pre">examples/LinearElastic/config.json</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">File: <code class="docutils literal notranslate"><span class="pre">testfiles/edelweiss/LinearElasticJSON/config.json</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;scipysettings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">        </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;trust-constr&quot;</span><span class="p">,</span><span class="w"></span>

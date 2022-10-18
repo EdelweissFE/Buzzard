@@ -15,6 +15,7 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -42,8 +43,24 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Interfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.abaqusUtility">Abaqus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.edelweissUtility">EdelweissFE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.interfaces.abaqus">Abaqus</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.abaqus.evaluateAbaqusSimulation"><code class="docutils literal notranslate"><span class="pre">evaluateAbaqusSimulation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.abaqus.runCommandAndCatchError"><code class="docutils literal notranslate"><span class="pre">runCommandAndCatchError()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.interfaces.edelweiss">EdelweissFE</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.edelweiss.evaluateEdelweissSimulation"><code class="docutils literal notranslate"><span class="pre">evaluateEdelweissSimulation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.edelweiss.getInputDictWithCurrentParameters"><code class="docutils literal notranslate"><span class="pre">getInputDictWithCurrentParameters()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-buzzard.interfaces.scipy">SciPy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.scipy.callSciPyGlobalOptimization"><code class="docutils literal notranslate"><span class="pre">callSciPyGlobalOptimization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.scipy.callSciPyMinimize"><code class="docutils literal notranslate"><span class="pre">callSciPyMinimize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.scipy.differentialEvolutionCallbackFunction"><code class="docutils literal notranslate"><span class="pre">differentialEvolutionCallbackFunction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.scipy.dualAnnealingCallbackFunction"><code class="docutils literal notranslate"><span class="pre">dualAnnealingCallbackFunction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buzzard.interfaces.scipy.minimizerCallbackFunction"><code class="docutils literal notranslate"><span class="pre">minimizerCallbackFunction()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="utilities.html">Utilities</a></li>
@@ -80,30 +97,30 @@
              
   <div class="section" id="interfaces">
 <h1>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this heading"></a></h1>
-<div class="section" id="module-buzzard.abaqusUtility">
-<span id="abaqus"></span><h2>Abaqus<a class="headerlink" href="#module-buzzard.abaqusUtility" title="Permalink to this heading"></a></h2>
+<div class="section" id="module-buzzard.interfaces.abaqus">
+<span id="abaqus"></span><h2>Abaqus<a class="headerlink" href="#module-buzzard.interfaces.abaqus" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.abaqusUtility.evaluateAbaqusSimulation">
-<span class="sig-prename descclassname"><span class="pre">buzzard.abaqusUtility.</span></span><span class="sig-name descname"><span class="pre">evaluateAbaqusSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/abaqusUtility.html#evaluateAbaqusSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.abaqusUtility.evaluateAbaqusSimulation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.interfaces.abaqus.evaluateAbaqusSimulation">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.abaqus.</span></span><span class="sig-name descname"><span class="pre">evaluateAbaqusSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/abaqus.html#evaluateAbaqusSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.abaqus.evaluateAbaqusSimulation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.abaqusUtility.runCommandAndCatchError">
-<span class="sig-prename descclassname"><span class="pre">buzzard.abaqusUtility.</span></span><span class="sig-name descname"><span class="pre">runCommandAndCatchError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/abaqusUtility.html#runCommandAndCatchError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.abaqusUtility.runCommandAndCatchError" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.interfaces.abaqus.runCommandAndCatchError">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.abaqus.</span></span><span class="sig-name descname"><span class="pre">runCommandAndCatchError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/abaqus.html#runCommandAndCatchError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.abaqus.runCommandAndCatchError" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </div>
-<div class="section" id="module-buzzard.edelweissUtility">
-<span id="edelweissfe"></span><h2>EdelweissFE<a class="headerlink" href="#module-buzzard.edelweissUtility" title="Permalink to this heading"></a></h2>
+<div class="section" id="module-buzzard.interfaces.edelweiss">
+<span id="edelweissfe"></span><h2>EdelweissFE<a class="headerlink" href="#module-buzzard.interfaces.edelweiss" title="Permalink to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.edelweissUtility.evaluateEdelweissSimulation">
-<span class="sig-prename descclassname"><span class="pre">buzzard.edelweissUtility.</span></span><span class="sig-name descname"><span class="pre">evaluateEdelweissSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><span class="pre">Simulation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/edelweissUtility.html#evaluateEdelweissSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.edelweissUtility.evaluateEdelweissSimulation" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.interfaces.edelweiss.evaluateEdelweissSimulation">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.edelweiss.</span></span><span class="sig-name descname"><span class="pre">evaluateEdelweissSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#buzzard.core.simulation.Simulation" title="buzzard.core.simulation.Simulation"><span class="pre">Simulation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/buzzard/interfaces/edelweiss.html#evaluateEdelweissSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.edelweiss.evaluateEdelweissSimulation" title="Permalink to this definition"></a></dt>
 <dd><p>Evaluates a single EdelweissFE simulation with certain parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>currParams</strong> (<em>numpy.ndarray</em>) – An array with the current parameters.</p></li>
-<li><p><strong>sim</strong> (<a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><em>buzzard.simulation.Simulation</em></a>) – The respective simulation object.</p></li>
+<li><p><strong>sim</strong> (<em>buzzard.simulation.Simulation</em>) – The respective simulation object.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -117,14 +134,14 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="buzzard.edelweissUtility.getInputDictWithCurrentParameters">
-<span class="sig-prename descclassname"><span class="pre">buzzard.edelweissUtility.</span></span><span class="sig-name descname"><span class="pre">getInputDictWithCurrentParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><span class="pre">Simulation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></span><a class="reference internal" href="../_modules/buzzard/edelweissUtility.html#getInputDictWithCurrentParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.edelweissUtility.getInputDictWithCurrentParameters" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="buzzard.interfaces.edelweiss.getInputDictWithCurrentParameters">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.edelweiss.</span></span><span class="sig-name descname"><span class="pre">getInputDictWithCurrentParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currParams</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="core.html#buzzard.core.simulation.Simulation" title="buzzard.core.simulation.Simulation"><span class="pre">Simulation</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></span><a class="reference internal" href="../_modules/buzzard/interfaces/edelweiss.html#getInputDictWithCurrentParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.edelweiss.getInputDictWithCurrentParameters" title="Permalink to this definition"></a></dt>
 <dd><p>Creates an input dictionary with the current parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>currParams</strong> (<em>numpy.ndarray</em>) – An array with the current parameters.</p></li>
-<li><p><strong>sim</strong> (<a class="reference internal" href="core.html#buzzard.simulation.Simulation" title="buzzard.simulation.Simulation"><em>buzzard.simulation.Simulation</em></a>) – The respective simulation object.</p></li>
+<li><p><strong>sim</strong> (<em>buzzard.simulation.Simulation</em>) – The respective simulation object.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -135,6 +152,34 @@
 </dd>
 </dl>
 </dd></dl>
+
+</div>
+<div class="section" id="module-buzzard.interfaces.scipy">
+<span id="scipy"></span><h2>SciPy<a class="headerlink" href="#module-buzzard.interfaces.scipy" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.interfaces.scipy.callSciPyGlobalOptimization">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.scipy.</span></span><span class="sig-name descname"><span class="pre">callSciPyGlobalOptimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.10)"><span class="pre">Sequence</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/scipy.html#callSciPyGlobalOptimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.scipy.callSciPyGlobalOptimization" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.interfaces.scipy.callSciPyMinimize">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.scipy.</span></span><span class="sig-name descname"><span class="pre">callSciPyMinimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">initialParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/scipy.html#callSciPyMinimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.scipy.callSciPyMinimize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.interfaces.scipy.differentialEvolutionCallbackFunction">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.scipy.</span></span><span class="sig-name descname"><span class="pre">differentialEvolutionCallbackFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">convergence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/scipy.html#differentialEvolutionCallbackFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.scipy.differentialEvolutionCallbackFunction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.interfaces.scipy.dualAnnealingCallbackFunction">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.scipy.</span></span><span class="sig-name descname"><span class="pre">dualAnnealingCallbackFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/scipy.html#dualAnnealingCallbackFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.scipy.dualAnnealingCallbackFunction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="buzzard.interfaces.scipy.minimizerCallbackFunction">
+<span class="sig-prename descclassname"><span class="pre">buzzard.interfaces.scipy.</span></span><span class="sig-name descname"><span class="pre">minimizerCallbackFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/buzzard/interfaces/scipy.html#minimizerCallbackFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#buzzard.interfaces.scipy.minimizerCallbackFunction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </div>
 </div>

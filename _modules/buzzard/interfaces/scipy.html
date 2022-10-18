@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>buzzard.interfaces.scipy &mdash; Buzzard v22.09 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Buzzard
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/index.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Buzzard</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>buzzard.interfaces.scipy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for buzzard.interfaces.scipy</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#  ---------------------------------------------------------------------</span>
+<span class="c1">#</span>
+<span class="c1">#  ____                             _</span>
+<span class="c1"># | __ ) _   _ __________ _ _ __ __| |</span>
+<span class="c1"># |  _ \| | | |_  /_  / _` | &#39;__/ _` |</span>
+<span class="c1"># | |_) | |_| |/ / / / (_| | | | (_| |</span>
+<span class="c1"># |____/ \__,_/___/___\__,_|_|  \__,_|</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1">#  Unit of Strength of Materials and Structural Analysis</span>
+<span class="c1">#  University of Innsbruck,</span>
+<span class="c1">#  2021 - today</span>
+<span class="c1">#</span>
+<span class="c1">#  Alexander Dummer alexander.dummer@uibk.ac.at</span>
+<span class="c1">#</span>
+<span class="c1">#  This file is part of Buzzard.</span>
+<span class="c1">#</span>
+<span class="c1">#  This library is free software; you can redistribute it and/or</span>
+<span class="c1">#  modify it under the terms of the GNU Lesser General Public</span>
+<span class="c1">#  License as published by the Free Software Foundation; either</span>
+<span class="c1">#  version 2.1 of the License, or (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1">#  The full text of the license can be found in the file LICENSE.md at</span>
+<span class="c1">#  the top level directory of Buzzard.</span>
+<span class="c1">#  ---------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Sequence</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">optimparallel</span> <span class="kn">import</span> <span class="n">minimize_parallel</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+
+<span class="kn">from</span> <span class="nn">buzzard.core.identification</span> <span class="kn">import</span> <span class="n">Identification</span>
+<span class="kn">from</span> <span class="nn">buzzard.utils.journal</span> <span class="kn">import</span> <span class="n">infoMessage</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">printLine</span>
+
+<span class="n">availableOptimizationMethods</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;brute&quot;</span><span class="p">,</span> <span class="s2">&quot;differential_evolution&quot;</span><span class="p">,</span> <span class="s2">&quot;shgo&quot;</span><span class="p">,</span> <span class="s2">&quot;dual_annealing&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span> <span class="s2">&quot;Powell&quot;</span><span class="p">,</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;L-BFGS-B-parallel&quot;</span><span class="p">,</span> <span class="s2">&quot;TNC&quot;</span><span class="p">,</span> <span class="s2">&quot;SLSQP&quot;</span><span class="p">,</span> <span class="s2">&quot;trust-constr&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="callSciPyMinimize"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyMinimize">[docs]</a><span class="k">def</span> <span class="nf">callSciPyMinimize</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">initialParameters</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">optimize</span><span class="o">.</span><span class="n">Bounds</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;L-BFGS-B-parallel&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">minimize_parallel</span><span class="p">(</span>
+            <span class="n">f</span><span class="p">,</span>
+            <span class="n">initialParameters</span><span class="p">,</span>
+            <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+        <span class="n">f</span><span class="p">,</span>
+        <span class="n">initialParameters</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+        <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="callSciPyGlobalOptimization"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyGlobalOptimization">[docs]</a><span class="k">def</span> <span class="nf">callSciPyGlobalOptimization</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;differential_evolution&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">differential_evolution</span><span class="p">(</span>
+            <span class="n">f</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">differentialEvolutionCallbackFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;dual_annealing&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">dual_annealing</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">dualAnnealingCallbackFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;brute&quot;</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">OptimizeResult</span><span class="p">()</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">brute</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;shgo&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">shgo</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;global optimization method </span><span class="si">{:}</span><span class="s2"> not available!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="minimizerCallbackFunction"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.minimizerCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">minimizerCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+
+    <span class="n">printLine</span><span class="p">()</span>
+    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">message</span><span class="p">(</span><span class="s2">&quot; --&gt;&quot;</span><span class="p">,</span> <span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;= </span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="n">printLine</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="differentialEvolutionCallbackFunction"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.differentialEvolutionCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">differentialEvolutionCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">convergence</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+    <span class="n">printLine</span><span class="p">()</span>
+    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">message</span><span class="p">(</span><span class="s2">&quot; --&gt;&quot;</span><span class="p">,</span> <span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;= </span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="n">printLine</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="dualAnnealingCallbackFunction"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.dualAnnealingCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">dualAnnealingCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+
+    <span class="n">printLine</span><span class="p">()</span>
+    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;f = </span><span class="si">{:}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">message</span><span class="p">(</span><span class="s2">&quot; --&gt;&quot;</span><span class="p">,</span> <span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;= </span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="n">printLine</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Alexander Dummer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
