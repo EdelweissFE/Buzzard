@@ -1,6 +1,6 @@
 *.pyc
 __pycache__
-**/optimalParameters.txt
+**/**/optimalParameters.txt
 *.pdf
 *.png
 /venv

@@ -28,9 +28,11 @@
 import argparse
 import os
 
-from buzzard.journal import printHeader
-from buzzard.optimizer import runOptimization
-from buzzard.reader import readConfig, readConfigFromJson
+import buzzard.core.optimizer
+import buzzard.utils.journal
+from buzzard.core.optimizer import runOptimization
+from buzzard.utils.journal import printHeader
+from buzzard.utils.reader import readConfig, readConfigFromJson
 
 if __name__ == "__main__":
 
@@ -44,19 +46,16 @@ if __name__ == "__main__":
         type=str,
         nargs=1,
     )
-    parser.add_argument(
-        "--parallel",
-        type=int,
-        default=0,
-        choices=[0, 1, 2, 3],
-        help="0: no parallelization (default);"
-        + "1: parallel execution of simulations;"
-        + "2:run parallel minimize (L-BFGS method only);"
-        + "3: combines option 1 and 2 (L-BFGS method only)",
-    )
+    parser.add_argument("--parallel", action="store_true", default=False)
     parser.add_argument("--createPlots", action="store_true", default=False)
+    parser.add_argument("--quiet", action="store_true", default=False)
 
     args = parser.parse_args()
+
+    buzzard.core.optimizer.executeSimulationsInParallel = args.parallel
+    buzzard.core.optimizer.createPlots = args.createPlots
+    buzzard.utils.journal.quiet = args.quiet
+
     printHeader()
 
     configFile = args.file[0]
@@ -68,4 +67,4 @@ if __name__ == "__main__":
     else:
         raise Exception("File type of config file must be .py or .json")
 
-    result = runOptimization(config, args)
+    result = runOptimization(config)

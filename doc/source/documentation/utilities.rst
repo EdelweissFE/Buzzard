@@ -4,7 +4,7 @@ Utilities
 Journal
 ----------------------
 
-.. automodule:: buzzard.journal
+.. automodule:: buzzard.utils.journal
     :members:
     :undoc-members:
     :show-inheritance:
@@ -13,7 +13,7 @@ Journal
 Plotters
 -----------------------
 
-.. automodule:: buzzard.plotters
+.. automodule:: buzzard.utils.plotters
     :members:
     :undoc-members:
     :show-inheritance:
@@ -21,7 +21,7 @@ Plotters
 Input reader
 ---------------------
 
-.. automodule:: buzzard.reader
+.. automodule:: buzzard.utils.reader
     :members:
     :undoc-members:
     :show-inheritance:
