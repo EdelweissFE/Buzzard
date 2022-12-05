@@ -14,7 +14,8 @@ Additionally, an interface to
    :maxdepth: 2
    :hidden:
 
-   usage
+   gettingstarted
+   examples/index
    documentation/index
    contributors
    publications
