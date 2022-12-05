@@ -90,7 +90,15 @@ pygments_style = None
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
+html_logo = "_static/images/logo.png"
 
+html_css_files = [
+    "_static/css/custom.css",
+]
+
+html_js_files = [
+    "_static/js/custom.js",
+]
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
@@ -238,7 +246,7 @@ class PrettyPrintDirective(CodeBlock):
 
         module_path, member_name = self.arguments[0].rsplit(".", 1)
         member_data = getattr(import_module(module_path), member_name)
-        code = pformat(member_data, 2, width=80)
+        code = pformat(member_data, 2, width=110)
 
         cb = self.get_codeblock_node(code, "python")
 
