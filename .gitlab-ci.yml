@@ -3,7 +3,7 @@ stages:
 
 linting:
   stage: linting
-  image: continuumio/miniconda3:latest
+  image: condaforge/mambaforge:22.9.0-2
   script:
     - pip install git+https://github.com/psf/black
     - pip install isort
