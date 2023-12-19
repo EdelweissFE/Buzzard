@@ -27,19 +27,18 @@
 
 import os
 import random as rd
-import sys
 from typing import Union
 
 import numpy as np
-
-from buzzard.core.identification import Identification
-from buzzard.core.simulation import Simulation
 
 # load necessary EdelweissFE functionality
 # if you do not have EdelweissFE installed, you can get it from
 # github.com/edelweissfe/edelweissfe
 from fe.drivers.inputfiledrivensimulation import finiteElementSimulation  # noqa: E402
 from fe.utils.inputfileparser import parseInputFile  # noqa: E402
+
+from buzzard.core.identification import Identification
+from buzzard.core.simulation import Simulation
 
 
 def getInputDictWithCurrentParameters(currParams: np.ndarray, sim: Simulation) -> dict:
@@ -81,9 +80,7 @@ def getInputDictWithCurrentParameters(currParams: np.ndarray, sim: Simulation) -
     return currentInputDict
 
 
-def evaluateEdelweissSimulation(
-    currParams: np.ndarray, sim: Simulation
-) -> Union[np.ndarray, np.ndarray]:
+def evaluateEdelweissSimulation(currParams: np.ndarray, sim: Simulation) -> Union[np.ndarray, np.ndarray]:
     """
     Evaluates a single EdelweissFE simulation with certain parameters.
 
@@ -112,21 +109,13 @@ def evaluateEdelweissSimulation(
     try:
         if sim.fieldoutputX == sim.fieldoutputY:
             # get time history as x value if only one fieldoutput is given
-            x = np.array(
-                fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory
-            ).ravel()
-            y = np.array(
-                fieldOutputController.fieldOutputs[sim.fieldoutputY].result
-            ).ravel()
+            x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory).ravel()
+            y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()
         else:
-            x = np.array(
-                fieldOutputController.fieldOutputs[sim.fieldoutputX].result
-            ).ravel()
-            y = np.array(
-                fieldOutputController.fieldOutputs[sim.fieldoutputY].result
-            ).ravel()
+            x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].result).ravel()
+            y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()
     except Exception as e:
-        print("simulation failed !!!")
+        print("simulation failed !!!: Exception: ", e)
         x = None
         y = None
 
