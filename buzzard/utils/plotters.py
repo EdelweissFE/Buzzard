@@ -35,9 +35,7 @@ sns.set_theme(context="paper", style="ticks", font="Arial")
 
 
 def plotOptimizationResults(initialParams, optParams):
-
     for sim in Simulation.all_simulations:
-
         initialX, initialY = sim.run(initialParams)
         optX, optY = sim.run(optParams)
 

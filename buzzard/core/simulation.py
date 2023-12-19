@@ -50,14 +50,15 @@ class Simulation:
     """A list containing all simulations."""
 
     def __init__(self, name, config):
-
         self.name = name
         self.type = config["type"]
         self.flipXY = config.get("flipXY", False)
         self.weight = config.get("weight", 1.0)
 
         if type(config["data"]) == list:
-            self.data = np.concatenate(tuple([np.loadtxt(d) for d in config["data"]]), axis=0)
+            self.data = np.concatenate(
+                tuple([np.loadtxt(d) for d in config["data"]]), axis=0
+            )
         else:
             self.data = np.loadtxt(config["data"])
 
@@ -145,7 +146,6 @@ class Simulation:
 
         # compute relative error vector
         if self.errorType == "relative":
-
             yErr = np.array([])
             # constant extrapolation of the last simulation value if necessary
             """
@@ -169,7 +169,6 @@ class Simulation:
 
         # compute relative error vector
         elif self.errorType == "absolute":
-
             yErr = np.array([])
             xySim = self.interpolateSimulationResults(x, y)
             # constant extrapolation of the last simulation value if necessary
@@ -185,12 +184,10 @@ class Simulation:
             return self.weight * np.linalg.norm(yErr)
 
         elif self.errorType == "area-between":
-
             # find index to start and end
             start = 0
             end = 0
             for xItem in x:
-
                 if xItem < max(self.data[:, 0]):
                     end += 1
                     if xItem < min(self.data[:, 0]):
@@ -200,15 +197,15 @@ class Simulation:
 
             simData = np.vstack([x[start:end], y[start:end]]).T
 
-            return self.weight * similaritymeasures.area_between_two_curves(self.data, simData)
+            return self.weight * similaritymeasures.area_between_two_curves(
+                self.data, simData
+            )
 
         elif self.errorType == "frechet-distance":
-
             # find index to start and end
             start = 0
             end = 0
             for xItem in x:
-
                 if xItem < max(self.data[:, 0]):
                     end += 1
                     if xItem < min(self.data[:, 0]):
@@ -232,7 +229,6 @@ class Simulation:
             return self.weight * similaritymeasures.frechet_dist(exp, sim)
 
         elif self.errorType == "partial-curve-mapping":
-
             # find index to start and end
             start = 0
             end = 0
@@ -262,7 +258,9 @@ class Simulation:
             )
             exit()
 
-    def interpolateSimulationResults(self, x: np.ndarray, y: np.ndarray) -> interpolate.interp1d:
+    def interpolateSimulationResults(
+        self, x: np.ndarray, y: np.ndarray
+    ) -> interpolate.interp1d:
         """
         Interpolates simulation results taking into account decreasing x-data.
 
@@ -294,4 +292,6 @@ class Simulation:
                     xlist.append(float(val))
                     ylist.append(float(y[i + 1]))
 
-        return interpolate.interp1d(np.array(xlist, dtype=object), np.array(ylist, dtype=object))
+        return interpolate.interp1d(
+            np.array(xlist, dtype=object), np.array(ylist, dtype=object)
+        )

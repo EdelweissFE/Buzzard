@@ -36,12 +36,25 @@ from buzzard.utils.journal import infoMessage, message, printLine
 
 availableOptimizationMethods = {
     "global": ["brute", "differential_evolution", "shgo", "dual_annealing"],
-    "local": ["Nelder-Mead", "Powell", "L-BFGS-B", "L-BFGS-B-parallel", "TNC", "SLSQP", "trust-constr"],
+    "local": [
+        "Nelder-Mead",
+        "Powell",
+        "L-BFGS-B",
+        "L-BFGS-B-parallel",
+        "TNC",
+        "SLSQP",
+        "trust-constr",
+    ],
 }
 
 
-def callSciPyMinimize(f: Callable, initialParameters: np.ndarray, bounds: optimize.Bounds, method: str, options: dict):
-
+def callSciPyMinimize(
+    f: Callable,
+    initialParameters: np.ndarray,
+    bounds: optimize.Bounds,
+    method: str,
+    options: dict,
+):
     if method == "L-BFGS-B-parallel":
         return minimize_parallel(
             f,
@@ -61,14 +74,17 @@ def callSciPyMinimize(f: Callable, initialParameters: np.ndarray, bounds: optimi
     )
 
 
-def callSciPyGlobalOptimization(f: Callable, bounds: Sequence, method: str, options: dict):
-
+def callSciPyGlobalOptimization(
+    f: Callable, bounds: Sequence, method: str, options: dict
+):
     if method == "differential_evolution":
         return optimize.differential_evolution(
             f, bounds=bounds, callback=differentialEvolutionCallbackFunction, **options
         )
     elif method == "dual_annealing":
-        return optimize.dual_annealing(f, bounds, callback=dualAnnealingCallbackFunction, **options)
+        return optimize.dual_annealing(
+            f, bounds, callback=dualAnnealingCallbackFunction, **options
+        )
 
     elif method == "brute":
         res = optimize.OptimizeResult()
@@ -82,28 +98,31 @@ def callSciPyGlobalOptimization(f: Callable, bounds: Sequence, method: str, opti
 
 
 def minimizerCallbackFunction(x: np.ndarray, *args):
-
     printLine()
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
+        message(
+            " -->", Identification.active_identifications[i].name, "= {:e}".format(val)
+        )
     printLine()
 
 
 def differentialEvolutionCallbackFunction(x: np.ndarray, convergence=0):
-
     printLine()
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
+        message(
+            " -->", Identification.active_identifications[i].name, "= {:e}".format(val)
+        )
     printLine()
 
 
 def dualAnnealingCallbackFunction(x: np.ndarray, f: float, context: int):
-
     printLine()
     infoMessage("f = {:}".format(f))
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
+        message(
+            " -->", Identification.active_identifications[i].name, "= {:e}".format(val)
+        )
     printLine()

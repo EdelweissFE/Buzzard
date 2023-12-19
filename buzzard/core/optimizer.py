@@ -79,10 +79,13 @@ def runOptimization(config: dict) -> OptimizeResult:
     # execute optimization
     tic = time.time()
     try:
-
         if method in availableOptimizationMethods.get("local"):
             res = callSciPyMinimize(
-                getResidualForMultipleSimulations, initialParameters, Bounds(lowerBounds, upperBounds), method, options
+                getResidualForMultipleSimulations,
+                initialParameters,
+                Bounds(lowerBounds, upperBounds),
+                method,
+                options,
             )
         elif method in availableOptimizationMethods.get("global"):
             res = callSciPyGlobalOptimization(
@@ -92,10 +95,14 @@ def runOptimization(config: dict) -> OptimizeResult:
                 options,
             )
         else:
-            errorMessage("Requested optimization method '{:}' not available!".format(method))
+            errorMessage(
+                "Requested optimization method '{:}' not available!".format(method)
+            )
             infoMessage("available methods are", availableOptimizationMethods)
 
-            raise Exception("Requested optimization method '{:}' not available!".format(method))
+            raise Exception(
+                "Requested optimization method '{:}' not available!".format(method)
+            )
 
     except KeyboardInterrupt:
         infoMessage("interrupted by user")
@@ -145,7 +152,6 @@ def getOptimizationMethodAndOptions(config: dict) -> Union[str, dict]:
 
 
 def collectParametersToIdentify(config: dict) -> Tuple[np.ndarray, list, list]:
-
     initialX = []
     lb = []
     ub = []
@@ -176,13 +182,16 @@ def collectParametersToIdentify(config: dict) -> Tuple[np.ndarray, list, list]:
     else:
         raise Exception("no parameter(s) found to identify")
 
-    message("found ", str(len(Identification.active_identifications)), " active parameter(s) to identify")
+    message(
+        "found ",
+        str(len(Identification.active_identifications)),
+        " active parameter(s) to identify",
+    )
 
     return initialX, lb, ub
 
 
 def collectSimulations(config):
-
     printSepline()
     infoMessage(" collecting simulations ...")
     printLine()
@@ -202,11 +211,12 @@ def collectSimulations(config):
         raise Exception("no simulations found")
 
     printLine()
-    infoMessage("found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
+    infoMessage(
+        "found " + str(len(Simulation.all_simulations)) + " active simulations(s)"
+    )
 
 
 def getResidualForMultipleSimulations(params: np.ndarray) -> float:
-
     yErr = np.array([])
 
     # workaround for differential evolution
@@ -215,7 +225,8 @@ def getResidualForMultipleSimulations(params: np.ndarray) -> float:
         nSim = len(Simulation.all_simulations)
         with ProcessPoolExecutor(max_workers=nSim) as executor:
             future_res = {
-                executor.submit(sim.computeWeightedResidual, params): sim for sim in Simulation.all_simulations
+                executor.submit(sim.computeWeightedResidual, params): sim
+                for sim in Simulation.all_simulations
             }
 
             for future in as_completed(future_res):

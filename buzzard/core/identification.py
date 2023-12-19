@@ -43,7 +43,6 @@ class Identification:
     """A list containing all active identification objects."""
 
     def __init__(self, name: str, values: dict):
-
         self.checkInput(name, values)
 
         self.active = False
@@ -65,4 +64,6 @@ class Identification:
 
         requiredKeys = ("start", "min", "max", "active")
         if not all(key in values for key in requiredKeys):
-            raise Exception("one or more required keys are not provided for {:}".format(name))
+            raise Exception(
+                "one or more required keys are not provided for {:}".format(name)
+            )

@@ -35,7 +35,6 @@ from buzzard.utils.journal import printHeader
 from buzzard.utils.reader import readConfig, readConfigFromJson
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(
         prog="buzzard",
         description="A tool for optimizing (material) parameters for finite element simulations",
