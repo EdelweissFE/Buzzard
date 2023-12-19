@@ -35,11 +35,10 @@ import numpy as np
 from buzzard.core.identification import Identification
 from buzzard.core.simulation import Simulation
 
-edelweissPath = os.environ.get("EDELWEISS_PATH")
-if edelweissPath is None:
-    raise Exception("You need to specify the environment variable EDELWEISS_PATH")
-sys.path.append(edelweissPath)
-from fe.fecore import finiteElementSimulation  # noqa: E402
+# load necessary EdelweissFE functionality
+# if you do not have EdelweissFE installed, you can get it from 
+# github.com/edelweissfe/edelweissfe
+from fe.drivers.inputfiledrivensimulation import finiteElementSimulation  # noqa: E402
 from fe.utils.inputfileparser import parseInputFile  # noqa: E402
 
 
@@ -106,9 +105,9 @@ def evaluateEdelweissSimulation(currParams: np.ndarray, sim: Simulation) -> Unio
     inp = getInputDictWithCurrentParameters(currParams, sim)
 
     # execute simulation
-    success, U, P, fieldOutputController = finiteElementSimulation(inp, verbose=False)
+    femodel, fieldOutputController = finiteElementSimulation(inp, verbose=False)
 
-    if success:
+    try:
 
         if sim.fieldoutputX == sim.fieldoutputY:
             # get time history as x value if only one fieldoutput is given
@@ -117,7 +116,7 @@ def evaluateEdelweissSimulation(currParams: np.ndarray, sim: Simulation) -> Unio
         else:
             x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].result).ravel()
             y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()
-    else:
+    except Exception as e:
         print("simulation failed !!!")
         x = None
         y = None

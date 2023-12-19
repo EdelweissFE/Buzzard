@@ -14,11 +14,11 @@ all
 *job, name=cps4job, domain=2d, solver=NIST
 
 *fieldOutput,
-name=disp, nSet=gen_top, field=displacement, result=U, saveHistory=True, f(x)='mean( x[:,1])'
-name=force, nSet=gen_top, field=displacement, result=P, saveHistory=True, f(x)='np.sum( x[:,1])'
+create=perNode, name=disp, nSet=gen_top, field=displacement, result=U, saveHistory=True, f(x)='mean( x[:,1])'
+create=perNode, name=force, nSet=gen_top, field=displacement, result=P, saveHistory=True, f(x)='np.sum( x[:,1])'
 
 
-*step, jobName=cps4job, maxInc=1e-1, minInc=1e-8, maxNumInc=1000, maxIter=25, stepLength=100
+*step,  maxInc=1e-1, minInc=1e-8, maxNumInc=1000, maxIter=25, stepLength=100
 dirichlet, name=1,          nSet=gen_leftBottom,    field=displacement, 2=0.0, 1=0.0
 dirichlet, name=bottom,     nSet=gen_bottom,        field=displacement, 2=0,
 dirichlet, name=top,        nSet=gen_top,           field=displacement, 2=-0.055555, f(t)=t
