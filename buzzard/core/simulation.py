@@ -55,10 +55,8 @@ class Simulation:
         self.flipXY = config.get("flipXY", False)
         self.weight = config.get("weight", 1.0)
 
-        if type(config["data"]) == list:
-            self.data = np.concatenate(
-                tuple([np.loadtxt(d) for d in config["data"]]), axis=0
-            )
+        if type(config["data"]) is list:
+            self.data = [np.loadtxt(d) for d in config["data"]]
         else:
             self.data = np.loadtxt(config["data"])
 
@@ -96,6 +94,9 @@ class Simulation:
             Result of the simulation (x-data, y-data).
         """
 
+        x = None
+        y = None
+
         if self.type == "edelweiss":
             from buzzard.interfaces.edelweiss import evaluateEdelweissSimulation
 
@@ -119,6 +120,109 @@ class Simulation:
             return y, x
 
         return x, y
+
+    def computeResidualForSingleDataSet(self, simX: np.ndarray, simY: np.ndarray, data: np.ndarray) -> float:
+        if self.errorType == "relative":
+            yErr = np.array([])
+            try:
+                xySim = self.interpolateSimulationResults(simX, simY)
+
+                for i in range(len(data[:, 1])):
+                    if data[i, 1] == 0:
+                        continue
+
+                    yErr = np.append(
+                        yErr,
+                        (data[i, 1] - xySim(data[i, 0])) / data[i, 1],
+                    )
+                return self.weight * np.linalg.norm(yErr)
+
+            # catch error if simulation failed
+            except ValueError:
+                return 1e12
+
+        # compute relative error vector
+        elif self.errorType == "absolute":
+            yErr = np.array([])
+            xySim = self.interpolateSimulationResults(simX, simY)
+
+            for i in range(len(data[:, 1])):
+                yErr = np.append(yErr, data[i, 1] - xySim(data[i, 0]))
+
+            return self.weight * np.linalg.norm(yErr)
+
+        elif self.errorType == "area-between":
+            # find index to start and end
+            start = 0
+            end = 0
+            for xItem in simX:
+                if xItem < max(data[:, 0]):
+                    end += 1
+                    if xItem < min(data[:, 0]):
+                        start += 1
+                else:
+                    break
+
+            simData = np.vstack([simX[start:end], simY[start:end]]).T
+
+            return self.weight * similaritymeasures.area_between_two_curves(data, simData)
+
+        elif self.errorType == "frechet-distance":
+            # find index to start and end
+            start = 0
+            end = 0
+            for xItem in simX:
+                if xItem < max(self.data[:, 0]):
+                    end += 1
+                    if xItem < min(self.data[:, 0]):
+                        start += 1
+                else:
+                    break
+
+            sim = np.vstack(
+                [
+                    simX[start:end],
+                    simY[start:end],
+                ]
+            ).T
+            exp = np.vstack(
+                [
+                    self.data[:, 0],
+                    self.data[:, 1],
+                ]
+            ).T
+
+            return self.weight * similaritymeasures.frechet_dist(exp, sim)
+
+        elif self.errorType == "partial-curve-mapping":
+            # find index to start and end
+            start = 0
+            end = 0
+
+            for xItem in simX:
+                if xItem < max(data[:, 0]):
+                    end += 1
+                    if xItem < min(data[:, 0]):
+                        start += 1
+                else:
+                    break
+
+            sim = np.vstack([simX[start:end], simY[start:end]]).T
+            exp = np.vstack([data[:, 0], data[:, 1]]).T
+
+            return self.weight * similaritymeasures.pcm(exp, sim)
+
+        else:
+            errorMessage(
+                "Unknown type for error calculation;",
+                "possible types are:",
+                "'relative',",
+                "'absolute',",
+                "'area-between',",
+                "'frechet-distance', and",
+                "'partial-curve-mapping'",
+            )
+            exit()
 
     def computeWeightedResidual(self, currParams: np.ndarray) -> np.ndarray:
         """
@@ -144,123 +248,14 @@ class Simulation:
             )
             return 1e12
 
-        # compute relative error vector
-        if self.errorType == "relative":
-            yErr = np.array([])
-            # constant extrapolation of the last simulation value if necessary
-            """
-            if self.data[-1,0] > x[-1]:
-                x = np.append( x, self.data[-1,0] )
-                y = np.append( y, y[-1] )
-                infoMessage( "extrapolate last simulation value" )
-            """
-            xySim = self.interpolateSimulationResults(x, y)
+        residuals = []
 
-            for i in range(len(self.data[:, 1])):
-                if self.data[i, 1] == 0:
-                    continue
+        for i in range(len(x[0, :])):
+            residuals.append(self.computeResidualForSingleDataSet(x[:, i], y[:, i], self.data[i]))
 
-                yErr = np.append(
-                    yErr,
-                    (self.data[i, 1] - xySim(self.data[i, 0])) / self.data[i, 1],
-                )
+        return np.linalg.norm(np.array(residuals))
 
-            return self.weight * np.linalg.norm(yErr)
-
-        # compute relative error vector
-        elif self.errorType == "absolute":
-            yErr = np.array([])
-            xySim = self.interpolateSimulationResults(x, y)
-            # constant extrapolation of the last simulation value if necessary
-            """
-            if self.data[-1,0] > x[-1]:
-                x = np.append( x, self.data[-1,0] )
-                y = np.append( y, y[-1] )
-                infoMessage( "extrapolate last simulation value" )
-            """
-            for i in range(len(self.data[:, 1])):
-                yErr = np.append(yErr, self.data[i, 1] - xySim(self.data[i, 0]))
-
-            return self.weight * np.linalg.norm(yErr)
-
-        elif self.errorType == "area-between":
-            # find index to start and end
-            start = 0
-            end = 0
-            for xItem in x:
-                if xItem < max(self.data[:, 0]):
-                    end += 1
-                    if xItem < min(self.data[:, 0]):
-                        start += 1
-                else:
-                    break
-
-            simData = np.vstack([x[start:end], y[start:end]]).T
-
-            return self.weight * similaritymeasures.area_between_two_curves(
-                self.data, simData
-            )
-
-        elif self.errorType == "frechet-distance":
-            # find index to start and end
-            start = 0
-            end = 0
-            for xItem in x:
-                if xItem < max(self.data[:, 0]):
-                    end += 1
-                    if xItem < min(self.data[:, 0]):
-                        start += 1
-                else:
-                    break
-
-            sim = np.vstack(
-                [
-                    x[start:end],
-                    y[start:end],
-                ]
-            ).T
-            exp = np.vstack(
-                [
-                    self.data[:, 0],
-                    self.data[:, 1],
-                ]
-            ).T
-
-            return self.weight * similaritymeasures.frechet_dist(exp, sim)
-
-        elif self.errorType == "partial-curve-mapping":
-            # find index to start and end
-            start = 0
-            end = 0
-
-            for xItem in x:
-                if xItem < max(self.data[:, 0]):
-                    end += 1
-                    if xItem < min(self.data[:, 0]):
-                        start += 1
-                else:
-                    break
-
-            sim = np.vstack([x[start:end], y[start:end]]).T
-            exp = np.vstack([self.data[:, 0], self.data[:, 1]]).T
-
-            return self.weight * similaritymeasures.pcm(exp, sim)
-
-        else:
-            errorMessage(
-                "Unknown type for error calculation;",
-                "possible types are:",
-                "'relative',",
-                "'absolute',",
-                "'area-between',",
-                "'frechet-distance', and",
-                "'partial-curve-mapping'",
-            )
-            exit()
-
-    def interpolateSimulationResults(
-        self, x: np.ndarray, y: np.ndarray
-    ) -> interpolate.interp1d:
+    def interpolateSimulationResults(self, x: np.ndarray, y: np.ndarray) -> interpolate.interp1d:
         """
         Interpolates simulation results taking into account decreasing x-data.
 
@@ -292,6 +287,4 @@ class Simulation:
                     xlist.append(float(val))
                     ylist.append(float(y[i + 1]))
 
-        return interpolate.interp1d(
-            np.array(xlist, dtype=object), np.array(ylist, dtype=object)
-        )
+        return interpolate.interp1d(np.array(xlist, dtype=object), np.array(ylist, dtype=object))

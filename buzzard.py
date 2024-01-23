@@ -33,6 +33,7 @@ import buzzard.utils.journal
 from buzzard.core.optimizer import runOptimization
 from buzzard.utils.journal import printHeader
 from buzzard.utils.reader import readConfig, readConfigFromJson
+from buzzard.utils.writers import writeInputFilesForInitialParameters
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -48,6 +49,7 @@ if __name__ == "__main__":
     parser.add_argument("--parallel", action="store_true", default=False)
     parser.add_argument("--createPlots", action="store_true", default=False)
     parser.add_argument("--quiet", action="store_true", default=False)
+    parser.add_argument("--writeInputOnly", action="store_true", default=False)
 
     args = parser.parse_args()
 
@@ -65,5 +67,10 @@ if __name__ == "__main__":
         config = readConfigFromJson(configFile)
     else:
         raise Exception("File type of config file must be .py or .json")
+
+    if args.writeInputOnly:
+        writeInputFilesForInitialParameters(config)
+        print("Write input files only")
+        exit()
 
     result = runOptimization(config)

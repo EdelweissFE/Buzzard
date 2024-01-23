@@ -35,10 +35,12 @@ import numpy as np
 # if you do not have EdelweissFE installed, you can get it from
 # github.com/edelweissfe/edelweissfe
 from fe.drivers.inputfiledrivensimulation import finiteElementSimulation  # noqa: E402
+from fe.utils.exceptions import StepFailed
 from fe.utils.inputfileparser import parseInputFile  # noqa: E402
 
 from buzzard.core.identification import Identification
 from buzzard.core.simulation import Simulation
+from buzzard.utils.journal import infoMessage
 
 
 def getInputDictWithCurrentParameters(currParams: np.ndarray, sim: Simulation) -> dict:
@@ -106,16 +108,36 @@ def evaluateEdelweissSimulation(currParams: np.ndarray, sim: Simulation) -> Unio
     # execute simulation
     femodel, fieldOutputController = finiteElementSimulation(inp, verbose=False)
 
+    x = None
+    y = None
+
     try:
-        if sim.fieldoutputX == sim.fieldoutputY:
-            # get time history as x value if only one fieldoutput is given
-            x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].timeHistory).ravel()
-            y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()
+        if type(sim.fieldoutputY) is list:
+            y = np.array(
+                [np.array(fieldOutputController.fieldOutputs[res].result).ravel() for res in sim.fieldoutputY]
+            ).T
+            if sim.fieldoutputX == "time":
+                x = np.array(
+                    [np.array(fieldOutputController.fieldOutputs[res].timeHistory).ravel() for res in sim.fieldoutputY]
+                ).T
+            else:
+                x = np.array(
+                    [np.array(fieldOutputController.fieldOutputs[res].result).ravel() for res in sim.fieldoutputX]
+                ).T
         else:
-            x = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].result).ravel()
-            y = np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()
+            # get time history as y value if only one fieldoutput is given
+            y = np.array([np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()]).T
+            if sim.fieldoutputX == "time":
+                x = np.array([np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].timeHistory).ravel()]).T
+            else:
+                x = np.array([np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()]).T
+    except StepFailed:
+        infoMessage("simulation failed !!!")
+        x = None
+        y = None
+
     except Exception as e:
-        print("simulation failed !!!: Exception: ", e)
+        infoMessage("simulation failed !!!: Exception: ", e)
         x = None
         y = None
 
