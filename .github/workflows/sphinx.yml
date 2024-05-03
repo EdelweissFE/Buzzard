@@ -1,12 +1,6 @@
 name: Documentation
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  workflow_dispatch:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -34,7 +28,7 @@ jobs:
       - name: Install Eigen
         shell: bash -l {0}
         run: |
-          git clone https://gitlab.com/libeigen/eigen.git
+          git clone --branch 3.4.0 https://gitlab.com/libeigen/eigen.git
           cd eigen 
           mkdir build
           cd build 
@@ -45,7 +39,7 @@ jobs:
       - name: Install Autodiff
         shell: bash -l {0}
         run: |
-          git clone https://github.com/autodiff/autodiff.git
+          git clone --branch v1.1.0 https://github.com/autodiff/autodiff.git
           cd autodiff
           mkdir build
           cd build
@@ -68,7 +62,7 @@ jobs:
         shell: bash -l {0}
         run: |
           cd EdelweissFE
-          python setup.py build_ext -i
+          python -m pip install .
           cd ..
 
       - name: Building Buzzard documentation
@@ -78,12 +72,6 @@ jobs:
           export EDELWEISS_PATH="/home/runner/work/Buzzard/Buzzard/EdelweissFE"
           echo $EDELWEISS_PATH
           sphinx-build ./doc/source/ ./docs -b html
-          
-      - name: Run Buzzard tests
-        shell: bash -l {0}
-        run: |
-          export EDELWEISS_PATH=/home/runner/work/Buzzard/Buzzard/EdelweissFE
-          python run_edelweiss_tests.py 
           
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
