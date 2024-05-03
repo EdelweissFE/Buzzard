@@ -77,4 +77,4 @@ jobs:
         shell: bash -l {0}
         run: |
           python -m pip install -r requirements.txt
-          python run_tests_edelweiss.py
+          python run_edelweiss_tests.py
