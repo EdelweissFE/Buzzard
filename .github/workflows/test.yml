@@ -1,6 +1,8 @@
 name: Run tests
 
-on: [push, pull_request]
+on:
+  schedule:
+  - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -44,15 +46,6 @@ jobs:
           make install
           cd ../..
 
-      - name: Install Fastor
-        shell: bash -l {0}
-        run: |
-          git clone https://github.com/romeric/Fastor.git
-          cd Fastor
-          cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX .
-          make install
-          cd ..
-
       - name: Install Marmot
         shell: bash -l {0}
         run: |
@@ -73,7 +66,7 @@ jobs:
           pip install .
           cd ..
 
-      - name: Run tests
+      - name: Run Buzzard tests
         shell: bash -l {0}
         run: |
           python -m pip install -r requirements.txt
