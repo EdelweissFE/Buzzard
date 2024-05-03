@@ -63,28 +63,34 @@ def callSciPyMinimize(
             options=options,
             callback=minimizerCallbackFunction,
         )
+    elif method == "TNC":
+        return optimize.minimize(
+            f,
+            initialParameters,
+            bounds=bounds,
+            method=method,
+            options=options,
+            callback=minimizerCallbackFunction,
+            jac="2-point",
+        )
+    else:
+        return optimize.minimize(
+            f,
+            initialParameters,
+            bounds=bounds,
+            method=method,
+            options=options,
+            callback=minimizerCallbackFunction,
+        )
 
-    return optimize.minimize(
-        f,
-        initialParameters,
-        bounds=bounds,
-        method=method,
-        options=options,
-        callback=minimizerCallbackFunction,
-    )
 
-
-def callSciPyGlobalOptimization(
-    f: Callable, bounds: Sequence, method: str, options: dict
-):
+def callSciPyGlobalOptimization(f: Callable, bounds: Sequence, method: str, options: dict):
     if method == "differential_evolution":
         return optimize.differential_evolution(
             f, bounds=bounds, callback=differentialEvolutionCallbackFunction, **options
         )
     elif method == "dual_annealing":
-        return optimize.dual_annealing(
-            f, bounds, callback=dualAnnealingCallbackFunction, **options
-        )
+        return optimize.dual_annealing(f, bounds, callback=dualAnnealingCallbackFunction, **options)
 
     elif method == "brute":
         res = optimize.OptimizeResult()
@@ -101,9 +107,7 @@ def minimizerCallbackFunction(x: np.ndarray, *args):
     printLine()
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(
-            " -->", Identification.active_identifications[i].name, "= {:e}".format(val)
-        )
+        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
     printLine()
 
 
@@ -111,9 +115,7 @@ def differentialEvolutionCallbackFunction(x: np.ndarray, convergence=0):
     printLine()
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(
-            " -->", Identification.active_identifications[i].name, "= {:e}".format(val)
-        )
+        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
     printLine()
 
 
@@ -122,7 +124,5 @@ def dualAnnealingCallbackFunction(x: np.ndarray, f: float, context: int):
     infoMessage("f = {:}".format(f))
     infoMessage("current parameters ...")
     for i, val in enumerate(x):
-        message(
-            " -->", Identification.active_identifications[i].name, "= {:e}".format(val)
-        )
+        message(" -->", Identification.active_identifications[i].name, "= {:e}".format(val))
     printLine()

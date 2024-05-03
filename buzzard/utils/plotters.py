@@ -39,16 +39,21 @@ def plotOptimizationResults(initialParams, optParams):
         initialX, initialY = sim.run(initialParams)
         optX, optY = sim.run(optParams)
 
-        plt.figure()
-        plt.plot(sim.data[:, 0], sim.data[:, 1], "x", label="given data")
-        plt.plot(initialX, initialY, label="initial params")
-        plt.plot(optX, optY, label="optimal params")
-        plt.title("Simulation: " + sim.name)
-        plt.legend()
-        plt.xlabel("x")
-        plt.ylabel("y")
-        plt.legend()
-        plt.grid()
+        n = len(initialX[0, :])
+        fig, axs = plt.subplots(1, n, figsize=(n * 5, 5))
+
+        for i in range(n):
+            ax = axs[i]
+            ax.plot(sim.data[i][:, 0], sim.data[i][:, 1], "x", label="given data")
+            ax.plot(initialX[:, i], initialY[:, i], label="initial params")
+            ax.plot(optX[:, i], optY[:, i], label="optimal params")
+            ax.set_title("Simulation: " + sim.name)
+            ax.legend()
+            ax.set_xlabel("x")
+            ax.set_ylabel("y")
+            ax.legend()
+            ax.grid()
+
         plt.tight_layout()
         plt.savefig(sim.name + ".pdf")
         message(" --> " + sim.name + ".pdf")
