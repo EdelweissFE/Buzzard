@@ -34,9 +34,11 @@ import numpy as np
 # load necessary EdelweissFE functionality
 # if you do not have EdelweissFE installed, you can get it from
 # github.com/edelweissfe/edelweissfe
-from fe.drivers.inputfiledrivensimulation import finiteElementSimulation  # noqa: E402
-from fe.utils.exceptions import StepFailed
-from fe.utils.inputfileparser import parseInputFile  # noqa: E402
+from edelweissfe.drivers.inputfiledrivensimulation import (  # noqa: E402
+    finiteElementSimulation,
+)
+from edelweissfe.utils.exceptions import StepFailed
+from edelweissfe.utils.inputfileparser import parseInputFile  # noqa: E402
 
 from buzzard.core.identification import Identification
 from buzzard.core.simulation import Simulation
@@ -130,7 +132,7 @@ def evaluateEdelweissSimulation(currParams: np.ndarray, sim: Simulation) -> Unio
             if sim.fieldoutputX == "time":
                 x = np.array([np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].timeHistory).ravel()]).T
             else:
-                x = np.array([np.array(fieldOutputController.fieldOutputs[sim.fieldoutputY].result).ravel()]).T
+                x = np.array([np.array(fieldOutputController.fieldOutputs[sim.fieldoutputX].result).ravel()]).T
     except StepFailed:
         infoMessage("simulation failed !!!")
         x = None

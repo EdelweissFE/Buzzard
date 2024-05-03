@@ -58,7 +58,7 @@ class Simulation:
         if type(config["data"]) is list:
             self.data = [np.loadtxt(d) for d in config["data"]]
         else:
-            self.data = np.loadtxt(config["data"])
+            self.data = [np.loadtxt(config["data"])]
 
         if self.flipXY:
             self.data[:, [1, 0]] = self.data[:, [0, 1]]

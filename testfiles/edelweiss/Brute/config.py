@@ -1,5 +1,4 @@
 config = {
-    #    "env_variables": {"EDELWEISS_PATH": "your_custom_path_to/EdelweissFE"},
     "scipysettings": {
         "method": "brute",
         "options": {"workers": 16},
