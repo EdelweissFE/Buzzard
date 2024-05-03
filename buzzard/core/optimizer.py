@@ -95,14 +95,10 @@ def runOptimization(config: dict) -> OptimizeResult:
                 options,
             )
         else:
-            errorMessage(
-                "Requested optimization method '{:}' not available!".format(method)
-            )
+            errorMessage("Requested optimization method '{:}' not available!".format(method))
             infoMessage("available methods are", availableOptimizationMethods)
 
-            raise Exception(
-                "Requested optimization method '{:}' not available!".format(method)
-            )
+            raise Exception("Requested optimization method '{:}' not available!".format(method))
 
     except KeyboardInterrupt:
         infoMessage("interrupted by user")
@@ -211,9 +207,7 @@ def collectSimulations(config):
         raise Exception("no simulations found")
 
     printLine()
-    infoMessage(
-        "found " + str(len(Simulation.all_simulations)) + " active simulations(s)"
-    )
+    infoMessage("found " + str(len(Simulation.all_simulations)) + " active simulations(s)")
 
 
 def getResidualForMultipleSimulations(params: np.ndarray) -> float:
@@ -225,8 +219,7 @@ def getResidualForMultipleSimulations(params: np.ndarray) -> float:
         nSim = len(Simulation.all_simulations)
         with ProcessPoolExecutor(max_workers=nSim) as executor:
             future_res = {
-                executor.submit(sim.computeWeightedResidual, params): sim
-                for sim in Simulation.all_simulations
+                executor.submit(sim.computeWeightedResidual, params): sim for sim in Simulation.all_simulations
             }
 
             for future in as_completed(future_res):

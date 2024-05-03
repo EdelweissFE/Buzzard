@@ -57,9 +57,7 @@ def evaluateAbaqusSimulation(currParams, sim):
     abaqusExecuteable = sim.executeable
     cpus = sim.cpus
 
-    simCommand = " ".join(
-        [abaqusExecuteable, "-j", randomFileName, "interactive", "cpus=" + str(cpus)]
-    )
+    simCommand = " ".join([abaqusExecuteable, "-j", randomFileName, "interactive", "cpus=" + str(cpus)])
 
     success = runCommandAndCatchError(simCommand)
 
@@ -90,9 +88,7 @@ def evaluateAbaqusSimulation(currParams, sim):
 
 def runCommandAndCatchError(command):
     com = [c.replace("'", "") for c in command.split(" ")]
-    pipe = subprocess.Popen(
-        com, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False
-    )
+    pipe = subprocess.Popen(com, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False)
 
     text = ""
     for i in pipe.communicate():
