@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>buzzard.core.optimizer &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/_static/css/custom.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,12 +30,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> Buzzard
-            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Buzzard
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -60,7 +66,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">buzzard.core.optimizer</li>
       <li class="wy-breadcrumbs-aside">
@@ -127,7 +133,7 @@
 
 
 <div class="viewcode-block" id="runOptimization"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.runOptimization">[docs]</a><span class="k">def</span> <span class="nf">runOptimization</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OptimizeResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Core function which executes parameter identification.</span>
 
 <span class="sd">    Parameters</span>
@@ -153,10 +159,13 @@
     <span class="c1"># execute optimization</span>
     <span class="n">tic</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-
         <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">availableOptimizationMethods</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">):</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">callSciPyMinimize</span><span class="p">(</span>
-                <span class="n">getResidualForMultipleSimulations</span><span class="p">,</span> <span class="n">initialParameters</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">(</span><span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span><span class="p">),</span> <span class="n">method</span><span class="p">,</span> <span class="n">options</span>
+                <span class="n">getResidualForMultipleSimulations</span><span class="p">,</span>
+                <span class="n">initialParameters</span><span class="p">,</span>
+                <span class="n">Bounds</span><span class="p">(</span><span class="n">lowerBounds</span><span class="p">,</span> <span class="n">upperBounds</span><span class="p">),</span>
+                <span class="n">method</span><span class="p">,</span>
+                <span class="n">options</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">availableOptimizationMethods</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;global&quot;</span><span class="p">):</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">callSciPyGlobalOptimization</span><span class="p">(</span>
@@ -199,7 +208,7 @@
 
 
 <div class="viewcode-block" id="getOptimizationMethodAndOptions"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.getOptimizationMethodAndOptions">[docs]</a><span class="k">def</span> <span class="nf">getOptimizationMethodAndOptions</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts the optimization method and respective options from the input dictionary.</span>
 
 <span class="sd">    Parameters</span>
@@ -219,7 +228,6 @@
 
 
 <div class="viewcode-block" id="collectParametersToIdentify"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.collectParametersToIdentify">[docs]</a><span class="k">def</span> <span class="nf">collectParametersToIdentify</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
-
     <span class="n">initialX</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">lb</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">ub</span> <span class="o">=</span> <span class="p">[]</span>
@@ -250,13 +258,16 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no parameter(s) found to identify&quot;</span><span class="p">)</span>
 
-    <span class="n">message</span><span class="p">(</span><span class="s2">&quot;found &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">)),</span> <span class="s2">&quot; active parameter(s) to identify&quot;</span><span class="p">)</span>
+    <span class="n">message</span><span class="p">(</span>
+        <span class="s2">&quot;found &quot;</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Identification</span><span class="o">.</span><span class="n">active_identifications</span><span class="p">)),</span>
+        <span class="s2">&quot; active parameter(s) to identify&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">initialX</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span></div>
 
 
 <div class="viewcode-block" id="collectSimulations"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.collectSimulations">[docs]</a><span class="k">def</span> <span class="nf">collectSimulations</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
-
     <span class="n">printSepline</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot; collecting simulations ...&quot;</span><span class="p">)</span>
     <span class="n">printLine</span><span class="p">()</span>
@@ -280,7 +291,6 @@
 
 
 <div class="viewcode-block" id="getResidualForMultipleSimulations"><a class="viewcode-back" href="../../../documentation/core.html#buzzard.core.optimizer.getResidualForMultipleSimulations">[docs]</a><span class="k">def</span> <span class="nf">getResidualForMultipleSimulations</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-
     <span class="n">yErr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
     <span class="c1"># workaround for differential evolution</span>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>buzzard.interfaces.edelweiss &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/_static/css/custom.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,12 +30,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> Buzzard
-            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Buzzard
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -60,7 +66,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">buzzard.interfaces.edelweiss</li>
       <li class="wy-breadcrumbs-aside">
@@ -101,24 +107,26 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rd</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="c1"># load necessary EdelweissFE functionality</span>
+<span class="c1"># if you do not have EdelweissFE installed, you can get it from</span>
+<span class="c1"># github.com/edelweissfe/edelweissfe</span>
+<span class="kn">from</span> <span class="nn">edelweissfe.drivers.inputfiledrivensimulation</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa: E402</span>
+    <span class="n">finiteElementSimulation</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">edelweissfe.utils.exceptions</span> <span class="kn">import</span> <span class="n">StepFailed</span>
+<span class="kn">from</span> <span class="nn">edelweissfe.utils.inputfileparser</span> <span class="kn">import</span> <span class="n">parseInputFile</span>  <span class="c1"># noqa: E402</span>
+
 <span class="kn">from</span> <span class="nn">buzzard.core.identification</span> <span class="kn">import</span> <span class="n">Identification</span>
 <span class="kn">from</span> <span class="nn">buzzard.core.simulation</span> <span class="kn">import</span> <span class="n">Simulation</span>
-
-<span class="n">edelweissPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;EDELWEISS_PATH&quot;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">edelweissPath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You need to specify the environment variable EDELWEISS_PATH&quot;</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edelweissPath</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">fe.fecore</span> <span class="kn">import</span> <span class="n">finiteElementSimulation</span>  <span class="c1"># noqa: E402</span>
-<span class="kn">from</span> <span class="nn">fe.utils.inputfileparser</span> <span class="kn">import</span> <span class="n">parseInputFile</span>  <span class="c1"># noqa: E402</span>
+<span class="kn">from</span> <span class="nn">buzzard.utils.journal</span> <span class="kn">import</span> <span class="n">infoMessage</span>
 
 
 <div class="viewcode-block" id="getInputDictWithCurrentParameters"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.edelweiss.getInputDictWithCurrentParameters">[docs]</a><span class="k">def</span> <span class="nf">getInputDictWithCurrentParameters</span><span class="p">(</span><span class="n">currParams</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sim</span><span class="p">:</span> <span class="n">Simulation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates an input dictionary with the current parameters.</span>
 
 <span class="sd">    Parameters</span>
@@ -134,7 +142,7 @@
 <span class="sd">        Input dictionary for EdelweissFE.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">randomFileName</span> <span class="o">=</span> <span class="s2">&quot;_temp_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rd</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e16</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;.inp&quot;</span>
+    <span class="n">randomFileName</span> <span class="o">=</span> <span class="s2">&quot;_temp_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rd</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e16</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;.inp&quot;</span>
 
     <span class="n">paramIDX</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -157,7 +165,7 @@
 
 
 <div class="viewcode-block" id="evaluateEdelweissSimulation"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.edelweiss.evaluateEdelweissSimulation">[docs]</a><span class="k">def</span> <span class="nf">evaluateEdelweissSimulation</span><span class="p">(</span><span class="n">currParams</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sim</span><span class="p">:</span> <span class="n">Simulation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluates a single EdelweissFE simulation with certain parameters.</span>
 
 <span class="sd">    Parameters</span>
@@ -180,19 +188,38 @@
     <span class="n">inp</span> <span class="o">=</span> <span class="n">getInputDictWithCurrentParameters</span><span class="p">(</span><span class="n">currParams</span><span class="p">,</span> <span class="n">sim</span><span class="p">)</span>
 
     <span class="c1"># execute simulation</span>
-    <span class="n">success</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">fieldOutputController</span> <span class="o">=</span> <span class="n">finiteElementSimulation</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">femodel</span><span class="p">,</span> <span class="n">fieldOutputController</span> <span class="o">=</span> <span class="n">finiteElementSimulation</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">if</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span> <span class="o">==</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">:</span>
-            <span class="c1"># get time history as x value if only one fieldoutput is given</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span><span class="p">]</span><span class="o">.</span><span class="n">timeHistory</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">res</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">if</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span> <span class="o">==</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">res</span><span class="p">]</span><span class="o">.</span><span class="n">timeHistory</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">]</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">res</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span><span class="p">]</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;simulation failed !!!&quot;</span><span class="p">)</span>
+            <span class="c1"># get time history as y value if only one fieldoutput is given</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">if</span> <span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span> <span class="o">==</span> <span class="s2">&quot;time&quot;</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputY</span><span class="p">]</span><span class="o">.</span><span class="n">timeHistory</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fieldOutputController</span><span class="o">.</span><span class="n">fieldOutputs</span><span class="p">[</span><span class="n">sim</span><span class="o">.</span><span class="n">fieldoutputX</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">except</span> <span class="n">StepFailed</span><span class="p">:</span>
+        <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;simulation failed !!!&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;simulation failed !!!: Exception: &quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
 

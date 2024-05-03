@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>buzzard.interfaces.abaqus &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/_static/css/custom.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,12 +30,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> Buzzard
-            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Buzzard
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -60,7 +66,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">buzzard.interfaces.abaqus</li>
       <li class="wy-breadcrumbs-aside">
@@ -110,7 +116,6 @@
 
 
 <div class="viewcode-block" id="evaluateAbaqusSimulation"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.abaqus.evaluateAbaqusSimulation">[docs]</a><span class="k">def</span> <span class="nf">evaluateAbaqusSimulation</span><span class="p">(</span><span class="n">currParams</span><span class="p">,</span> <span class="n">sim</span><span class="p">):</span>
-
     <span class="n">randomFileName</span> <span class="o">=</span> <span class="s2">&quot;_temp_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rd</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e16</span><span class="p">))</span>
 
     <span class="c1"># create input for current parameters</span>
@@ -118,7 +123,6 @@
 
     <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">inp</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ide</span> <span class="ow">in</span> <span class="n">Identification</span><span class="o">.</span><span class="n">all_identifications</span><span class="p">:</span>
-
         <span class="k">if</span> <span class="n">ide</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">ide</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">currParams</span><span class="p">[</span><span class="n">paramIDX</span><span class="p">]))</span>
             <span class="n">paramIDX</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -163,7 +167,6 @@
 
 
 <div class="viewcode-block" id="runCommandAndCatchError"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.abaqus.runCommandAndCatchError">[docs]</a><span class="k">def</span> <span class="nf">runCommandAndCatchError</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
-
     <span class="n">com</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">command</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)]</span>
     <span class="n">pipe</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">com</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 

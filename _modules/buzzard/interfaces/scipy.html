@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>buzzard.interfaces.scipy &mdash; Buzzard v22.09 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/_static/css/custom.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,12 +30,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> Buzzard
-            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Buzzard
+              <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -60,7 +66,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">buzzard.interfaces.scipy</li>
       <li class="wy-breadcrumbs-aside">
@@ -110,12 +116,25 @@
 
 <span class="n">availableOptimizationMethods</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;brute&quot;</span><span class="p">,</span> <span class="s2">&quot;differential_evolution&quot;</span><span class="p">,</span> <span class="s2">&quot;shgo&quot;</span><span class="p">,</span> <span class="s2">&quot;dual_annealing&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span> <span class="s2">&quot;Powell&quot;</span><span class="p">,</span> <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="s2">&quot;L-BFGS-B-parallel&quot;</span><span class="p">,</span> <span class="s2">&quot;TNC&quot;</span><span class="p">,</span> <span class="s2">&quot;SLSQP&quot;</span><span class="p">,</span> <span class="s2">&quot;trust-constr&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Nelder-Mead&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Powell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;L-BFGS-B-parallel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TNC&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SLSQP&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trust-constr&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="callSciPyMinimize"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyMinimize">[docs]</a><span class="k">def</span> <span class="nf">callSciPyMinimize</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">initialParameters</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">optimize</span><span class="o">.</span><span class="n">Bounds</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-
+<div class="viewcode-block" id="callSciPyMinimize"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyMinimize">[docs]</a><span class="k">def</span> <span class="nf">callSciPyMinimize</span><span class="p">(</span>
+    <span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">initialParameters</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="p">:</span> <span class="n">optimize</span><span class="o">.</span><span class="n">Bounds</span><span class="p">,</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+<span class="p">):</span>
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;L-BFGS-B-parallel&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">minimize_parallel</span><span class="p">(</span>
             <span class="n">f</span><span class="p">,</span>
@@ -124,19 +143,28 @@
             <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
             <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
         <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
-        <span class="n">f</span><span class="p">,</span>
-        <span class="n">initialParameters</span><span class="p">,</span>
-        <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
-        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
-        <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
-    <span class="p">)</span></div>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;TNC&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+            <span class="n">f</span><span class="p">,</span>
+            <span class="n">initialParameters</span><span class="p">,</span>
+            <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
+            <span class="n">jac</span><span class="o">=</span><span class="s2">&quot;2-point&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+            <span class="n">f</span><span class="p">,</span>
+            <span class="n">initialParameters</span><span class="p">,</span>
+            <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="n">minimizerCallbackFunction</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="callSciPyGlobalOptimization"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.callSciPyGlobalOptimization">[docs]</a><span class="k">def</span> <span class="nf">callSciPyGlobalOptimization</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;differential_evolution&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">optimize</span><span class="o">.</span><span class="n">differential_evolution</span><span class="p">(</span>
             <span class="n">f</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">differentialEvolutionCallbackFunction</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span>
@@ -156,7 +184,6 @@
 
 
 <div class="viewcode-block" id="minimizerCallbackFunction"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.minimizerCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">minimizerCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-
     <span class="n">printLine</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -165,7 +192,6 @@
 
 
 <div class="viewcode-block" id="differentialEvolutionCallbackFunction"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.differentialEvolutionCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">differentialEvolutionCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">convergence</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-
     <span class="n">printLine</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -174,7 +200,6 @@
 
 
 <div class="viewcode-block" id="dualAnnealingCallbackFunction"><a class="viewcode-back" href="../../../documentation/interfaces.html#buzzard.interfaces.scipy.dualAnnealingCallbackFunction">[docs]</a><span class="k">def</span> <span class="nf">dualAnnealingCallbackFunction</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-
     <span class="n">printLine</span><span class="p">()</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;f = </span><span class="si">{:}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
     <span class="n">infoMessage</span><span class="p">(</span><span class="s2">&quot;current parameters ...&quot;</span><span class="p">)</span>
