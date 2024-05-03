@@ -62,7 +62,7 @@ def getInputDictWithCurrentParameters(currParams: np.ndarray, sim: Simulation) -
         Input dictionary for EdelweissFE.
     """
 
-    randomFileName = "_temp_" + str(rd.randint(0, 1e16)) + ".inp"
+    randomFileName = "_temp_" + str(rd.randint(0, int(1e16))) + ".inp"
 
     paramIDX = 0
 
