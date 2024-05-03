@@ -16,11 +16,6 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: latest
           activate-environment: anaconda-client-env
-              
-      - name: Install conda packages
-        shell: bash -l {0}
-        run: |
-          mamba install --file requirements.txt
 
       - name: Install Eigen
         shell: bash -l {0}
@@ -73,6 +68,8 @@ jobs:
         shell: bash -l {0}
         run: |
           git clone https://github.com/EdelweissFE/EdelweissFE.git
+          cd EdelweissFE
+          mamba install -r requirements.txt
           pip install .
           cd ..
 
