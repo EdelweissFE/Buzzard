@@ -69,7 +69,7 @@ jobs:
           git clone https://github.com/EdelweissFE/EdelweissFE.git
           cd EdelweissFE
           mamba install --file requirements.txt
-          pip install .
+          python -m pip install .
           cd ..
 
       - name: Run Buzzard tests
