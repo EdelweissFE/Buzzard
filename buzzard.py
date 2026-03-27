@@ -25,52 +25,7 @@
 #  the top level directory of Buzzard.
 #  ---------------------------------------------------------------------
 
-import argparse
-import os
-
-import buzzard.core.optimizer
-import buzzard.utils.journal
-from buzzard.core.optimizer import runOptimization
-from buzzard.utils.journal import printHeader
-from buzzard.utils.reader import readConfig, readConfigFromJson
-from buzzard.utils.writers import writeInputFilesForInitialParameters
+from buzzard.__main__ import main
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        prog="buzzard",
-        description="A tool for optimizing (material) parameters for finite element simulations",
-    )
-
-    parser.add_argument(
-        "file",
-        type=str,
-        nargs=1,
-    )
-    parser.add_argument("--parallel", action="store_true", default=False)
-    parser.add_argument("--createPlots", action="store_true", default=False)
-    parser.add_argument("--quiet", action="store_true", default=False)
-    parser.add_argument("--writeInputOnly", action="store_true", default=False)
-
-    args = parser.parse_args()
-
-    buzzard.core.optimizer.executeSimulationsInParallel = args.parallel
-    buzzard.core.optimizer.createPlots = args.createPlots
-    buzzard.utils.journal.quiet = args.quiet
-
-    printHeader()
-
-    configFile = args.file[0]
-    root, ext = os.path.splitext(configFile)
-    if ext == ".py":
-        config = readConfig(configFile)
-    elif ext == ".json":
-        config = readConfigFromJson(configFile)
-    else:
-        raise Exception("File type of config file must be .py or .json")
-
-    if args.writeInputOnly:
-        writeInputFilesForInitialParameters(config)
-        print("Write input files only")
-        exit()
-
-    result = runOptimization(config)
+    main()

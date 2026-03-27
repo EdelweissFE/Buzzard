@@ -5,3 +5,4 @@ __pycache__
 *.png
 /venv
 /docs
+*.egg-info
