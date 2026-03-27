@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "buzzard"
+version = "0.1.0"
+description = "A tool for optimizing (material) parameters for finite element simulations"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Alexander Dummer", email = "alexander.dummer@uibk.ac.at"},
+]
+requires-python = ">=3.8"
+dependencies = [
+  "numpy>=1.20",
+  "scipy>=1.7",
+  "matplotlib>=3.4",
+  "seaborn>=0.11",
+  "similaritymeasures>=0.4",
+  "optimparallel>=0.1",
+]
+
+[project.optional-dependencies]
+edelweiss = ["edelweissfe"]
+
+[project.scripts]
+buzzard = "buzzard.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/EdelweissFE/Buzzard"
+Documentation = "https://edelweissfe.github.io/Buzzard"
+
+[tool.setuptools.packages.find]
+include = ["buzzard*"]
